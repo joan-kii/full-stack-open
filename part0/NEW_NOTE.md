@@ -27,12 +27,6 @@ activate Server
 Server-->>Browser: JavaScript File
 deactivate Server
 activate Browser
-Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
-deactivate Browser
-activate Server
-Server->>Browser: JavaScript File
-deactivate Server
-activate Browser
 Note left of Browser: Execute JavaScript Code fetch data.json
 Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
 deactivate Browser
