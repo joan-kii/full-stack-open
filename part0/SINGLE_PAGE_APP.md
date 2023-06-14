@@ -1,16 +1,10 @@
-# New Note Diagram
+# Single Page App Diagram
 
 ```mermaid
 sequenceDiagram
 participant Browser
 participant Server
-Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
-activate Server
-Note right of Server: Server Update Notes { content: "joankii was here", date: "2023-06-13T02:57:39.158Z" }
-Server-->>Browser: Redirect https://studies.cs.helsinki.fi/exampleapp/notes
-deactivate Server
 activate Browser
-Note left of Browser: Code 302
 Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/notes
 deactivate Browser
 activate Server
@@ -23,10 +17,10 @@ activate Server
 Server-->>Browser: CSS File
 deactivate Server
 activate Browser
-Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
 deactivate Browser
 activate Server
-Server-->>Browser: JavaScript File
+Server-->>Browser: SPA JavaScript File
 deactivate Server
 activate Browser
 Note left of Browser: Execute JavaScript Code fetch data.json
