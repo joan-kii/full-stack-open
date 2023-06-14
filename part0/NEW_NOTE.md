@@ -7,8 +7,8 @@ participant Server
 Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
 activate Server
 Note right of Server: Server Update Notes
-Note right of Server: { content: "joankii was here",
-Note right of Server: date: "2023-06-13T02:57:39.158Z" }
+Note right of Server: Body Request content: "joankii was here",
+Note right of Server: date: "2023-06-13T02:57:39.158Z"
 Server-->>Browser: Redirect https://studies.cs.helsinki.fi/exampleapp/notes
 deactivate Server
 activate Browser
