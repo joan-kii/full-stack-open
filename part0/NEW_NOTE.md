@@ -6,7 +6,9 @@ participant Browser
 participant Server
 Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
 activate Server
-Note right of Server: Server Update Notes { content: "joankii was here", date: "2023-06-13T02:57:39.158Z" }
+Note right of Server: Server Update Notes
+Note right of Server: { content: "joankii was here",
+Note right of Server: date: "2023-06-13T02:57:39.158Z" }
 Server-->>Browser: Redirect https://studies.cs.helsinki.fi/exampleapp/notes
 deactivate Server
 activate Browser
@@ -36,6 +38,7 @@ activate Server
 Server-->>Browser: JSON File
 deactivate Server
 activate Browser
-Note left of Browser: Execute callback function and render the notes 
+Note left of Browser: Execute callback function
+Note left of Browser: Render the notes
 deactivate Browser
 ````
