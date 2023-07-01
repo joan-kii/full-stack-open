@@ -1,5 +1,11 @@
 import { useState } from "react"
 
+const Title = (props) => <h1>{props.text}</h1>
+
+const Paragraph = (props) => <p>{props.text}</p>
+
+const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>
+
 const App = () => {
 
   const anecdotes = [
@@ -25,23 +31,19 @@ const App = () => {
     let copy = [...points]
     copy[selected] += 1
     setPoints(copy)
-    getMostVoted()
-  }
-
-  const getMostVoted = () => {
-    console.log([Math.max(...points)])
-    setMostVoted(anecdotes[anecdotes.indexOf([Math.max(...points)])])
+    setMostVoted(anecdotes[copy.indexOf(Math.max(...copy))])
   }
   
   return (
     <>
-      <h1>Anecdote of the day</h1>
-      <p>{anecdotes[selected]}</p>
-      <p>Has {points[selected]} votes</p>
-      <button onClick={addPoint}>Vote</button>
-      <button onClick={getSelected}>Next anecdote</button>
-      <h2>Anecdote with most votes</h2>
-      <p>{mostVoted}</p>
+      <Title text="Anecdote of the day" />
+      <Paragraph text={anecdotes[selected]} />
+      <Paragraph text={`Has ${points[selected]} votes`} />
+      <Button handleClick={addPoint} text="Vote" />
+      <Button handleClick={getSelected} text="Next anecdote" />
+      <Title text="Anecdote with most votes" />
+      <Paragraph text={mostVoted} />
+      <Paragraph text={`Has ${points[anecdotes.indexOf(mostVoted)]} votes`} />
     </>
   )
 }
