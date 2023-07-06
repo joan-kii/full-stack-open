@@ -1,11 +1,20 @@
 const Persons = (props) => {
-  const {searchName, persons, filteredPersons} = props
+  const {
+    searchName, persons, 
+    filteredPersons , removePerson} = props
 
   return (
     <div>
       {searchName ? 
         persons.map(filteredPersons) : 
-        persons.map(person => <p key={person.id}>{person.name} {person.number}</p>)
+        persons.map(person => {
+          return (
+            <div key={person.id}>
+              <p>{person.name} {person.number}</p>
+              <button onClick={() => removePerson(person)}>Delete</button>
+            </div>
+          )
+        })
       }
     </div>
   )
