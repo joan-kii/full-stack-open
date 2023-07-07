@@ -45,11 +45,30 @@ const App = () => {
       name: newName,
       number: newNumber
     }
+    let currentId = 0
+    let alreadyExists = false
+    let isUpdatingNumber = false
 
-    const alreadyExists = persons.some(person => person.name === newPerson.name)
+    persons.forEach(person => {
+      if (person.name === newPerson.name && person.number === newPerson.number) {
+        alreadyExists = true
+      } else if ((person.name === newPerson.name && person.number !== newPerson.number)) {
+        isUpdatingNumber = true
+        currentId = person.id
+      }
+    })
 
     if (alreadyExists) {
       alert(`${newName} is already added to the phonebook`)
+    } else if (isUpdatingNumber) {
+      if (confirm(`${newName} is already added to the phonebook. Replace old number with a new one?`)) {
+        personService.update(currentId, newPerson)
+          .then(response => {
+            setPersons(persons.map(person => {
+              return person.id === response.data.id ? response.data : person
+            }))
+          })
+      }
     } else {
       personService.create(newPerson)
         .then(response => {
@@ -58,12 +77,12 @@ const App = () => {
     }
   }
 
-  const removePerson = (removedPerson) => {
-    if (confirm(`Do you want to delete ${removedPerson.name}?`)) {
-      personService.deletePerson(removedPerson.id)
-        .then(response => {
+  const deletePerson = (personToRemove) => {
+    if (confirm(`Do you want to delete ${personToRemove.name}?`)) {
+      personService.deletePerson(personToRemove.id)
+        .then(_ => {
           setPersons(persons.filter(person => {
-            return person.id !== removedPerson.id
+            return person.id !== personToRemove.id
           }))
         })
     }
@@ -82,7 +101,7 @@ const App = () => {
         searchName={searchName} 
         persons={persons} 
         filteredPersons={filteredPersons} 
-        removePerson={removePerson}
+        deletePerson={deletePerson}
       />
     </>
   )

@@ -1,7 +1,7 @@
 const Persons = (props) => {
   const {
     searchName, persons, 
-    filteredPersons , removePerson} = props
+    filteredPersons , deletePerson} = props
 
   return (
     <div>
@@ -11,7 +11,7 @@ const Persons = (props) => {
           return (
             <div key={person.id}>
               <p>{person.name} {person.number}</p>
-              <button onClick={() => removePerson(person)}>Delete</button>
+              <button onClick={() => deletePerson(person)}>Delete</button>
             </div>
           )
         })
