@@ -7,20 +7,20 @@ import countriesService from './servicies/countries'
 
 const App = () => {
 
-  const [country, setCountry] = useState('')
+  const [countryValue, setCountryValue] = useState('')
   const [countriesList, setCountriesList] = useState([])
   const [matchesList, setMatchesList] = useState([])
 
   
   useEffect(() => {
-    if (country) {
+    if (countryValue) {
       setMatchesList(countriesList.filter(item => {
-        if (item.name.common.toLowerCase().includes(country.toLowerCase())) {
+        if (item.name.common.toLowerCase().includes(countryValue.toLowerCase())) {
           return item
         }
       }))
     }
-  }, [country])
+  }, [countryValue])
 
   useEffect(() => {
     countriesService.getCountries()
@@ -30,13 +30,13 @@ const App = () => {
   }, [])
 
   const handleChange = (e) => {
-    setCountry(e.target.value)
+    setCountryValue(e.target.value)
   }
 
   return (
     <>
-      <InputSearch country={country} handleChange={handleChange} />
-      <Results matchesList={matchesList} />
+      <InputSearch countryValue={countryValue} handleChange={handleChange} />
+      <Results countryValue={countryValue} matchesList={matchesList} />
     </>
   )
 }

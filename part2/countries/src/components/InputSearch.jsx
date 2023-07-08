@@ -1,7 +1,7 @@
-const InputSearch = ({ country, handleChange }) => {
+const InputSearch = ({ countryValue, handleChange }) => {
   return (
     <div>
-      Find Countries: <input value={country} onChange={handleChange} />
+      Find Countries: <input value={countryValue} onChange={handleChange} />
     </div>
   )
 }
