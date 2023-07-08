@@ -63,11 +63,11 @@ const App = () => {
     })
 
     if (alreadyExists) {
-      setIsError(!isError)
+      setIsError(prevError => !prevError)
       setErrorMessage(`${newName} is already added to the phonebook`)
       setTimeout(() => {
+        setIsError(prevError => !prevError)
         setErrorMessage('')
-        setIsError(!isError)
       }, 5000)
     } else if (isUpdatingNumber) {
       if (confirm(`${newName} is already added to the phonebook. Replace old number with a new one?`)) {
@@ -81,9 +81,18 @@ const App = () => {
               setInfoMessage('')
             }, 5000)
           })
-      }
-    } else {
-      personService.create(newPerson)
+          .catch(() => {
+            setIsError(prevError => !prevError)
+            setErrorMessage(`Information of ${newName} has already been removed from server`)
+            setPersons(persons.filter(person => person.name !== newName))
+            setTimeout(() => {
+              setIsError(prevError => !prevError)
+              setErrorMessage('')
+            }, 5000)
+          })
+        }
+      } else {
+        personService.create(newPerson)
         .then(response => {
           setPersons(persons.concat(response.data))
           setInfoMessage(`Added ${response.data.name}`)
@@ -91,13 +100,13 @@ const App = () => {
             setInfoMessage('')
           }, 5000)
         })
+      }
     }
-  }
 
   const deletePerson = (personToRemove) => {
     if (confirm(`Do you want to delete ${personToRemove.name}?`)) {
       personService.deletePerson(personToRemove.id)
-        .then(_ => {
+        .then(() => {
           setPersons(persons.filter(person => {
             return person.id !== personToRemove.id
           }))
