@@ -27,6 +27,9 @@ const App = () => {
       .then((response) => {
         setCountriesList(response.data)
       })
+      .catch(err => {
+        console.log(err)
+      })
   }, [])
 
   const handleChange = (e) => {
