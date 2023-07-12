@@ -70,7 +70,7 @@ app.post('/api/persons', (request, response) => {
       number: body.number,
       id: Math.floor(Math.random() * 10000)
     }
-    persons.concat(newPerson)
+    persoms = persons.concat(newPerson)
     response.json(newPerson)
   }
 })
