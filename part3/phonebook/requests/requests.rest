@@ -26,3 +26,6 @@ Content-Type: application/json
   "name": "Arto Hellas",
   "number": "34-123456"
 }
+
+###
+GET https://fso-phonebook-wjnd.onrender.com/api/persons
