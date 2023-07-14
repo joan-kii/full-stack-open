@@ -41,7 +41,7 @@ let persons = [
   }
 ]
 
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
   Person.find({})
     .then(people => {
       const res = `<div><p>Phonebook has info for ${people.length} people</p><p>${Date()}</p></div>`
@@ -50,7 +50,7 @@ app.get('/info', (request, response) => {
     .catch(err => next(err))
 })
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
   Person.find({})
     .then(people => {
       response.send(people)
@@ -58,7 +58,7 @@ app.get('/api/persons', (request, response) => {
     .catch(err => next(err))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
   const personId = request.params.id
   Person.findById(personId)
     .then(person => {
@@ -67,7 +67,7 @@ app.get('/api/persons/:id', (request, response) => {
     .catch(err => next(err))
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   const personId = request.params.id
   Person.findByIdAndRemove(personId)
     .then(_ => {
@@ -76,7 +76,7 @@ app.delete('/api/persons/:id', (request, response) => {
     .catch(err => next(err))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
   if (!body.name || !body.number) {
     response.status(400).json({error: 'content missing'})
