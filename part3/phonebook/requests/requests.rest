@@ -4,9 +4,9 @@ DELETE https://fso-phonebook-wjnd.onrender.com/api/persons/2
 POST https://fso-phonebook-wjnd.onrender.com/api/persons HTTP/1.1
 Content-Type: application/json
 
-{
-  "name": "Joan Serrano",
-  "number": "34-123456"
+{ 
+  "name": "Liss Serrano", 
+  "number": "34-445323523"
 }
 
 ###
@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ###
-GET https://fso-phonebook-wjnd.onrender.com/api/persons
+GET https://fso-phonebook-wjnd.onrender.com/api/persons HTTP/1.1

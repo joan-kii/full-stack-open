@@ -1,9 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 
 const Person = require('./models/person')
-const { default: mongoose } = require('mongoose')
 
 const app = express()
 
@@ -15,22 +15,18 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :d
 
 let persons = [
   { 
-    "id": 1,
     "name": "Arto Hellas", 
     "number": "040-123456"
   },
   { 
-    "id": 2,
     "name": "Ada Lovelace", 
     "number": "39-44-5323523"
   },
   { 
-    "id": 3,
     "name": "Dan Abramov", 
     "number": "12-43-234345"
   },
   { 
-    "id": 4,
     "name": "Mary Poppendieck", 
     "number": "39-23-6423122"
   }
@@ -45,7 +41,6 @@ app.get('/info', (request, response) => {
     .catch(err => {
       console.log('Failed gettin people', err.message)
     })
-    .then(_ => mongoose.connection.close())
 })
 
 app.get('/api/persons', (request, response) => {
@@ -56,7 +51,6 @@ app.get('/api/persons', (request, response) => {
     .catch(err => {
       console.log('Failed gettin people', err.message)
     })
-    .then(_ => mongoose.connection.close())
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -69,7 +63,6 @@ app.get('/api/persons/:id', (request, response) => {
       console.log('No person with this id', err.message)
       response.status(500).end()
     })
-    .then(_ => mongoose.connection.close())
 })
 
 app.delete('/api/persons/:id', (request, response) => {
@@ -97,7 +90,6 @@ app.post('/api/persons', (request, response) => {
       .catch(err => {
         console.log('Fail saving new person', err.message)
       })
-      .then(_ => mongoose.connection.close())
   }
 })
 
