@@ -55,7 +55,7 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
   const personId = request.params.id
-  Person.findById({personId})
+  Person.findById(personId)
     .then(person => {
       response.send(person)
     })
