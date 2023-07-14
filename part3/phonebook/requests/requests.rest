@@ -29,3 +29,6 @@ Content-Type: application/json
 
 ###
 GET https://fso-phonebook-wjnd.onrender.com/api/persons HTTP/1.1
+
+###
+GET https://fso-phonebook-wjnd.onrender.com/api/persons/64b0be6dd7e92b8c9954f42c HTTP/1.1
