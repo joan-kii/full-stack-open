@@ -2,6 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 
+const Person = require('./models/person')
+const { default: mongoose } = require('mongoose')
+
 const app = express()
 
 app.use(express.static('dist'))
@@ -34,22 +37,39 @@ let persons = [
 ]
 
 app.get('/info', (request, response) => {
-  const res = `<div><p>Phonebook has info for ${persons.length} people</p><p>${Date()}</p></div>`
-  response.send(res)
+  Person.find({})
+    .then(people => {
+      const res = `<div><p>Phonebook has info for ${people.length} people</p><p>${Date()}</p></div>`
+      response.send(res)
+    })
+    .catch(err => {
+      console.log('Failed gettin people', err.message)
+    })
+    .then(_ => mongoose.connection.close())
 })
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({})
+    .then(people => {
+      response.send(people)
+    })
+    .catch(err => {
+      console.log('Failed gettin people', err.message)
+    })
+    .then(_ => mongoose.connection.close())
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-  if (person) {
-    response.json(person)
-  } else {
-    response.status(404).end()
-  }
+  const personId = Number(request.params.id)
+  Person.findById({personId})
+    .then(person => {
+      response.send(person)
+    })
+    .catch(err => {
+      console.log('No person with this id', err.message)
+      response.status(500).end()
+    })
+    .then(_ => mongoose.connection.close())
 })
 
 app.delete('/api/persons/:id', (request, response) => {
@@ -66,13 +86,18 @@ app.post('/api/persons', (request, response) => {
   } else if (persons.some(person => person.name === body.name)) {
     response.status(400).json({error: 'name must be unique'})
   } else {
-    const newPerson = {
+    const newPerson = new Person ({
       name: body.name, 
-      number: body.number,
-      id: Math.floor(Math.random() * 10000)
-    }
-    persons = persons.concat(newPerson)
-    response.json(newPerson)
+      number: body.number
+    })
+    newPerson.save()
+      .then(person => {
+        response.json(person)
+      })
+      .catch(err => {
+        console.log('Fail saving new person', err.message)
+      })
+      .then(_ => mongoose.connection.close())
   }
 })
 
