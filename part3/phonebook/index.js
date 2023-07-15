@@ -67,6 +67,15 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(err => next(err))
 })
 
+app.put('api/persons/', (request, response, next) => {
+  const body = request.body
+  Person.findOneAndUpdate(body.name, body.number)
+    .then(result => {
+
+    })
+    .catch(err => next(err))
+})
+
 app.delete('/api/persons/:id', (request, response, next) => {
   const personId = request.params.id
   Person.findByIdAndRemove(personId)
@@ -78,21 +87,27 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
+
   if (!body.name || !body.number) {
     response.status(400).json({error: 'content missing'})
-  } else if (persons.some(person => person.name === body.name)) {
-    response.status(400).json({error: 'name must be unique'})
-  } else {
-    const newPerson = new Person ({
-      name: body.name, 
-      number: body.number
-    })
-    newPerson.save()
-      .then(person => {
-        response.json(person)
-      })
-      .catch(err => next(err))
   }
+
+  Person.find({})
+    .then(people => {
+      if (people.some(person => person.name === body.name)) {
+        response.status(400).json({error: 'name must be unique'})
+      } else {
+        const newPerson = new Person ({
+          name: body.name, 
+          number: body.number
+        })
+        newPerson.save()
+          .then(person => {
+            response.json(person)
+          })
+          .catch(err => next(err))
+      }
+    }) 
 })
 
 app.use(errorHandler)
