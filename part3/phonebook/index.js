@@ -67,11 +67,11 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(err => next(err))
 })
 
-app.put('api/persons/', (request, response, next) => {
+app.put('api/persons', (request, response, next) => {
   const body = request.body
   Person.findOneAndUpdate(body.name, body.number)
-    .then(result => {
-
+    .then(person => {
+      response.send(person)
     })
     .catch(err => next(err))
 })
