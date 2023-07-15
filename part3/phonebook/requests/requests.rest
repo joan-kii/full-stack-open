@@ -34,7 +34,7 @@ GET https://fso-phonebook-wjnd.onrender.com/api/persons HTTP/1.1
 GET https://fso-phonebook-wjnd.onrender.com/api/persons/64b0be6dd7e92b8c9954f42r HTTP/1.1
 
 ###
-PUT https://fso-phonebook-wjnd.onrender.com/api/persons HTTP/1.1
+PUT https://fso-phonebook-wjnd.onrender.com/api/persons/64b0be6dd7e92b8c9954f42c HTTP/1.1
 Content-Type: application/json
 
 { 
