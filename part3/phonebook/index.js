@@ -86,7 +86,7 @@ app.post('/api/persons', (request, response, next) => {
           name: body.name, 
           number: body.number
         })
-        const numberValidation = newUser.validateSync()
+        const numberValidation = newPerson.validateSync()
         if (!numberValidation) {
           newPerson.save()
             .then(person => {
