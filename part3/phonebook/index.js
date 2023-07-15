@@ -50,7 +50,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.put('/api/persons/:id', (request, response, next) => {
   const personId = request.params.id
-  const number = request.body.numer
+  const number = request.body.number
   Person.findOneAndUpdate({id: personId}, {number: number}, {new: true})
     .then(person => {
       response.send(person)
