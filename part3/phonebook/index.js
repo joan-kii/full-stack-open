@@ -69,10 +69,8 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.put('api/persons', (request, response, next) => {
   const body = request.body
-  console.log(body);
   Person.findOneAndUpdate(body.name, body.number)
     .then(person => {
-      console.log(body.name, body.number);
       response.send(person)
     })
     .catch(err => next(err))
