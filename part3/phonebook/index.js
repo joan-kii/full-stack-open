@@ -51,7 +51,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 app.put('/api/persons/:id', (request, response, next) => {
   const personId = request.params.id
   const number = request.body.number
-  Person.findOneAndUpdate(personId, {number: number}, {new: true})
+  Person.findByIdAndUpdate(personId, {number: number}, {new: true})
     .then(person => {
       console.log(person);
       response.send(person)
