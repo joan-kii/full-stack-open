@@ -86,16 +86,16 @@ app.post('/api/persons', (request, response, next) => {
             name: body.name, 
             number: body.number
           })
-          const numberValidation = newPerson.validateSync()
-          if (!numberValidation) {
+          const validation = newPerson.validateSync()
+          if (!validation) {
             newPerson.save()
               .then(person => {
                 response.json(person)
               })
               .catch(err => next(err))
           } else {
-            console.log(numberValidation);
-            response.status(400).json({error: numberValidation.errors[0].message})
+            console.log(validation);
+            response.status(400).json({error: validation.errors.name?.number?.message})
           }
         }
       }) 
