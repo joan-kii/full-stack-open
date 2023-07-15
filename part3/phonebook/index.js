@@ -53,6 +53,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   const number = request.body.number
   Person.findOneAndUpdate({id: personId}, {number: number}, {new: true})
     .then(person => {
+      console.log(person);
       response.send(person)
     })
     .catch(err => next(err))
