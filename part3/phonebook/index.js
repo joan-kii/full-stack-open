@@ -76,28 +76,28 @@ app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
   Person.find({})
-  .then(people => {
-      if (!body.name || !body.number) {
-        response.status(400).json({error: 'content missing'})
-      } else if (people.some(person => person.name === body.name)) {
-        response.status(400).json({error: 'name must be unique'})
-      } else {
-        const newPerson = new Person ({
-          name: body.name, 
-          number: body.number
-        })
-        const numberValidation = newPerson.validateSync()
-        if (!numberValidation) {
-          newPerson.save()
-            .then(person => {
-              response.json(person)
-            })
-            .catch(err => next(err))
+    .then(people => {
+        if (!body.name || !body.number) {
+          response.status(400).json({error: 'content missing'})
+        } else if (people.some(person => person.name === body.name)) {
+          response.status(400).json({error: 'name must be unique'})
         } else {
-          response.status(400).json({error: numberValidation.errors.number.message})
+          const newPerson = new Person ({
+            name: body.name, 
+            number: body.number
+          })
+          const numberValidation = newPerson.validateSync()
+          if (!numberValidation) {
+            newPerson.save()
+              .then(person => {
+                response.json(person)
+              })
+              .catch(err => next(err))
+          } else {
+            response.status(400).json({error: numberValidation.errors[0].message})
+          }
         }
-      }
-    }) 
+      }) 
 })
 
 app.use(errorHandler)
