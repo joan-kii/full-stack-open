@@ -72,7 +72,7 @@ app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
   if (!body.name || !body.number) {
-    response.status(400).json({error: 'content missing'})
+    response.status(400).json({error: 'content missing'}).end()
   }
 
   Person.find({})
