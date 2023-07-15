@@ -48,7 +48,7 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(err => next(err))
 })
 
-app.put('api/persons', (request, response, next) => {
+app.put('/api/persons', (request, response, next) => {
   const body = request.body
   Person.findOneAndUpdate({name: body.name}, {number: body.number})
     .then(person => {
