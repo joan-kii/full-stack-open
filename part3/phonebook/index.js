@@ -94,6 +94,7 @@ app.post('/api/persons', (request, response, next) => {
               })
               .catch(err => next(err))
           } else {
+            console.log(numberValidation);
             response.status(400).json({error: numberValidation.errors[0].message})
           }
         }
