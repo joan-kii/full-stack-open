@@ -93,13 +93,22 @@ const App = () => {
         }
       } else {
         personService.create(newPerson)
-        .then(response => {
-          setPersons(persons.concat(response.data))
-          setInfoMessage(`Added ${response.data.name}`)
-          setTimeout(() => {
-            setInfoMessage('')
-          }, 5000)
-        })
+          .then(response => {
+            setPersons(persons.concat(response.data))
+            setInfoMessage(`Added ${response.data.name}`)
+            setTimeout(() => {
+              setInfoMessage('')
+            }, 5000)
+          })
+          .catch(err => {
+            console.log(err.response.data.error)
+            setIsError(prevError => !prevError)
+            setErrorMessage(err.response.data.error)
+            setTimeout(() => {
+              setIsError(prevError => !prevError)
+              setErrorMessage('')
+            }, 5000)
+          })
       }
     }
 
