@@ -36,7 +36,5 @@ module.exports = {
     'no-unused-vars': ['error',
       { destructuredArrayIgnorePattern: '^_', argsIgnorePattern: '^_' }],
     'consistent-return': 'error',
-    'import/no-extraneous-dependencies': [
-      'error', { dependencies: false }],
   },
 };
