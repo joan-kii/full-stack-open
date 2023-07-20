@@ -4,10 +4,10 @@ POST http://localhost:3001/api/blogs HTTP/1.1
 Content-Type: application/json
 
 { 
-  "title": "Second Blog",
+  "title": "First Blog",
   "author": "Joankii",
-  "url": "second-blog",
-  "likes": 2
+  "url": "first-blog",
+  "likes": 10
 }
 
 // Get blogs
