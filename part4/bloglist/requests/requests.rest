@@ -13,3 +13,7 @@ Content-Type: application/json
 // Get blogs
 ###
 GET http://localhost:3001/api/blogs HTTP/1.1
+
+// Get a blog by id
+###
+GET http://localhost:3001/api/blogs/64b9ee95f27eab02bff33f6b HTTP/1.1
