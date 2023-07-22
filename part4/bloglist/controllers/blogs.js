@@ -13,10 +13,10 @@ blogsRouter.get('/:id', async (request, response) => {
 });
 
 blogsRouter.post('/', async (request, response) => {
-  console.log(request.body);
   const blog = new Blog(request.body);
   const result = await blog.save();
-  response.status(201).send(result);
+  if (result) response.status(201).send(result);
+  response.status(400);
 });
 
 module.exports = blogsRouter;
