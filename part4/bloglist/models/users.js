@@ -1,27 +1,33 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const mongoose = require('mongoose');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const uniqueValidator = require('mongoose-unique-validator');
 
-const blogSchema = new mongoose.Schema({
-  title: {
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  name: {
     type: String,
     required: true,
   },
-  author: String,
-  url: {
+  passwordHash: {
     type: String,
     required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  blogs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Blog',
+    },
+  ],
 });
 
-blogSchema.set('toJSON', {
+userSchema.plugin(uniqueValidator);
+
+userSchema.set('toJSON', {
   transform: (_document, returnedObject) => {
     // eslint-disable-next-line no-param-reassign, no-underscore-dangle
     returnedObject.id = returnedObject._id.toString();
@@ -29,7 +35,9 @@ blogSchema.set('toJSON', {
     delete returnedObject._id;
     // eslint-disable-next-line no-underscore-dangle, no-param-reassign
     delete returnedObject.__v;
+    // eslint-disable-next-line no-param-reassign
+    delete returnedObject.passwordHash;
   },
 });
 
-module.exports = mongoose.model('Blog', blogSchema);
+module.exports = mongoose.model('User', userSchema);

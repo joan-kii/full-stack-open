@@ -12,12 +12,15 @@
   "author": "joankii",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "lodash": "^4.17.21",
-    "mongoose": "^7.3.4"
+    "mongoose": "^7.3.4",
+    "mongoose-unique-validator": "^4.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -29,6 +32,7 @@
     "supertest": "^6.3.3"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "globalTeardown": "./tests/teardown.js"
   }
 }
