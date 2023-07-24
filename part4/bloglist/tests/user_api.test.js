@@ -41,6 +41,79 @@ describe('when there is initially one user in db', () => {
   });
 });
 
+describe('invalid user is not created', () => {
+  test('username must be given', async () => {
+    const newUser = {
+      username: '',
+      name: 'Joan',
+      password: 'myPassword',
+    };
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+  });
+
+  test('password must be given', async () => {
+    const newUser = {
+      username: 'joankii',
+      name: 'Joan',
+      password: '',
+    };
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+  });
+
+  test('username length < 3', async () => {
+    const newUser = {
+      username: 'jo',
+      name: 'Joan',
+      password: 'myPassword',
+    };
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+  });
+
+  test('password length < 3', async () => {
+    const newUser = {
+      username: 'joankii',
+      name: 'Joan',
+      password: 'my',
+    };
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+  });
+
+  test('username is not unique', async () => {
+    const newUser = {
+      username: 'liss',
+      name: 'Liss Serrano',
+      password: 'myPassword',
+    };
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(201)
+      .expect('Content-Type', /application\/json/);
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+  });
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
