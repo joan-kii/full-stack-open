@@ -32,3 +32,43 @@ Content-Type: application/json
 // Get users
 ###
 GET http://localhost:3001/api/users HTTP/1.1
+
+// Login valid user
+###
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "liss",
+  "password": "sexyMami"
+}
+
+// Login invalid user
+###
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "liss",
+  "password": "isexyMam"
+}
+
+
+// Add authenticated blog
+###
+POST http://localhost:3001/api/blogs HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDI1NzA2NX0.bngyBPtPJcExdZszFk3ShHo1zVXgBB5rETvZ5qwiw-w
+
+{ 
+  "title": "Liss First Blog",
+  "author": "Liss",
+  "url": "liss-first-blog",
+  "likes": 1000
+}
+
+// Delete blog
+###
+DELETE http://localhost:3001/api/blogs/64bf46bdd7b1a43448eda45b HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDI1NzYwM30.Jqafh-hurI80Zy1WyKwN2fSTANVap0GDJrgaVczSKUo
