@@ -58,7 +58,7 @@ Content-Type: application/json
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDI1NzA2NX0.bngyBPtPJcExdZszFk3ShHo1zVXgBB5rETvZ5qwiw-w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDM0MDE1MH0.jrAYkJrlMSLIl999wZsO7xQRcSMRlPdYSoIiBBOnkVE
 
 { 
   "title": "Liss First Blog",
@@ -69,6 +69,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc
 
 // Delete blog
 ###
-DELETE http://localhost:3001/api/blogs/64bf46bdd7b1a43448eda45b HTTP/1.1
+DELETE http://localhost:3001/api/blogs/64c08bae78f02da6fa404418 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDI1NzYwM30.Jqafh-hurI80Zy1WyKwN2fSTANVap0GDJrgaVczSKUo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDM0MDE1MH0.jrAYkJrlMSLIl999wZsO7xQRcSMRlPdYSoIiBBOnkVE
