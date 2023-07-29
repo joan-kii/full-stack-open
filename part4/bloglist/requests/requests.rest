@@ -1,18 +1,21 @@
 // Add blog
 ###
-POST http://localhost:3001/api/blogs HTTP/1.1
+POST http://localhost:3003/api/blogs HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDYwMjc5NX0.2uk6SNqVYVwbrmj-n7U9-UsoaXflUb3-AjllMzAceFI
 
 { 
-  "title": "First Blog",
-  "author": "Joankii",
-  "url": "first-blog",
-  "likes": 10
+  "title": "This is my Second Blog",
+  "author": "Liss Serrano",
+  "url": "second-blog",
+  "likes": 16
 }
 
 // Get blogs
 ###
-GET http://localhost:3001/api/blogs HTTP/1.1
+GET http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc3MiLCJpZCI6IjY0YmRmNGZlOWQ4MWExYmM0NTIyMzk4YiIsImlhdCI6MTY5MDYwMjc5NX0.2uk6SNqVYVwbrmj-n7U9-UsoaXflUb3-AjllMzAceFI
 
 // Get a blog by id
 ###
@@ -35,7 +38,7 @@ GET http://localhost:3001/api/users HTTP/1.1
 
 // Login valid user
 ###
-POST http://localhost:3001/api/login HTTP/1.1
+POST http://localhost:3003/api/login HTTP/1.1
 Content-Type: application/json
 
 {

@@ -7,7 +7,7 @@ const User = require('../models/users');
 loginRouter.post('/', async (request, response) => {
   const { username, password } = request.body;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username }).populate('blogs', { title: 1, author: 1 });
   const passwordCorrect = user === null
     ? false
     : await bycript.compare(password, user.passwordHash);
@@ -28,7 +28,12 @@ loginRouter.post('/', async (request, response) => {
 
   response
     .status(200)
-    .send({ token, username: user.username, name: user.name });
+    .send({
+      token,
+      username: user.username,
+      name: user.name,
+      blogs: user.blogs,
+    });
   return null;
 });
 
