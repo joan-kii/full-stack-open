@@ -28,6 +28,7 @@ module.exports = {
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'react/display-name': 0,
     'react/forbid-prop-types': 0,
+    'react/jsx-one-expression-per-line': 0,
     'react/jsx-boolean-value': 1,
     'react/jsx-closing-bracket-location': 1,
     'react/jsx-curly-spacing': 1,
