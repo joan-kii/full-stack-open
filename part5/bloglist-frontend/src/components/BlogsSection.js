@@ -7,6 +7,9 @@ const BlogsSection = ({
   setUser,
   blogs,
   setBlogs,
+  setErromessage,
+  setInfoMessage,
+  setIsError,
 }) => {
   const handleLogout = () => {
     loginService.handleLogout();
@@ -18,7 +21,14 @@ const BlogsSection = ({
       <h1>Blogs</h1>
       <h4>{user.name} logged in</h4>
       <button type="button" onClick={handleLogout}>Logout</button>
-      <NewBlogSection user={user} blogs={blogs} setBlogs={setBlogs} />
+      <NewBlogSection
+        user={user}
+        blogs={blogs}
+        setBlogs={setBlogs}
+        setInfoMessage={setInfoMessage}
+        setErrorMessage={setErromessage}
+        setIsError={setIsError}
+      />
       {blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
     </>
   );

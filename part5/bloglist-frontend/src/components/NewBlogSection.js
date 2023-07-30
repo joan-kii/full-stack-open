@@ -2,7 +2,9 @@ import { useState } from 'react';
 
 import blogService from '../services/blogs';
 
-const NewBlogSection = ({ blogs, setBlogs }) => {
+const NewBlogSection = ({
+  blogs, setBlogs, setErrorMessage, setInfoMessage, setIsError,
+}) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -14,11 +16,24 @@ const NewBlogSection = ({ blogs, setBlogs }) => {
       author,
       url,
     };
-    const savedBlog = await blogService.createBlog(newBlog);
-    setBlogs(blogs.concat(savedBlog));
-    setTitle('');
-    setAuthor('');
-    setUrl('');
+    try {
+      const savedBlog = await blogService.createBlog(newBlog);
+      setInfoMessage(`A new blog ${savedBlog.title} by ${savedBlog.author} added!`);
+      setBlogs(blogs.concat(savedBlog));
+      setTitle('');
+      setAuthor('');
+      setUrl('');
+      setTimeout(() => {
+        setInfoMessage('');
+      }, 5000);
+    } catch (error) {
+      setIsError((prev) => !prev);
+      setErrorMessage('Something went wrong...');
+      setTimeout(() => {
+        setIsError((prev) => !prev);
+        setErrorMessage('');
+      }, 5000);
+    }
   };
 
   return (

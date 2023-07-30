@@ -3,7 +3,9 @@ import { useState } from 'react';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
 
-const LoginSection = ({ setUser, setErrorMessage, setBlogs }) => {
+const LoginSection = ({
+  setUser, setBlogs, setErrorMessage, setInfoMessage, setIsError,
+}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,14 +15,20 @@ const LoginSection = ({ setUser, setErrorMessage, setBlogs }) => {
       const loggedUser = await loginService.login({ username, password });
       setUser(loggedUser);
       setBlogs(loggedUser.blogs);
+      setInfoMessage(`${loggedUser.name} is logged!`);
       localStorage.setItem('user', JSON.stringify(loggedUser));
       blogService.setToken(loggedUser.token);
       setUsername('');
       setPassword('');
-    } catch (error) {
-      setErrorMessage('Wrong Credentials');
       setTimeout(() => {
-        setErrorMessage(null);
+        setInfoMessage('');
+      }, 5000);
+    } catch (error) {
+      setIsError((prev) => !prev);
+      setErrorMessage('Wrong Username or Password');
+      setTimeout(() => {
+        setIsError((prev) => !prev);
+        setErrorMessage('');
       }, 5000);
     }
   };
