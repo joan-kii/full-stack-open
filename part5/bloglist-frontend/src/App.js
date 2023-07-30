@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import BlogsSection from './components/BlogsSection';
+import NewBlogSection from './components/NewBlogSection';
 import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
 
@@ -10,6 +11,7 @@ const App = () => {
   const [infoMessage, setInfoMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const [user, setUser] = useState(null);
+  const [createBlogVisible, setCreateBlogVisible] = useState(false);
 
   useEffect(() => {
     const loggedUser = localStorage.getItem('user');
@@ -29,11 +31,20 @@ const App = () => {
             user={user}
             setUser={setUser}
             blogs={blogs}
-            setBlogs={setBlogs}
-            setErrorMessage={setErrorMessage}
-            setInfoMessage={setInfoMessage}
-            setIsError={setIsError}
-          />
+            createBlogVisible={createBlogVisible}
+            setCreateBlogVisible={setCreateBlogVisible}
+          >
+            {createBlogVisible && (
+              <NewBlogSection
+                blogs={blogs}
+                setBlogs={setBlogs}
+                setErrorMessage={setErrorMessage}
+                setInfoMessage={setInfoMessage}
+                setIsError={setIsError}
+                setCreateBlogVisible={setCreateBlogVisible}
+              />
+            )}
+          </BlogsSection>
         )
         : (
           <LoginSection
