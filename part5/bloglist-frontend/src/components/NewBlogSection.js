@@ -3,7 +3,7 @@ import { useState } from 'react';
 import blogService from '../services/blogs';
 
 const NewBlogSection = ({
-  blogs, setBlogs, setErrorMessage, setInfoMessage, setIsError, setCreateBlogVisible,
+  setInfoMessage, blogs, setBlogs, setIsError, setErrorMessage,
 }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -23,7 +23,6 @@ const NewBlogSection = ({
       setTitle('');
       setAuthor('');
       setUrl('');
-      setCreateBlogVisible((prev) => !prev);
       setTimeout(() => {
         setInfoMessage('');
       }, 5000);

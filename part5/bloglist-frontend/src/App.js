@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import BlogsSection from './components/BlogsSection';
 import NewBlogSection from './components/NewBlogSection';
+import Toggable from './components/Toggable';
 import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
 
@@ -11,7 +12,6 @@ const App = () => {
   const [infoMessage, setInfoMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const [user, setUser] = useState(null);
-  const [createBlogVisible, setCreateBlogVisible] = useState(false);
 
   useEffect(() => {
     const loggedUser = localStorage.getItem('user');
@@ -26,27 +26,21 @@ const App = () => {
       {errorMessage && <Notification message={errorMessage} isError={isError} />}
       {infoMessage && <Notification message={infoMessage} isError={isError} />}
       {user
-        ? (
-          <BlogsSection
-            user={user}
-            setUser={setUser}
-            blogs={blogs}
-            createBlogVisible={createBlogVisible}
-            setCreateBlogVisible={setCreateBlogVisible}
-          >
-            {createBlogVisible && (
+        && (
+          <BlogsSection user={user} setUser={setUser} blogs={blogs}>
+            <Toggable buttonLabel="Create New Blog">
               <NewBlogSection
+                setInfoMessage={setInfoMessage}
                 blogs={blogs}
                 setBlogs={setBlogs}
-                setErrorMessage={setErrorMessage}
-                setInfoMessage={setInfoMessage}
                 setIsError={setIsError}
-                setCreateBlogVisible={setCreateBlogVisible}
+                setErrorMessage={setErrorMessage}
               />
-            )}
+            </Toggable>
           </BlogsSection>
-        )
-        : (
+        )}
+      {!user
+        && (
           <LoginSection
             setUser={setUser}
             setBlogs={setBlogs}
