@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import blogService from '../services/blogs';
 
-const NewBlogSection = ({
-  setInfoMessage, blogs, setBlogs, setIsError, setErrorMessage,
+const BlogForm = ({
+  setInfoMessage, blogs, setBlogs, setIsError, setErrorMessage, toggleVisibility,
 }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -23,6 +23,7 @@ const NewBlogSection = ({
       setTitle('');
       setAuthor('');
       setUrl('');
+      toggleVisibility();
       setTimeout(() => {
         setInfoMessage('');
       }, 5000);
@@ -68,4 +69,4 @@ const NewBlogSection = ({
   );
 };
 
-export default NewBlogSection;
+export default BlogForm;
