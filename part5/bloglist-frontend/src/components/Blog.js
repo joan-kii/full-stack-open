@@ -1,7 +1,9 @@
 import Toggable from './Toggable';
 import BlogDetails from './BlogDetails';
 
-const Blog = ({ blog }) => {
+const Blog = ({
+  blog, user, blogs, setBlogs,
+}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -13,7 +15,7 @@ const Blog = ({ blog }) => {
     <div style={blogStyle}>
       <p>{blog.title} {blog.author}</p>
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
-        <BlogDetails blog={blog} />
+        <BlogDetails blog={blog} user={user} blogs={blogs} setBlogs={setBlogs} />
       </Toggable>
     </div>
   );

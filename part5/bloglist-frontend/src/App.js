@@ -27,7 +27,7 @@ const App = () => {
       {infoMessage && <Notification message={infoMessage} isError={isError} />}
       {user
         && (
-          <BlogsSection user={user} setUser={setUser} blogs={blogs}>
+          <BlogsSection user={user} setUser={setUser} blogs={blogs} setBlogs={setBlogs}>
             <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
               <BlogForm
                 setInfoMessage={setInfoMessage}
