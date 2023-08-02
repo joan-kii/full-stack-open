@@ -35,6 +35,7 @@ loginRouter.post('/', async (request, response) => {
       username: user.username,
       name: user.name,
       blogs: user.blogs,
+      id: user.id,
     });
   return null;
 });
