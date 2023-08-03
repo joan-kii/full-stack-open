@@ -14,10 +14,11 @@ const LoginSection = ({
     try {
       const loggedUser = await loginService.login({ username, password });
       setUser(loggedUser);
-      setBlogs(loggedUser.blogs);
+      blogService.setToken(loggedUser.token);
+      const blogsList = await blogService.getAll();
+      setBlogs(blogsList);
       setInfoMessage(`${loggedUser.name} is logged!`);
       localStorage.setItem('user', JSON.stringify(loggedUser));
-      blogService.setToken(loggedUser.token);
       setUsername('');
       setPassword('');
       setTimeout(() => {

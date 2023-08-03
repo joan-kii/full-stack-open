@@ -13,13 +13,14 @@ const BlogDetails = (props) => {
     const response = await blogService.updateLikes(updatedBlog);
     setBlogs(blogs.map((b) => (b.id === blog.id ? response : b)));
   };
+
   return (
     <div>
-      <p>https://mystuff.com/{blog.url}</p>
+      <p>{blog.url}</p>
       <div>
         <p>Likes: {blog.likes} <button type="button" onClick={handleLikes}>Like</button></p>
       </div>
-      <p>{user.name}</p>
+      <p>{blog.user.name}</p>
     </div>
   );
 };

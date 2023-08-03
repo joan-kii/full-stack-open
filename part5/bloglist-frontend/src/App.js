@@ -5,6 +5,7 @@ import BlogForm from './components/BlogForm';
 import Toggable from './components/Toggable';
 import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
+import blogService from './services/blogs';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -17,8 +18,13 @@ const App = () => {
     const loggedUser = localStorage.getItem('user');
     if (loggedUser) {
       setUser(JSON.parse(loggedUser));
-      setBlogs(JSON.parse(loggedUser).blogs);
+      blogService.setToken(JSON.parse(loggedUser).token);
     }
+    async function getBlogs() {
+      const response = await blogService.getAll();
+      setBlogs(response);
+    }
+    getBlogs();
   }, []);
 
   return (
