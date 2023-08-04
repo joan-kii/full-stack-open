@@ -20,8 +20,9 @@ blogsRouter.post('/', async (request, response) => {
     user: user.id,
   });
   const result = await blog.save();
-  if (result) {
-    response.status(201).send(result);
+  const blogToSend = await Blog.findById(result.id).populate('user', { username: 1, name: 1, id: 1 });
+  if (blogToSend) {
+    response.status(201).send(blogToSend);
     // eslint-disable-next-line no-underscore-dangle
     user.blogs = user.blogs.concat(result._id);
     await user.save();
@@ -34,6 +35,7 @@ blogsRouter.post('/', async (request, response) => {
 blogsRouter.delete('/:id', async (request, response) => {
   const blog = await Blog.findById(request.params.id);
   if (request.user.id === blog.user.toString()) {
+    await User.findByIdAndUpdate(request.user.id, { $pull: { blogs: request.params.id } });
     await Blog.findByIdAndRemove(blog.id);
     response.status(200).send(blog);
   } else {
