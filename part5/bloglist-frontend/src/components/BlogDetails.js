@@ -2,8 +2,9 @@ import blogService from '../services/blogs';
 
 const BlogDetails = (props) => {
   const {
-    blog, user, blogs, setBlogs,
+    blog, user, blogs, setBlogs, handleRemove,
   } = props;
+
   const handleLikes = async () => {
     const updatedBlog = {
       ...blog,
@@ -21,6 +22,7 @@ const BlogDetails = (props) => {
         <p>Likes: {blog.likes} <button type="button" onClick={handleLikes}>Like</button></p>
       </div>
       <p>{blog.user.name}</p>
+      {blog.user.id === user.id && <button type="button" onClick={() => handleRemove(blog)}>Remove</button>}
     </div>
   );
 };

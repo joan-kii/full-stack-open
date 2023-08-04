@@ -26,8 +26,8 @@ const Toggable = ({
         <button type="button" onClick={toggleVisibility}>{showButtonLabel}</button>
       </div>
       <div style={showComponent}>
-        {childrenWithToggle}
         <button type="button" onClick={toggleVisibility}>{hideButtonLabel}</button>
+        {childrenWithToggle}
       </div>
     </div>
   );

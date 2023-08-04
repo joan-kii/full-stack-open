@@ -28,12 +28,20 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <>
       {errorMessage && <Notification message={errorMessage} isError={isError} />}
       {infoMessage && <Notification message={infoMessage} isError={isError} />}
       {user
         && (
-          <BlogsSection user={user} setUser={setUser} blogs={blogs} setBlogs={setBlogs}>
+          <BlogsSection
+            user={user}
+            setUser={setUser}
+            blogs={blogs}
+            setBlogs={setBlogs}
+            setInfoMessage={setInfoMessage}
+            setIsError={setIsError}
+            setErrorMessage={setErrorMessage}
+          >
             <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
               <BlogForm
                 setInfoMessage={setInfoMessage}
@@ -55,7 +63,7 @@ const App = () => {
             setIsError={setIsError}
           />
         )}
-    </div>
+    </>
   );
 };
 
