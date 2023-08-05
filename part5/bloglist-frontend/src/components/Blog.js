@@ -15,7 +15,7 @@ const Blog = ({
     marginBottom: 5,
   };
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <p>{blog.title} by {blog.author}</p>
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
         <BlogDetails
