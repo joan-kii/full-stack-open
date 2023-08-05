@@ -15,16 +15,16 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const loggedUser = localStorage.getItem('user');
-    if (loggedUser) {
-      setUser(JSON.parse(loggedUser));
-      blogService.setToken(JSON.parse(loggedUser).token);
-    }
     async function getBlogs() {
       const response = await blogService.getAll();
       setBlogs(response);
     }
-    getBlogs();
+    const loggedUser = localStorage.getItem('user');
+    if (loggedUser) {
+      setUser(JSON.parse(loggedUser));
+      blogService.setToken(JSON.parse(loggedUser).token);
+      getBlogs();
+    }
   }, []);
 
   return (

@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
+
 import Toggable from './Toggable';
 import BlogDetails from './BlogDetails';
 
@@ -13,7 +16,7 @@ const Blog = ({
   };
   return (
     <div style={blogStyle}>
-      <p>{blog.title} {blog.author}</p>
+      <p>{blog.title} by {blog.author}</p>
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
         <BlogDetails
           blog={blog}
@@ -27,6 +30,16 @@ const Blog = ({
       </Toggable>
     </div>
   );
+};
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  blogs: PropTypes.array.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setInfoMessage: PropTypes.func.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
+  setIsError: PropTypes.func.isRequired,
 };
 
 export default Blog;

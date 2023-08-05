@@ -1,5 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
 import {
-  isValidElement, cloneElement, Children, useState,
+  cloneElement, Children, useState,
 } from 'react';
 
 const Toggable = ({
@@ -13,12 +15,8 @@ const Toggable = ({
     setIsVisible(!isVisible);
   };
 
-  const childrenWithToggle = Children.map(children, (child) => {
-    if (isValidElement(child)) {
-      return cloneElement(child, { toggleVisibility });
-    }
-    return child;
-  });
+  // eslint-disable-next-line max-len
+  const childrenWithToggle = Children.map(children, (child) => cloneElement(child, { toggleVisibility }));
 
   return (
     <div>
@@ -31,6 +29,11 @@ const Toggable = ({
       </div>
     </div>
   );
+};
+
+Toggable.propTypes = {
+  showButtonLabel: PropTypes.string.isRequired,
+  hideButtonLabel: PropTypes.string.isRequired,
 };
 
 export default Toggable;

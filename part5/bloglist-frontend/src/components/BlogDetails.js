@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
+
 import blogService from '../services/blogs';
 
 const BlogDetails = (props) => {
@@ -47,6 +50,16 @@ const BlogDetails = (props) => {
       {blog.user.id === user.id && <button type="button" onClick={handleRemove}>Remove</button>}
     </div>
   );
+};
+
+BlogDetails.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  blogs: PropTypes.array.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setInfoMessage: PropTypes.func.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
+  setIsError: PropTypes.func.isRequired,
 };
 
 export default BlogDetails;

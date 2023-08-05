@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
+
 import Blog from './Blog';
 import loginService from '../services/login';
 
@@ -34,6 +37,16 @@ const BlogsSection = ({
       </div>
     </>
   );
+};
+
+BlogsSection.propTypes = {
+  user: PropTypes.object.isRequired,
+  blogs: PropTypes.array.isRequired,
+  setUser: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setInfoMessage: PropTypes.func.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
+  setIsError: PropTypes.func.isRequired,
 };
 
 export default BlogsSection;

@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import blogService from '../services/blogs';
@@ -67,6 +69,14 @@ const BlogForm = ({
       <button type="submit">Create Blog</button>
     </form>
   );
+};
+
+BlogForm.propTypes = {
+  blogs: PropTypes.array.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setInfoMessage: PropTypes.func.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
+  setIsError: PropTypes.func.isRequired,
 };
 
 export default BlogForm;
