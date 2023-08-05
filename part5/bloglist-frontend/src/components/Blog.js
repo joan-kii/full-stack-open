@@ -2,7 +2,7 @@ import Toggable from './Toggable';
 import BlogDetails from './BlogDetails';
 
 const Blog = ({
-  blog, user, blogs, setBlogs, handleRemove,
+  blog, user, blogs, setBlogs, setInfoMessage, setErrorMessage, setIsError,
 }) => {
   const blogStyle = {
     paddingTop: 10,
@@ -20,7 +20,9 @@ const Blog = ({
           user={user}
           blogs={blogs}
           setBlogs={setBlogs}
-          handleRemove={handleRemove}
+          setInfoMessage={setInfoMessage}
+          setErrorMessage={setErrorMessage}
+          setIsError={setIsError}
         />
       </Toggable>
     </div>
