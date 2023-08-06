@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Toggable from './Toggable';
 import BlogDetails from './BlogDetails';
+import blogService from '../services/blogs';
 
 const Blog = ({
   blog, user, blogs, setBlogs, setInfoMessage, setErrorMessage, setIsError,
@@ -14,6 +15,39 @@ const Blog = ({
     borderWidth: 1,
     marginBottom: 5,
   };
+
+  const handleLikes = async () => {
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+      user: user.id,
+    };
+    const response = await blogService.updateLikes(updatedBlog);
+    setBlogs(blogs.map((b) => (b.id === blog.id ? response : b)));
+  };
+
+  const handleRemove = async () => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      try {
+        const response = await blogService.removeBlog(blog.id);
+        blogs.splice(blogs.indexOf(blog), 1);
+        setBlogs(blogs);
+        setInfoMessage(`The blog ${response.title} by ${response.author} was removed!`);
+        setTimeout(() => {
+          setInfoMessage('');
+        }, 5000);
+      } catch (error) {
+        setIsError((prev) => !prev);
+        setErrorMessage('Something went wrong...');
+        setTimeout(() => {
+          setIsError((prev) => !prev);
+          setErrorMessage('');
+        }, 5000);
+      }
+    }
+  };
+
   return (
     <div style={blogStyle} className="blog">
       <p>{blog.title} by {blog.author}</p>
@@ -21,11 +55,8 @@ const Blog = ({
         <BlogDetails
           blog={blog}
           user={user}
-          blogs={blogs}
-          setBlogs={setBlogs}
-          setInfoMessage={setInfoMessage}
-          setErrorMessage={setErrorMessage}
-          setIsError={setIsError}
+          handleLikes={handleLikes}
+          handleRemove={handleRemove}
         />
       </Toggable>
     </div>

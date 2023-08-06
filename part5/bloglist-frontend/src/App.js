@@ -27,6 +27,24 @@ const App = () => {
     }
   }, []);
 
+  const addBlog = async (blog) => {
+    try {
+      const savedBlog = await blogService.createBlog(blog);
+      setInfoMessage(`A new blog ${savedBlog.title} by ${savedBlog.author} added!`);
+      setBlogs(blogs.concat(savedBlog));
+      setTimeout(() => {
+        setInfoMessage('');
+      }, 5000);
+    } catch (error) {
+      setIsError((prev) => !prev);
+      setErrorMessage('Something went wrong...');
+      setTimeout(() => {
+        setIsError((prev) => !prev);
+        setErrorMessage('');
+      }, 5000);
+    }
+  };
+
   return (
     <>
       {errorMessage && <Notification message={errorMessage} isError={isError} />}
@@ -43,13 +61,7 @@ const App = () => {
             setErrorMessage={setErrorMessage}
           >
             <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
-              <BlogForm
-                setInfoMessage={setInfoMessage}
-                blogs={blogs}
-                setBlogs={setBlogs}
-                setIsError={setIsError}
-                setErrorMessage={setErrorMessage}
-              />
+              <BlogForm addBlog={addBlog} />
             </Toggable>
           </BlogsSection>
         )}

@@ -2,10 +2,8 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-import blogService from '../services/blogs';
-
 const BlogForm = ({
-  setInfoMessage, blogs, setBlogs, setIsError, setErrorMessage, toggleVisibility,
+  addBlog, toggleVisibility,
 }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -13,30 +11,11 @@ const BlogForm = ({
 
   const handleCreate = async (event) => {
     event.preventDefault();
-    const newBlog = {
-      title,
-      author,
-      url,
-    };
-    try {
-      const savedBlog = await blogService.createBlog(newBlog);
-      setInfoMessage(`A new blog ${savedBlog.title} by ${savedBlog.author} added!`);
-      setBlogs(blogs.concat(savedBlog));
-      setTitle('');
-      setAuthor('');
-      setUrl('');
-      toggleVisibility();
-      setTimeout(() => {
-        setInfoMessage('');
-      }, 5000);
-    } catch (error) {
-      setIsError((prev) => !prev);
-      setErrorMessage('Something went wrong...');
-      setTimeout(() => {
-        setIsError((prev) => !prev);
-        setErrorMessage('');
-      }, 5000);
-    }
+    await addBlog({ title, author, url });
+    setTitle('');
+    setAuthor('');
+    setUrl('');
+    toggleVisibility();
   };
 
   return (
@@ -72,11 +51,7 @@ const BlogForm = ({
 };
 
 BlogForm.propTypes = {
-  blogs: PropTypes.array.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-  setIsError: PropTypes.func.isRequired,
+  addBlog: PropTypes.func.isRequired,
 };
 
 export default BlogForm;

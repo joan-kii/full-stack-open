@@ -1,53 +1,19 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 
-import blogService from '../services/blogs';
-
 const BlogDetails = (props) => {
   const {
-    blog, user, blogs, setBlogs, setInfoMessage, setErrorMessage, setIsError,
+    blog, user, handleLikes, handleRemove,
   } = props;
-
-  const handleLikes = async () => {
-    const updatedBlog = {
-      ...blog,
-      likes: blog.likes + 1,
-      user: user.id,
-    };
-    const response = await blogService.updateLikes(updatedBlog);
-    setBlogs(blogs.map((b) => (b.id === blog.id ? response : b)));
-  };
-
-  const handleRemove = async () => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      try {
-        const response = await blogService.removeBlog(blog.id);
-        blogs.splice(blogs.indexOf(blog), 1);
-        setBlogs(blogs);
-        setInfoMessage(`The blog ${response.title} by ${response.author} was removed!`);
-        setTimeout(() => {
-          setInfoMessage('');
-        }, 5000);
-      } catch (error) {
-        setIsError((prev) => !prev);
-        setErrorMessage('Something went wrong...');
-        setTimeout(() => {
-          setIsError((prev) => !prev);
-          setErrorMessage('');
-        }, 5000);
-      }
-    }
-  };
 
   return (
     <div>
       <p>{blog.url}</p>
       <div>
-        <p>Likes: {blog.likes} <button type="button" onClick={handleLikes}>Like</button></p>
+        <p>Likes: {blog.likes} <button type="button" onClick={() => handleLikes()}>Like</button></p>
       </div>
       <p>{blog.user.name}</p>
-      {blog.user.id === user.id && <button type="button" onClick={handleRemove}>Remove</button>}
+      {blog.user.id === user.id && <button type="button" onClick={() => handleRemove()}>Remove</button>}
     </div>
   );
 };
@@ -55,11 +21,8 @@ const BlogDetails = (props) => {
 BlogDetails.propTypes = {
   blog: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  blogs: PropTypes.array.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-  setIsError: PropTypes.func.isRequired,
+  handleLikes: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
 };
 
 export default BlogDetails;
