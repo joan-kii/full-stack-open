@@ -10,10 +10,10 @@ const BlogDetails = (props) => {
     <div>
       <p>{blog.url}</p>
       <div>
-        <p>Likes: {blog.likes} <button type="button" onClick={() => handleLikes()}>Like</button></p>
+        <p id="likes">Likes: {blog.likes} <button id="like-btn" type="button" onClick={() => handleLikes()}>Like</button></p>
       </div>
       <p>{blog.user.name}</p>
-      {blog.user.id === user.id && <button type="button" onClick={() => handleRemove()}>Remove</button>}
+      {blog.user.id === user.id && <button id="remove-btn" type="button" onClick={() => handleRemove()}>Remove</button>}
     </div>
   );
 };

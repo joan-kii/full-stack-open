@@ -21,10 +21,10 @@ const Toggable = ({
   return (
     <div>
       <div style={hideComponent}>
-        <button type="button" onClick={toggleVisibility}>{showButtonLabel}</button>
+        <button id="toggable-show" type="button" onClick={toggleVisibility}>{showButtonLabel}</button>
       </div>
       <div style={showComponent}>
-        <button type="button" onClick={toggleVisibility}>{hideButtonLabel}</button>
+        <button id="toggable-hide" type="button" onClick={toggleVisibility}>{hideButtonLabel}</button>
         {childrenWithToggle}
       </div>
     </div>
