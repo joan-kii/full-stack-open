@@ -57,7 +57,7 @@ const LoginSection = ({
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit" id="login-button">Login</button>
+      <button type="submit" id="login-btn">Login</button>
     </form>
   );
 };

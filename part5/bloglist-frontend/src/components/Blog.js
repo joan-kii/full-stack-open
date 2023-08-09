@@ -20,10 +20,18 @@ const Blog = ({
     const updatedBlog = {
       ...blog,
       likes: blog.likes + 1,
-      user: user.id,
     };
-    const response = await blogService.updateLikes(updatedBlog);
-    setBlogs(blogs.map((b) => (b.id === blog.id ? response : b)));
+    try {
+      await blogService.updateLikes(updatedBlog);
+      setBlogs(blogs.map((b) => (b.id === blog.id ? updatedBlog : b)));
+    } catch (_error) {
+      setIsError((prev) => !prev);
+      setErrorMessage('Something went wrong...');
+      setTimeout(() => {
+        setIsError((prev) => !prev);
+        setErrorMessage('');
+      }, 5000);
+    }
   };
 
   const handleRemove = async () => {
@@ -37,7 +45,7 @@ const Blog = ({
         setTimeout(() => {
           setInfoMessage('');
         }, 5000);
-      } catch (error) {
+      } catch (_error) {
         setIsError((prev) => !prev);
         setErrorMessage('Something went wrong...');
         setTimeout(() => {
@@ -48,8 +56,10 @@ const Blog = ({
     }
   };
 
+  const blogId = blog.title.toLowerCase().split(' ').join('-');
+
   return (
-    <div style={blogStyle} className="blog">
+    <div id={blogId} style={blogStyle} className="blog">
       <p>{blog.title} by {blog.author}</p>
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
         <BlogDetails

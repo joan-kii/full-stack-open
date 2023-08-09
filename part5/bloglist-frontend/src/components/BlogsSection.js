@@ -18,7 +18,7 @@ const BlogsSection = ({
       <div>
         <h1>Blogs</h1>
         <h4>{user.name} logged in</h4>
-        <button type="button" onClick={handleLogout}>Logout</button>
+        <button id="logout-btn" type="button" onClick={handleLogout}>Logout</button>
       </div>
       <div>
         {children}
