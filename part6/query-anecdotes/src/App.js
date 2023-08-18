@@ -18,6 +18,9 @@ const App = () => {
   const handleVote = (anecdote) => {
     dispatch({type: 'VOTE', payload: anecdote.content})
     updateAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
+    setTimeout(() => {
+      dispatch({})
+    }, 5000)
   }
 
   const getAnecdotes = useQuery('anecdotes', getData, { 

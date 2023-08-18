@@ -1,17 +1,15 @@
 import { createContext, useReducer, useContext } from 'react'
 
 const notificationReducer = (state, action) => {
-  // seguir aquí (setTimeout)
   switch (action.type) {
     case 'CREATION':
-      state = `You have created a new anecdote ${action.payload}`
-      return state
+      return state = `You have created a new anecdote ${action.payload}`
     case 'VOTE':
-      state = `You have voted ${action.payload}`
-      return state
+      return state = `You have voted ${action.payload}`
+    case 'ERROR':
+      return state = `${action.payload}`
     default:
-      state = ''
-      return state
+      return state = ''
   }
 }
 
