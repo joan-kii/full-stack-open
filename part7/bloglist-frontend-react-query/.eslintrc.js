@@ -26,7 +26,7 @@ module.exports = {
     "react", "jest", "cypress"
   ],
   rules: {
-    'linebreak-style': ['error', 'linux'],
+    'linebreak-style': ['error', 'unix'],
     'no-console': 0,
     'jsx-quotes': 1,
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
