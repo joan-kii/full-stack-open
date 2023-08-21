@@ -98,7 +98,10 @@ describe('blog app', function () {
       cy.contains('View').click();
       cy.get('#remove-btn').click();
 
-      cy.get('#notification').should('contain', `The blog ${fakeBlog1.title} by ${fakeBlog1.author} was removed!`);
+      cy.get('#notification').should(
+        'contain',
+        `The blog ${fakeBlog1.title} by ${fakeBlog1.author} was removed!`
+      );
     });
 
     it('only the creator can see delete blog button', function () {

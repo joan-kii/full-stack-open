@@ -5,8 +5,14 @@ import Blog from './Blog';
 import loginService from '../services/login';
 
 const BlogsSection = ({
-  user, setUser, blogs, setBlogs, setInfoMessage,
-  setIsError, setErrorMessage, children,
+  user,
+  setUser,
+  blogs,
+  setBlogs,
+  setInfoMessage,
+  setIsError,
+  setErrorMessage,
+  children,
 }) => {
   const handleLogout = () => {
     loginService.handleLogout();
@@ -18,22 +24,26 @@ const BlogsSection = ({
       <div>
         <h1>Blogs</h1>
         <h4>{user.name} logged in</h4>
-        <button id="logout-btn" type="button" onClick={handleLogout}>Logout</button>
+        <button id="logout-btn" type="button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
       <div>
         {children}
-        {blogs.sort((a, b) => b.likes - a.likes).map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            user={user}
-            blogs={blogs}
-            setBlogs={setBlogs}
-            setInfoMessage={setInfoMessage}
-            setErrorMessage={setErrorMessage}
-            setIsError={setIsError}
-          />
-        ))}
+        {blogs
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              user={user}
+              blogs={blogs}
+              setBlogs={setBlogs}
+              setInfoMessage={setInfoMessage}
+              setErrorMessage={setErrorMessage}
+              setIsError={setIsError}
+            />
+          ))}
       </div>
     </>
   );

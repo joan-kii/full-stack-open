@@ -30,7 +30,9 @@ const App = () => {
   const addBlog = async (blog) => {
     try {
       const savedBlog = await blogService.createBlog(blog);
-      setInfoMessage(`A new blog ${savedBlog.title} by ${savedBlog.author} added!`);
+      setInfoMessage(
+        `A new blog ${savedBlog.title} by ${savedBlog.author} added!`
+      );
       setBlogs(blogs.concat(savedBlog));
       setTimeout(() => {
         setInfoMessage('');
@@ -47,34 +49,33 @@ const App = () => {
 
   return (
     <>
-      {errorMessage && <Notification message={errorMessage} isError={isError} />}
+      {errorMessage && (
+        <Notification message={errorMessage} isError={isError} />
+      )}
       {infoMessage && <Notification message={infoMessage} isError={isError} />}
-      {user
-        && (
-          <BlogsSection
-            user={user}
-            setUser={setUser}
-            blogs={blogs}
-            setBlogs={setBlogs}
-            setInfoMessage={setInfoMessage}
-            setIsError={setIsError}
-            setErrorMessage={setErrorMessage}
-          >
-            <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
-              <BlogForm addBlog={addBlog} />
-            </Toggable>
-          </BlogsSection>
-        )}
-      {!user
-        && (
-          <LoginSection
-            setUser={setUser}
-            setBlogs={setBlogs}
-            setErrorMessage={setErrorMessage}
-            setInfoMessage={setInfoMessage}
-            setIsError={setIsError}
-          />
-        )}
+      {user && (
+        <BlogsSection
+          user={user}
+          setUser={setUser}
+          blogs={blogs}
+          setBlogs={setBlogs}
+          setInfoMessage={setInfoMessage}
+          setIsError={setIsError}
+          setErrorMessage={setErrorMessage}>
+          <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
+            <BlogForm addBlog={addBlog} />
+          </Toggable>
+        </BlogsSection>
+      )}
+      {!user && (
+        <LoginSection
+          setUser={setUser}
+          setBlogs={setBlogs}
+          setErrorMessage={setErrorMessage}
+          setInfoMessage={setInfoMessage}
+          setIsError={setIsError}
+        />
+      )}
     </>
   );
 };

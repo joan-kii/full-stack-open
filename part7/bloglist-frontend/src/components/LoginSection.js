@@ -6,7 +6,11 @@ import loginService from '../services/login';
 import blogService from '../services/blogs';
 
 const LoginSection = ({
-  setUser, setBlogs, setErrorMessage, setInfoMessage, setIsError,
+  setUser,
+  setBlogs,
+  setErrorMessage,
+  setInfoMessage,
+  setIsError,
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +44,8 @@ const LoginSection = ({
     <form onSubmit={handleLogin}>
       <h1>Log in to application</h1>
       <div>
-        Username: <input
+        Username:{' '}
+        <input
           id="username"
           type="text"
           value={username}
@@ -49,7 +54,8 @@ const LoginSection = ({
         />
       </div>
       <div>
-        Password: <input
+        Password:{' '}
+        <input
           id="password"
           type="password"
           value={password}
@@ -57,7 +63,9 @@ const LoginSection = ({
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit" id="login-btn">Login</button>
+      <button type="submit" id="login-btn">
+        Login
+      </button>
     </form>
   );
 };

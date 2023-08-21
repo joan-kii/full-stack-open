@@ -17,12 +17,7 @@ test('Create new blog', async () => {
   const mockToggle = jest.fn();
   const user = userEvent.setup();
 
-  render(
-    <BlogForm
-      addBlog={mockAddBlog}
-      toggleVisibility={mockToggle}
-    />,
-  );
+  render(<BlogForm addBlog={mockAddBlog} toggleVisibility={mockToggle} />);
 
   const inputs = screen.getAllByRole('textbox');
   const submitButton = screen.getByText('Create Blog');

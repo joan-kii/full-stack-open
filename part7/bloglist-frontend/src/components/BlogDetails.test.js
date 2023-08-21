@@ -31,7 +31,7 @@ test('Like button clicked twice', async () => {
       user={user}
       handleLikes={mockHandler}
       handleRemove={mockHandler}
-    />,
+    />
   );
 
   const eventUser = userEvent.setup();

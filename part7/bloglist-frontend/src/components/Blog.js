@@ -6,7 +6,13 @@ import BlogDetails from './BlogDetails';
 import blogService from '../services/blogs';
 
 const Blog = ({
-  blog, user, blogs, setBlogs, setInfoMessage, setErrorMessage, setIsError,
+  blog,
+  user,
+  blogs,
+  setBlogs,
+  setInfoMessage,
+  setErrorMessage,
+  setIsError,
 }) => {
   const blogStyle = {
     paddingTop: 10,
@@ -41,7 +47,9 @@ const Blog = ({
         const response = await blogService.removeBlog(blog.id);
         blogs.splice(blogs.indexOf(blog), 1);
         setBlogs(blogs);
-        setInfoMessage(`The blog ${response.title} by ${response.author} was removed!`);
+        setInfoMessage(
+          `The blog ${response.title} by ${response.author} was removed!`
+        );
         setTimeout(() => {
           setInfoMessage('');
         }, 5000);
@@ -60,7 +68,9 @@ const Blog = ({
 
   return (
     <div id={blogId} style={blogStyle} className="blog">
-      <p>{blog.title} by {blog.author}</p>
+      <p>
+        {blog.title} by {blog.author}
+      </p>
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
         <BlogDetails
           blog={blog}

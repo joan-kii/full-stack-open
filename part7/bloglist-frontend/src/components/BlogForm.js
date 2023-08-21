@@ -2,9 +2,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-const BlogForm = ({
-  addBlog, toggleVisibility,
-}) => {
+const BlogForm = ({ addBlog, toggleVisibility }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -22,7 +20,8 @@ const BlogForm = ({
     <form onSubmit={handleCreate}>
       <h3>Create New Blog</h3>
       <div>
-        Title: <input
+        Title:{' '}
+        <input
           id="title-input"
           type="text"
           value={title}
@@ -31,7 +30,8 @@ const BlogForm = ({
         />
       </div>
       <div>
-        Author: <input
+        Author:{' '}
+        <input
           id="author-input"
           type="text"
           value={author}
@@ -40,7 +40,8 @@ const BlogForm = ({
         />
       </div>
       <div>
-        Url: <input
+        Url:{' '}
+        <input
           id="url-input"
           type="text"
           value={url}
@@ -48,7 +49,9 @@ const BlogForm = ({
           onChange={({ target }) => setUrl(target.value)}
         />
       </div>
-      <button id="create-blog-btn" type="submit">Create Blog</button>
+      <button id="create-blog-btn" type="submit">
+        Create Blog
+      </button>
     </form>
   );
 };

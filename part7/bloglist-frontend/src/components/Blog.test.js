@@ -40,7 +40,7 @@ test('Renders blog content', () => {
       setInfoMessage={setInfoMessage}
       setErrorMessage={setErrorMessage}
       setIsError={setIsError}
-    />,
+    />
   );
 
   const blogDiv = container.querySelector('.blog');
@@ -64,7 +64,7 @@ test('Renders blog detail content', async () => {
       setInfoMessage={setInfoMessage}
       setErrorMessage={setErrorMessage}
       setIsError={setIsError}
-    />,
+    />
   );
 
   const eventUser = userEvent.setup();
