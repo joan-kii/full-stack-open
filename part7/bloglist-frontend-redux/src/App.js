@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import BlogsSection from './components/BlogsSection';
 import BlogForm from './components/BlogForm';
@@ -6,13 +8,12 @@ import Toggable from './components/Toggable';
 import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
 import blogService from './services/blogs';
+import { showNotification } from './reducers/notificationReducer';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [infoMessage, setInfoMessage] = useState('');
-  const [isError, setIsError] = useState(false);
   const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getBlogs() {
@@ -30,38 +31,29 @@ const App = () => {
   const addBlog = async (blog) => {
     try {
       const savedBlog = await blogService.createBlog(blog);
-      setInfoMessage(
-        `A new blog ${savedBlog.title} by ${savedBlog.author} added!`
-      );
+      dispatch(showNotification({
+        text: `A new blog ${savedBlog.title} by ${savedBlog.author} added!`,
+        isError: false
+      }));
       setBlogs(blogs.concat(savedBlog));
-      setTimeout(() => {
-        setInfoMessage('');
-      }, 5000);
-    } catch (error) {
-      setIsError((prev) => !prev);
-      setErrorMessage('Something went wrong...');
-      setTimeout(() => {
-        setIsError((prev) => !prev);
-        setErrorMessage('');
-      }, 5000);
+    } catch (_error) {
+      dispatch(showNotification({
+        text: 'Something went wrong...',
+        isError: true
+      }));
     }
   };
 
   return (
     <>
-      {errorMessage && (
-        <Notification message={errorMessage} isError={isError} />
-      )}
-      {infoMessage && <Notification message={infoMessage} isError={isError} />}
+      <Notification />
       {user && (
         <BlogsSection
           user={user}
           setUser={setUser}
           blogs={blogs}
           setBlogs={setBlogs}
-          setInfoMessage={setInfoMessage}
-          setIsError={setIsError}
-          setErrorMessage={setErrorMessage}>
+        >
           <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
             <BlogForm addBlog={addBlog} />
           </Toggable>
@@ -71,9 +63,6 @@ const App = () => {
         <LoginSection
           setUser={setUser}
           setBlogs={setBlogs}
-          setErrorMessage={setErrorMessage}
-          setInfoMessage={setInfoMessage}
-          setIsError={setIsError}
         />
       )}
     </>

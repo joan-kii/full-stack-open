@@ -9,9 +9,6 @@ const BlogsSection = ({
   setUser,
   blogs,
   setBlogs,
-  setInfoMessage,
-  setIsError,
-  setErrorMessage,
   children,
 }) => {
   const handleLogout = () => {
@@ -39,9 +36,6 @@ const BlogsSection = ({
               user={user}
               blogs={blogs}
               setBlogs={setBlogs}
-              setInfoMessage={setInfoMessage}
-              setErrorMessage={setErrorMessage}
-              setIsError={setIsError}
             />
           ))}
       </div>
@@ -53,10 +47,7 @@ BlogsSection.propTypes = {
   user: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
   setUser: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-  setIsError: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired
 };
 
 export default BlogsSection;

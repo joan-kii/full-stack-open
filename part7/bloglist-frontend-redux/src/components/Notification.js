@@ -1,10 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
+/* eslint-disable import/no-extraneous-dependencies */
+import { useSelector } from 'react-redux';
 
-const Notification = ({ message, isError }) => {
-  if (message === null) {
-    return null;
-  }
+const Notification = () => {
+  const message = useSelector(({ notification }) => notification);
 
   const notificationStyle = {
     background: 'lightgrey',
@@ -13,6 +11,7 @@ const Notification = ({ message, isError }) => {
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    display: message.text ? 'block' : 'none'
   };
 
   const errorStyle = {
@@ -26,15 +25,10 @@ const Notification = ({ message, isError }) => {
   };
 
   return (
-    <div id="notification" style={isError ? errorStyle : infoStyle}>
-      {message}
+    <div id="notification" style={message.isError ? errorStyle : infoStyle}>
+      {message.text}
     </div>
   );
-};
-
-Notification.propTypes = {
-  message: PropTypes.string.isRequired,
-  isError: PropTypes.bool.isRequired,
 };
 
 export default Notification;

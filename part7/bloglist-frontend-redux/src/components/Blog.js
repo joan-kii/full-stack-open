@@ -1,18 +1,17 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import Toggable from './Toggable';
 import BlogDetails from './BlogDetails';
 import blogService from '../services/blogs';
+import { showNotification } from '../reducers/notificationReducer';
 
 const Blog = ({
   blog,
   user,
   blogs,
-  setBlogs,
-  setInfoMessage,
-  setErrorMessage,
-  setIsError,
+  setBlogs
 }) => {
   const blogStyle = {
     paddingTop: 10,
@@ -21,6 +20,7 @@ const Blog = ({
     borderWidth: 1,
     marginBottom: 5,
   };
+  const dispatch = useDispatch();
 
   const handleLikes = async () => {
     const updatedBlog = {
@@ -31,12 +31,10 @@ const Blog = ({
       await blogService.updateLikes(updatedBlog);
       setBlogs(blogs.map((b) => (b.id === blog.id ? updatedBlog : b)));
     } catch (_error) {
-      setIsError((prev) => !prev);
-      setErrorMessage('Something went wrong...');
-      setTimeout(() => {
-        setIsError((prev) => !prev);
-        setErrorMessage('');
-      }, 5000);
+      dispatch(showNotification({
+        text: 'Something went wrong...',
+        isError: true
+      }));
     }
   };
 
@@ -47,19 +45,15 @@ const Blog = ({
         const response = await blogService.removeBlog(blog.id);
         blogs.splice(blogs.indexOf(blog), 1);
         setBlogs(blogs);
-        setInfoMessage(
-          `The blog ${response.title} by ${response.author} was removed!`
-        );
-        setTimeout(() => {
-          setInfoMessage('');
-        }, 5000);
+        dispatch(showNotification({
+          text: `The blog ${response.title} by ${response.author} was removed!`,
+          isError: false
+        }));
       } catch (_error) {
-        setIsError((prev) => !prev);
-        setErrorMessage('Something went wrong...');
-        setTimeout(() => {
-          setIsError((prev) => !prev);
-          setErrorMessage('');
-        }, 5000);
+        dispatch(showNotification({
+          text: 'Something went wrong...',
+          isError: true
+        }));
       }
     }
   };
@@ -87,10 +81,7 @@ Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-  setIsError: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired
 };
 
 export default Blog;

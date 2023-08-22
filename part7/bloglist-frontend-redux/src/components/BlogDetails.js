@@ -2,7 +2,9 @@
 import PropTypes from 'prop-types';
 
 const BlogDetails = (props) => {
-  const { blog, user, handleLikes, handleRemove } = props;
+  const {
+    blog, user, handleLikes, handleRemove
+  } = props;
 
   return (
     <div>

@@ -1,19 +1,19 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import loginService from '../services/login';
 import blogService from '../services/blogs';
+import { showNotification } from '../reducers/notificationReducer';
 
 const LoginSection = ({
   setUser,
   setBlogs,
-  setErrorMessage,
-  setInfoMessage,
-  setIsError,
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -23,20 +23,18 @@ const LoginSection = ({
       blogService.setToken(loggedUser.token);
       const blogsList = await blogService.getAll();
       setBlogs(blogsList);
-      setInfoMessage(`${loggedUser.name} is logged!`);
+      dispatch(showNotification({
+        text: `${loggedUser.name} is logged!`,
+        isError: false
+      }));
       localStorage.setItem('user', JSON.stringify(loggedUser));
       setUsername('');
       setPassword('');
-      setTimeout(() => {
-        setInfoMessage('');
-      }, 5000);
     } catch (error) {
-      setIsError((prev) => !prev);
-      setErrorMessage('Wrong Username or Password');
-      setTimeout(() => {
-        setIsError((prev) => !prev);
-        setErrorMessage('');
-      }, 5000);
+      dispatch(showNotification({
+        text: 'Wrong Username or Password',
+        isError: true
+      }));
     }
   };
 
@@ -72,10 +70,7 @@ const LoginSection = ({
 
 LoginSection.propTypes = {
   setUser: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-  setIsError: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired
 };
 
 export default LoginSection;
