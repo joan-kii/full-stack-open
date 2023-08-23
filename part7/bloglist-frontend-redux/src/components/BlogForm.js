@@ -1,15 +1,17 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-const BlogForm = ({ addBlog, toggleVisibility }) => {
+import { createBlog } from '../reducers/blogReducer';
+
+const BlogForm = ({ toggleVisibility }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const dispatch = useDispatch();
 
   const handleCreate = async (event) => {
     event.preventDefault();
-    await addBlog({ title, author, url });
+    dispatch(createBlog({ title, author, url }));
     setTitle('');
     setAuthor('');
     setUrl('');
@@ -54,10 +56,6 @@ const BlogForm = ({ addBlog, toggleVisibility }) => {
       </button>
     </form>
   );
-};
-
-BlogForm.propTypes = {
-  addBlog: PropTypes.func.isRequired,
 };
 
 export default BlogForm;

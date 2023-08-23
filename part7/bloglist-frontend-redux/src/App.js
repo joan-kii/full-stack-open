@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BlogsSection from './components/BlogsSection';
 import BlogForm from './components/BlogForm';
@@ -9,16 +9,16 @@ import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
 import blogService from './services/blogs';
 import { showNotification } from './reducers/notificationReducer';
+import { initializeBlogs } from './reducers/blogReducer';
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
+  const blogsList = useSelector(({ blogs }) => blogs);
 
   useEffect(() => {
     async function getBlogs() {
-      const response = await blogService.getAll();
-      setBlogs(response);
+      dispatch(initializeBlogs());
     }
     const loggedUser = localStorage.getItem('user');
     if (loggedUser) {
@@ -35,7 +35,7 @@ const App = () => {
         text: `A new blog ${savedBlog.title} by ${savedBlog.author} added!`,
         isError: false
       }));
-      setBlogs(blogs.concat(savedBlog));
+      dispatch(initializeBlogs(savedBlog));
     } catch (_error) {
       dispatch(showNotification({
         text: 'Something went wrong...',
@@ -51,18 +51,18 @@ const App = () => {
         <BlogsSection
           user={user}
           setUser={setUser}
-          blogs={blogs}
-          setBlogs={setBlogs}
+          blogs={blogsList}
+          setBlogs={initializeBlogs}
         >
           <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
-            <BlogForm addBlog={addBlog} />
+            <BlogForm />
           </Toggable>
         </BlogsSection>
       )}
       {!user && (
         <LoginSection
           setUser={setUser}
-          setBlogs={setBlogs}
+          setBlogs={initializeBlogs}
         />
       )}
     </>
