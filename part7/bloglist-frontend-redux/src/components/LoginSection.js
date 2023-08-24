@@ -1,16 +1,13 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import loginService from '../services/login';
 import blogService from '../services/blogs';
 import { showNotification } from '../reducers/notificationReducer';
+import { setUser } from '../reducers/userReducer';
+import { initializeBlogs } from '../reducers/blogReducer';
 
-const LoginSection = ({
-  setUser,
-  setBlogs,
-}) => {
+const LoginSection = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -19,10 +16,9 @@ const LoginSection = ({
     event.preventDefault();
     try {
       const loggedUser = await loginService.login({ username, password });
-      setUser(loggedUser);
+      dispatch(setUser(loggedUser));
       blogService.setToken(loggedUser.token);
-      const blogsList = await blogService.getAll();
-      setBlogs(blogsList);
+      dispatch(initializeBlogs());
       dispatch(showNotification({
         text: `${loggedUser.name} is logged!`,
         isError: false
@@ -66,11 +62,6 @@ const LoginSection = ({
       </button>
     </form>
   );
-};
-
-LoginSection.propTypes = {
-  setUser: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired
 };
 
 export default LoginSection;

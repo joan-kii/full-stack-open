@@ -1,23 +1,24 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Blog from './Blog';
 import loginService from '../services/login';
+import { removeUser } from '../reducers/userReducer';
 
-const BlogsSection = ({ user, setUser, children }) => {
+const BlogsSection = ({ children }) => {
+  const blogsList = useSelector(({ blogs }) => blogs);
+  const actualUser = useSelector(({ user }) => user);
+  const dispatch = useDispatch();
+
   const handleLogout = () => {
     loginService.handleLogout();
-    setUser(null);
+    dispatch(removeUser());
   };
-
-  const blogsList = useSelector(({ blogs }) => blogs);
 
   return (
     <>
       <div>
         <h1>Blogs</h1>
-        <h4>{user.name} logged in</h4>
+        <h4>{actualUser.name} logged in</h4>
         <button id="logout-btn" type="button" onClick={handleLogout}>
           Logout
         </button>
@@ -30,18 +31,11 @@ const BlogsSection = ({ user, setUser, children }) => {
             <Blog
               key={blog.id}
               blog={blog}
-              user={user}
-              blogs={blogsList}
             />
           ))}
       </div>
     </>
   );
-};
-
-BlogsSection.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired
 };
 
 export default BlogsSection;

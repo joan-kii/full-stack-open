@@ -1,17 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { showNotification } from '../reducers/notificationReducer';
 import { deleteBlog, likeBlog } from '../reducers/blogReducer';
 
-const BlogDetails = (props) => {
-  const { blog, user } = props;
-
+const BlogDetails = ({ blog }) => {
   const dispatch = useDispatch();
+  const actualUser = useSelector(({ user }) => user);
 
   const handleLikes = async () => {
-    // Seguir aquí (rerender tras like)
     const updatedBlog = {
       ...blog,
       likes: blog.likes + 1,
@@ -56,7 +54,7 @@ const BlogDetails = (props) => {
         </p>
       </div>
       <p>{blog.user.name}</p>
-      {blog.user.id === user.id && (
+      {blog.user.id === actualUser.id && (
         <button id="remove-btn" type="button" onClick={() => handleRemove()}>
           Remove
         </button>
@@ -66,8 +64,7 @@ const BlogDetails = (props) => {
 };
 
 BlogDetails.propTypes = {
-  blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  blog: PropTypes.object.isRequired
 };
 
 export default BlogDetails;

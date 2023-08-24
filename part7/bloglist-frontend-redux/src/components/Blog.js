@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Toggable from './Toggable';
 import BlogDetails from './BlogDetails';
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -23,7 +23,6 @@ const Blog = ({ blog, user }) => {
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
         <BlogDetails
           blog={blog}
-          user={user}
         />
       </Toggable>
     </div>
@@ -31,8 +30,7 @@ const Blog = ({ blog, user }) => {
 };
 
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  blog: PropTypes.object.isRequired
 };
 
 export default Blog;

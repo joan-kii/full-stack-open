@@ -16,7 +16,8 @@ const blogSlice = createSlice({
       state.splice(state.indexOf(action.payload.id), 1);
     },
     addLike(state, action) {
-      state = state.map((b) => (b.id === action.payload.id ? action.payload : b));
+      const blogToUpdate = state.findIndex((b) => (b.id === action.payload.id));
+      state[blogToUpdate].likes += 1;
     }
   },
 });

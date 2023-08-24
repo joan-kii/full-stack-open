@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import BlogsSection from './components/BlogsSection';
@@ -10,19 +10,22 @@ import Notification from './components/Notification';
 import blogService from './services/blogs';
 import { showNotification } from './reducers/notificationReducer';
 import { initializeBlogs } from './reducers/blogReducer';
+import { setUser } from './reducers/userReducer';
 
 const App = () => {
-  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const blogsList = useSelector(({ blogs }) => blogs);
+  const actualUser = useSelector(({ user }) => user);
 
   useEffect(() => {
     async function getBlogs() {
       dispatch(initializeBlogs());
     }
+
     const loggedUser = localStorage.getItem('user');
+
     if (loggedUser) {
-      setUser(JSON.parse(loggedUser));
+      dispatch(setUser(JSON.parse(loggedUser)));
       blogService.setToken(JSON.parse(loggedUser).token);
       getBlogs();
     }
@@ -47,9 +50,9 @@ const App = () => {
   return (
     <>
       <Notification />
-      {user && (
+      {actualUser && (
         <BlogsSection
-          user={user}
+          user={actualUser}
           setUser={setUser}
           blogs={blogsList}
           setBlogs={initializeBlogs}
@@ -59,11 +62,8 @@ const App = () => {
           </Toggable>
         </BlogsSection>
       )}
-      {!user && (
-        <LoginSection
-          setUser={setUser}
-          setBlogs={initializeBlogs}
-        />
+      {!actualUser && (
+        <LoginSection />
       )}
     </>
   );
