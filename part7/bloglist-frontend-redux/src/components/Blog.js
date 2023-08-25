@@ -21,9 +21,7 @@ const Blog = ({ blog }) => {
         {blog.title} by {blog.author}
       </p>
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
-        <BlogDetails
-          blog={blog}
-        />
+        <BlogDetails blog={blog} />
       </Toggable>
     </div>
   );
