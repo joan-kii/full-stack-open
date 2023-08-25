@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^4.33.0",
     "axios": "^1.2.3",
     "eslint-config-prettier": "^9.0.0",
     "prop-types": "^15.8.1",

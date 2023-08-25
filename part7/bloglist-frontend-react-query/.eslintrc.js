@@ -2,7 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    "cypress/globals": true,
+    'cypress/globals': true,
   },
   extends: 'airbnb',
   overrides: [
@@ -23,12 +23,15 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    "react", "jest", "cypress"
+    'react', 'jest', 'cypress'
   ],
   rules: {
     'linebreak-style': ['error', 'unix'],
     'no-console': 0,
     'jsx-quotes': 1,
+    'no-param-reassign': 0,
+    'no-unused-vars': 0,
+    'comma-dangle': 0,
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'react/display-name': 0,
     'react/forbid-prop-types': 0,

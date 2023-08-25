@@ -5,7 +5,7 @@ const Notification = ({ message, isError }) => {
   if (message === null) {
     return null;
   }
-
+  // seguir aquí (useNotificationValue)
   const notificationStyle = {
     background: 'lightgrey',
     fontSize: 20,

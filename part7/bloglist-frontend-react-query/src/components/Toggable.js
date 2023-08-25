@@ -12,9 +12,7 @@ const Toggable = ({ showButtonLabel, hideButtonLabel, children }) => {
   };
 
   // eslint-disable-next-line max-len
-  const childrenWithToggle = Children.map(children, (child) =>
-    cloneElement(child, { toggleVisibility })
-  );
+  const childrenWithToggle = Children.map(children, (child) => cloneElement(child, { toggleVisibility }));
 
   return (
     <div>
