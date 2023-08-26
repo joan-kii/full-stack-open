@@ -3,16 +3,24 @@ import { createContext, useReducer, useContext } from 'react';
 const notificationReducer = (state, action) => {
   switch (action.type) {
     case 'CREATE':
-      state = `A new blog ${action.payload.title} by ${action.payload.author} added!`;
+      state.text = `A new blog ${action.payload.title} by ${action.payload.author} added!`;
+      state.isError = false;
       return state;
     case 'ERROR':
-      state = `${action.payload}`;
+      state.text = `${action.payload}`;
+      state.isError = true;
       return state;
-    case 'VOTE':
-      state = `You have voted ${action.payload}`;
+    case 'LIKE':
+      state.text = `You have liked ${action.payload.title}`;
+      state.isError = false;
+      return state;
+    case 'REMOVE':
+      state.text = `You have removed ${action.payload.title}`;
+      state.isError = false;
       return state;
     default:
-      state = '';
+      state.text = '';
+      state.isError = false;
       return state;
   }
 };
@@ -20,7 +28,10 @@ const notificationReducer = (state, action) => {
 const NotificationContext = createContext();
 
 export const NotificationContextProvider = ({ children }) => {
-  const [notification, notificationDispatch] = useReducer(notificationReducer, '');
+  const [notification, notificationDispatch] = useReducer(notificationReducer, {
+    text: '',
+    isError: false
+  });
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values

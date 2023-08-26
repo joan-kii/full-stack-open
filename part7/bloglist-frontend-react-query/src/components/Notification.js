@@ -1,11 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
+import { useNotificationValue } from '../contexts/NotificationContext';
 
-const Notification = ({ message, isError }) => {
-  if (message === null) {
-    return null;
-  }
-  // seguir aquí (useNotificationValue)
+const Notification = () => {
+  const notification = useNotificationValue();
+  console.log(notification);
+
   const notificationStyle = {
     background: 'lightgrey',
     fontSize: 20,
@@ -13,6 +11,7 @@ const Notification = ({ message, isError }) => {
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    display: notification.text ? 'block' : 'none'
   };
 
   const errorStyle = {
@@ -26,15 +25,10 @@ const Notification = ({ message, isError }) => {
   };
 
   return (
-    <div id="notification" style={isError ? errorStyle : infoStyle}>
-      {message}
+    <div id="notification" style={notification.isError ? errorStyle : infoStyle}>
+      {notification.text}
     </div>
   );
-};
-
-Notification.propTypes = {
-  message: PropTypes.string.isRequired,
-  isError: PropTypes.bool.isRequired,
 };
 
 export default Notification;

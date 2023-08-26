@@ -1,15 +1,37 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const BlogForm = ({ addBlog, toggleVisibility }) => {
+import blogService from '../services/blogs';
+import { useNotificationDispatch } from '../contexts/NotificationContext';
+
+const BlogForm = ({ toggleVisibility }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const dispatch = useNotificationDispatch();
+  const queryClient = useQueryClient();
+
+  const newBlogMutation = useMutation(blogService.createBlog, {
+    onSuccess: (newBlog) => {
+      const blogsList = queryClient.getQueryData(['blogs']);
+      queryClient.setQueryData(['blogs'], blogsList.concat(newBlog));
+    },
+    onError: (_err) => {
+      dispatch({ type: 'ERROR', payload: 'Something went wrong...' });
+      setTimeout(() => {
+        dispatch({});
+      }, 5000);
+    }
+  });
 
   const handleCreate = async (event) => {
     event.preventDefault();
-    await addBlog({ title, author, url });
+    const newBlog = { title, author, url };
+    newBlogMutation.mutate(newBlog);
+    dispatch({ type: 'CREATE', payload: newBlog });
+    setTimeout(() => {
+      dispatch({});
+    }, 5000);
     setTitle('');
     setAuthor('');
     setUrl('');
@@ -54,10 +76,6 @@ const BlogForm = ({ addBlog, toggleVisibility }) => {
       </button>
     </form>
   );
-};
-
-BlogForm.propTypes = {
-  addBlog: PropTypes.func.isRequired,
 };
 
 export default BlogForm;

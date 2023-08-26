@@ -1,23 +1,27 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
+import { useQuery } from '@tanstack/react-query';
 
 import Blog from './Blog';
 import loginService from '../services/login';
+import blogService from '../services/blogs';
 
 const BlogsSection = ({
   user,
   setUser,
-  blogs,
-  setBlogs,
-  setInfoMessage,
-  setIsError,
-  setErrorMessage,
   children,
 }) => {
   const handleLogout = () => {
     loginService.handleLogout();
     setUser(null);
   };
+
+  const getBlogs = useQuery(['blogs'], blogService.getAll, {
+    retry: 1,
+    refetchOnWindowFocus: false
+  });
+
+  const blogs = getBlogs.data;
 
   return (
     <>
@@ -30,18 +34,13 @@ const BlogsSection = ({
       </div>
       <div>
         {children}
-        {blogs
+        {blogs && blogs
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
             <Blog
               key={blog.id}
               blog={blog}
               user={user}
-              blogs={blogs}
-              setBlogs={setBlogs}
-              setInfoMessage={setInfoMessage}
-              setErrorMessage={setErrorMessage}
-              setIsError={setIsError}
             />
           ))}
       </div>
@@ -51,12 +50,7 @@ const BlogsSection = ({
 
 BlogsSection.propTypes = {
   user: PropTypes.object.isRequired,
-  blogs: PropTypes.array.isRequired,
-  setUser: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-  setIsError: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired
 };
 
 export default BlogsSection;
