@@ -7,7 +7,7 @@ import BlogDetails from './BlogDetails';
 import blogService from '../services/blogs';
 import { useNotificationDispatch } from '../contexts/NotificationContext';
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -38,7 +38,7 @@ const Blog = ({ blog, user }) => {
     onError: (_err) => {
       dispatch({ type: 'ERROR', payload: 'Something went wrong...' });
       setTimeout(() => {
-        dispatch({});
+        dispatch('');
       }, 5000);
     }
   });
@@ -76,7 +76,6 @@ const Blog = ({ blog, user }) => {
       <Toggable showButtonLabel="View" hideButtonLabel="Hide">
         <BlogDetails
           blog={blog}
-          user={user}
           handleLikes={handleLikes}
           handleRemove={handleRemove}
         />
@@ -86,8 +85,7 @@ const Blog = ({ blog, user }) => {
 };
 
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  blog: PropTypes.object.isRequired
 };
 
 export default Blog;

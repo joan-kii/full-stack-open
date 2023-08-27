@@ -3,35 +3,31 @@ import { createContext, useReducer, useContext } from 'react';
 const notificationReducer = (state, action) => {
   switch (action.type) {
     case 'CREATE':
-      state.text = `A new blog ${action.payload.title} by ${action.payload.author} added!`;
-      state.isError = false;
-      return state;
+      return { ...state, text: `A new blog ${action.payload.title} by ${action.payload.author} added!` };
     case 'ERROR':
-      state.text = `${action.payload}`;
-      state.isError = true;
-      return state;
+      return { isError: true, text: `${action.payload}` };
     case 'LIKE':
-      state.text = `You have liked ${action.payload.title}`;
-      state.isError = false;
-      return state;
+      return { ...state, text: `You have liked ${action.payload.title}` };
     case 'REMOVE':
-      state.text = `You have removed ${action.payload.title}`;
-      state.isError = false;
-      return state;
+      return { ...state, text: `You have removed ${action.payload.title}` };
+    case 'LOGGED_IN':
+      return { ...state, text: `${action.payload.name} is logged in!` };
+    case 'LOGGED_OUT':
+      return { ...state, text: 'User logged out!' };
     default:
-      state.text = '';
-      state.isError = false;
-      return state;
+      return { text: '', isError: false };
   }
 };
 
 const NotificationContext = createContext();
 
+const initialState = {
+  text: '',
+  isError: false
+};
+
 export const NotificationContextProvider = ({ children }) => {
-  const [notification, notificationDispatch] = useReducer(notificationReducer, {
-    text: '',
-    isError: false
-  });
+  const [notification, notificationDispatch] = useReducer(notificationReducer, initialState);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values

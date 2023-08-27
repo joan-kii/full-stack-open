@@ -1,19 +1,23 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
 
 import Blog from './Blog';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
+import { useUserValue, useUserDispatch } from '../contexts/UserContext';
+import { useNotificationDispatch } from '../contexts/NotificationContext';
 
-const BlogsSection = ({
-  user,
-  setUser,
-  children,
-}) => {
+const BlogsSection = ({ children }) => {
+  const user = useUserValue();
+  const userDispatch = useUserDispatch();
+  const notificationDispatch = useNotificationDispatch();
+
   const handleLogout = () => {
     loginService.handleLogout();
-    setUser(null);
+    userDispatch({ type: 'LOGGED_OUT', payload: {} });
+    notificationDispatch({ type: 'LOGGED_OUT', payload: {} });
+    setTimeout(() => {
+      notificationDispatch({});
+    }, 5000);
   };
 
   const getBlogs = useQuery(['blogs'], blogService.getAll, {
@@ -37,20 +41,11 @@ const BlogsSection = ({
         {blogs && blogs
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              user={user}
-            />
+            <Blog key={blog.id} blog={blog} />
           ))}
       </div>
     </>
   );
-};
-
-BlogsSection.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired
 };
 
 export default BlogsSection;

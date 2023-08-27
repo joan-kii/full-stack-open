@@ -2,7 +2,6 @@ import { useNotificationValue } from '../contexts/NotificationContext';
 
 const Notification = () => {
   const notification = useNotificationValue();
-  console.log(notification);
 
   const notificationStyle = {
     background: 'lightgrey',

@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 
-const BlogDetails = (props) => {
-  const {
-    blog, user, handleLikes, handleRemove
-  } = props;
+import { useUserValue } from '../contexts/UserContext';
+
+const BlogDetails = ({ blog, handleLikes, handleRemove }) => {
+  const user = useUserValue();
 
   return (
     <div>
@@ -18,7 +18,7 @@ const BlogDetails = (props) => {
         </p>
       </div>
       <p>{blog.user.name}</p>
-      {blog.user.id === user.id && (
+      {blog.user.id === user.payload.id && (
         <button id="remove-btn" type="button" onClick={() => handleRemove()}>
           Remove
         </button>
@@ -29,7 +29,6 @@ const BlogDetails = (props) => {
 
 BlogDetails.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   handleLikes: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
 };

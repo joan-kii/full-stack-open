@@ -1,25 +1,34 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import loginService from '../services/login';
 import blogService from '../services/blogs';
+import { useUserDispatch } from '../contexts/UserContext';
+import { useNotificationDispatch } from '../contexts/NotificationContext';
 
-const LoginSection = ({ setUser }) => {
+const LoginSection = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const userDispatch = useUserDispatch();
+  const notificationDispatch = useNotificationDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const loggedUser = await loginService.login({ username, password });
-      setUser(loggedUser);
       blogService.setToken(loggedUser.token);
       localStorage.setItem('user', JSON.stringify(loggedUser));
+      userDispatch({ type: 'LOGGED_IN', payload: loggedUser });
+      notificationDispatch({ type: 'LOGGED_IN', payload: loggedUser });
+      setTimeout(() => {
+        notificationDispatch({});
+      }, 5000);
       setUsername('');
       setPassword('');
-    } catch (error) {
-      console.log(error);
+    } catch (_error) {
+      notificationDispatch({ type: 'ERROR', payload: 'Something went wrong...' });
+      setTimeout(() => {
+        notificationDispatch({});
+      }, 5000);
     }
   };
 
@@ -51,10 +60,6 @@ const LoginSection = ({ setUser }) => {
       </button>
     </form>
   );
-};
-
-LoginSection.propTypes = {
-  setUser: PropTypes.func.isRequired
 };
 
 export default LoginSection;
