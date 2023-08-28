@@ -1,13 +1,18 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import BlogsSection from './components/BlogsSection';
-import BlogForm from './components/BlogForm';
-import Toggable from './components/Toggable';
 import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
+import Navigation from './components/Navigation';
+import Users from './components/Users';
+import UserDetail from './components/UserDetail';
+
 import blogService from './services/blogs';
+
 import { initializeBlogs } from './reducers/blogReducer';
+import { initializeUsers } from './reducers/usersListReducer';
 import { setUser } from './reducers/userReducer';
 
 const App = () => {
@@ -17,6 +22,7 @@ const App = () => {
   useEffect(() => {
     async function getBlogs() {
       dispatch(initializeBlogs());
+      dispatch(initializeUsers());
     }
 
     const loggedUser = localStorage.getItem('user');
@@ -29,19 +35,22 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <Router>
       <Notification />
       {actualUser && (
-        <BlogsSection>
-          <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
-            <BlogForm />
-          </Toggable>
-        </BlogsSection>
+        <>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<BlogsSection />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<UserDetail />} />
+          </Routes>
+        </>
       )}
       {!actualUser && (
         <LoginSection />
       )}
-    </>
+    </Router>
   );
 };
 
