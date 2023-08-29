@@ -7,7 +7,8 @@ import LoginSection from './components/LoginSection';
 import Notification from './components/Notification';
 import Navigation from './components/Navigation';
 import Users from './components/Users';
-import UserDetail from './components/UserDetail';
+import UserDetails from './components/UserDetails';
+import BlogDetails from './components/BlogDetails';
 
 import blogService from './services/blogs';
 
@@ -43,7 +44,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<BlogsSection />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/users/:id" element={<UserDetail />} />
+            <Route path="/users/:id" element={<UserDetails />} />
+            <Route path="/blogs/:id" element={<BlogDetails />} />
           </Routes>
         </>
       )}

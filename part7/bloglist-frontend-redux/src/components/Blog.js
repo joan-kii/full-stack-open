@@ -1,8 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
-
-import Toggable from './Toggable';
-import BlogDetails from './BlogDetails';
+import { Link } from 'react-router-dom';
 
 const Blog = ({ blog }) => {
   const blogStyle = {
@@ -18,11 +16,8 @@ const Blog = ({ blog }) => {
   return (
     <div id={blogId} style={blogStyle} className="blog">
       <p>
-        {blog.title} by {blog.author}
+        <Link to={`/blogs/${blog.id}`}>{blog.title} by {blog.author}</Link>
       </p>
-      <Toggable showButtonLabel="View" hideButtonLabel="Hide">
-        <BlogDetails blog={blog} />
-      </Toggable>
     </div>
   );
 };

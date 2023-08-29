@@ -1,13 +1,16 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { showNotification } from '../reducers/notificationReducer';
 import { deleteBlog, likeBlog } from '../reducers/blogReducer';
 
-const BlogDetails = ({ blog }) => {
-  const dispatch = useDispatch();
+const BlogDetails = () => {
   const actualUser = useSelector(({ user }) => user);
+  const blogsList = useSelector(({ blogs }) => blogs);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const blog = blogsList.find((el) => el.id === id);
 
   const handleLikes = async () => {
     const updatedBlog = {
@@ -16,6 +19,10 @@ const BlogDetails = ({ blog }) => {
     };
     try {
       dispatch(likeBlog(updatedBlog));
+      dispatch(showNotification({
+        text: `You liked ${blog.title}!`,
+        isError: false
+      }));
     } catch (_error) {
       dispatch(showNotification({
         text: 'Something went wrong...',
@@ -42,9 +49,15 @@ const BlogDetails = ({ blog }) => {
     }
   };
 
+  const addComment = () => {
+    // seguir aquí (implementar addComment backend y redux store)
+  };
+
   return (
+    (blog && (
     <div>
-      <p>{blog.url}</p>
+      <h2>{blog.title} by {blog.author}</h2>
+      <a href="#">{blog.url}</a>
       <div>
         <p id="likes">
           Likes: {blog.likes}{' '}
@@ -53,18 +66,26 @@ const BlogDetails = ({ blog }) => {
           </button>
         </p>
       </div>
-      <p>{blog.user.name}</p>
+      <p>Added by {blog.user.name}</p>
       {blog.user.id === actualUser.id && (
         <button id="remove-btn" type="button" onClick={() => handleRemove()}>
           Remove
         </button>
       )}
+      <h3>Comments</h3>
+      <form onSubmit={addComment}>
+        <input type="text" />
+        <button type="submit">Add Comment</button>
+      </form>
+      <ul>
+        {blog.comments.map((comment) => {
+          const commentIndex = blog.comments.indexOf(comment);
+          return <li key={blog.id + commentIndex}>{comment}</li>;
+        })}
+      </ul>
     </div>
+    ))
   );
-};
-
-BlogDetails.propTypes = {
-  blog: PropTypes.object.isRequired
 };
 
 export default BlogDetails;
