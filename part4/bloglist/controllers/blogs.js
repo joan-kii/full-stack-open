@@ -32,6 +32,17 @@ blogsRouter.post('/', async (request, response) => {
   return null;
 });
 
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const blog = await Blog.findById(request.blog.id);
+  if (blog) {
+    blog.comments.concat(request.body);
+    await blog.save();
+    response.status(200);
+  } else {
+    response.status(400);
+  }
+});
+
 blogsRouter.delete('/:id', async (request, response) => {
   const blog = await Blog.findById(request.params.id);
   if (request.user.id === blog.user.toString()) {
