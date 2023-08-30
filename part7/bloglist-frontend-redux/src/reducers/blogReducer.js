@@ -18,12 +18,16 @@ const blogSlice = createSlice({
     addLike(state, action) {
       const blogToUpdate = state.findIndex((b) => (b.id === action.payload.id));
       state[blogToUpdate].likes += 1;
+    },
+    addComment(state, action) {
+      const blogToUpdate = state.findIndex((b) => b.id === action.payload.blogId);
+      state[blogToUpdate].comments.push(action.payload.comment);
     }
   },
 });
 
 export const {
-  setBlogs, addBlog, removeBlog, addLike
+  setBlogs, addBlog, removeBlog, addLike, addComment
 } = blogSlice.actions;
 
 // eslint-disable-next-line arrow-body-style
@@ -55,6 +59,14 @@ export const likeBlog = (blog) => {
   return async (dispatch) => {
     const likedBlog = await blogService.updateLikes(blog);
     dispatch(addLike(likedBlog));
+  };
+};
+
+// eslint-disable-next-line arrow-body-style
+export const newComment = (blogId, comment) => {
+  return async (dispatch) => {
+    await blogService.addComment(blogId, comment);
+    dispatch(addComment({ blogId, comment }));
   };
 };
 

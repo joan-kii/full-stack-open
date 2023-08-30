@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 import BlogsSection from './components/BlogsSection';
 import LoginSection from './components/LoginSection';
@@ -36,23 +37,25 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-      <Notification />
-      {actualUser && (
-        <>
-          <Navigation />
-          <Routes>
-            <Route path="/" element={<BlogsSection />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/:id" element={<UserDetails />} />
-            <Route path="/blogs/:id" element={<BlogDetails />} />
-          </Routes>
-        </>
-      )}
-      {!actualUser && (
-        <LoginSection />
-      )}
-    </Router>
+    <Container>
+      <Router>
+        <Notification />
+        {actualUser && (
+          <>
+            <Navigation />
+            <Routes>
+              <Route path="/" element={<BlogsSection />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<UserDetails />} />
+              <Route path="/blogs/:id" element={<BlogDetails />} />
+            </Routes>
+          </>
+        )}
+        {!actualUser && (
+          <LoginSection />
+        )}
+      </Router>
+    </Container>
   );
 };
 

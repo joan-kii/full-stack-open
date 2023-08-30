@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 import { showNotification } from '../reducers/notificationReducer';
-import { deleteBlog, likeBlog } from '../reducers/blogReducer';
+import { deleteBlog, likeBlog, newComment } from '../reducers/blogReducer';
 
 const BlogDetails = () => {
+  const [comment, setComment] = useState('');
   const actualUser = useSelector(({ user }) => user);
   const blogsList = useSelector(({ blogs }) => blogs);
   const { id } = useParams();
@@ -49,8 +51,10 @@ const BlogDetails = () => {
     }
   };
 
-  const addComment = () => {
-    // seguir aquí (implementar addComment backend y redux store)
+  const handleComment = (event) => {
+    event.preventDefault();
+    dispatch(newComment(blog.id, comment));
+    setComment('');
   };
 
   return (
@@ -73,14 +77,19 @@ const BlogDetails = () => {
         </button>
       )}
       <h3>Comments</h3>
-      <form onSubmit={addComment}>
-        <input type="text" />
+      <form onSubmit={handleComment}>
+        <input
+          type="text"
+          value={comment}
+          name="comment"
+          onChange={({ target }) => setComment(target.value)}
+        />
         <button type="submit">Add Comment</button>
       </form>
       <ul>
-        {blog.comments.map((comment) => {
-          const commentIndex = blog.comments.indexOf(comment);
-          return <li key={blog.id + commentIndex}>{comment}</li>;
+        {blog.comments.map((comm) => {
+          const commentIndex = blog.comments.indexOf(comm);
+          return <li key={blog.id + commentIndex}>{comm}</li>;
         })}
       </ul>
     </div>
