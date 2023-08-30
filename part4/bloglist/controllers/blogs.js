@@ -33,11 +33,11 @@ blogsRouter.post('/', async (request, response) => {
 });
 
 blogsRouter.post('/:id/comments', async (request, response) => {
-  const blog = await Blog.findById(request.blog.id);
+  const blog = await Blog.findById(request.params.id);
   if (blog) {
-    blog.comments.concat(request.body);
+    blog.comments.push(request.body.comment);
     await blog.save();
-    response.status(200);
+    response.status(200).send(blog);
   } else {
     response.status(400);
   }
