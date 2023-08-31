@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
-import Card from '@mui/material/Card';
 
 import Blog from './Blog';
 import Toggable from './Toggable';
@@ -12,6 +11,7 @@ const BlogsSection = ({ children }) => {
 
   return (
     <div>
+      <h1>Blog App</h1>
       {children}
       <Toggable showButtonLabel="Create New Blog" hideButtonLabel="Cancel">
         <BlogForm />
@@ -24,11 +24,10 @@ const BlogsSection = ({ children }) => {
         {[...blogsList]
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
-            <Card key={blog.id} variant="outlined">
-              <Blog
-                blog={blog}
-              />
-            </Card>
+            <Blog
+              key={blog.id}
+              blog={blog}
+            />
           ))}
       </Stack>
     </div>

@@ -1,14 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const Blog = ({ blog }) => {
   const blogId = blog.title.toLowerCase().split(' ').join('-');
 
   return (
-    <div id={blogId} className="blog">
-      <Link to={`/blogs/${blog.id}`}>{blog.title} by {blog.author}</Link>
-    </div>
+    <Button href={`/blogs/${blog.id}`} id={blogId} className="blog">{blog.title} by {blog.author}</Button>
   );
 };
 
