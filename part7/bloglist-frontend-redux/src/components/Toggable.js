@@ -1,11 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import { cloneElement, Children, useState } from 'react';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 const Toggable = ({ showButtonLabel, hideButtonLabel, children }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const hideComponent = { display: isVisible ? 'none' : '' };
-  const showComponent = { display: isVisible ? '' : 'none' };
+  const hideComponent = { display: isVisible ? 'none' : 'flex' };
+  const showComponent = { display: isVisible ? 'flex' : 'none' };
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -19,15 +21,38 @@ const Toggable = ({ showButtonLabel, hideButtonLabel, children }) => {
   return (
     <div>
       <div style={hideComponent}>
-        <button id="toggable-show" type="button" onClick={toggleVisibility}>
+        <Button
+          id="toggable-show"
+          variant="outlined"
+          sx={{
+            m: '0 auto'
+          }}
+          onClick={toggleVisibility}
+        >
           {showButtonLabel}
-        </button>
+        </Button>
       </div>
       <div style={showComponent}>
-        <button id="toggable-hide" type="button" onClick={toggleVisibility}>
-          {hideButtonLabel}
-        </button>
-        {childrenWithToggle}
+        <Box
+          sx={{
+            m: '1rem auto',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          {childrenWithToggle}
+          <Button
+            id="toggable-hide"
+            variant="outlined"
+            onClick={toggleVisibility}
+            sx={{
+              m: '0 auto'
+            }}
+          >
+            {hideButtonLabel}
+          </Button>
+        </Box>
       </div>
     </div>
   );

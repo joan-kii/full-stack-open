@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 import { createBlog } from '../reducers/blogReducer';
 
@@ -20,40 +23,52 @@ const BlogForm = ({ toggleVisibility }) => {
 
   return (
     <form onSubmit={handleCreate}>
-      <h3>Create New Blog</h3>
-      <div>
-        Title:{' '}
-        <input
+      <Box
+        sx={{
+          m: '1rem auto',
+          width: '25%',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <TextField
           id="title-input"
-          type="text"
+          label="Title"
           value={title}
           name="Title"
           onChange={({ target }) => setTitle(target.value)}
+          sx={{
+            mb: '1.5rem'
+          }}
         />
-      </div>
-      <div>
-        Author:{' '}
-        <input
+        <TextField
           id="author-input"
-          type="text"
+          label="Author"
           value={author}
           name="Author"
           onChange={({ target }) => setAuthor(target.value)}
+          sx={{
+            mb: '1.5rem'
+          }}
         />
-      </div>
-      <div>
-        Url:{' '}
-        <input
+        <TextField
           id="url-input"
-          type="text"
+          label="Url"
           value={url}
           name="Url"
           onChange={({ target }) => setUrl(target.value)}
+          sx={{
+            mb: '1.5rem'
+          }}
         />
-      </div>
-      <button id="create-blog-btn" type="submit">
-        Create Blog
-      </button>
+        <Button
+          id="create-blog-btn"
+          type="submit"
+          variant="outlined"
+        >
+          Create Blog
+        </Button>
+      </Box>
     </form>
   );
 };

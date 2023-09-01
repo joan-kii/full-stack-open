@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 import loginService from '../services/login';
 import blogService from '../services/blogs';
@@ -36,30 +40,56 @@ const LoginSection = () => {
 
   return (
     <form onSubmit={handleLogin}>
-      <h1>Log in to application</h1>
-      <div>
-        Username:{' '}
-        <input
+      <Typography
+        variant="h3"
+        sx={{
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          color: 'primary.dark',
+          m: '1rem 0 2rem 0',
+          textTransform: 'uppercase'
+        }}
+      >
+        Log in to application
+      </Typography>
+      <Box
+        sx={{
+          m: '1rem auto',
+          width: '25%',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <TextField
           id="username"
-          type="text"
           value={username}
+          label="Username"
           name="Username"
           onChange={({ target }) => setUsername(target.value)}
+          sx={{
+            mb: '1.5rem'
+          }}
         />
-      </div>
-      <div>
-        Password:{' '}
-        <input
+        <TextField
           id="password"
           type="password"
           value={password}
+          label="Password"
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
+          sx={{
+            mb: '1.5rem'
+          }}
         />
-      </div>
-      <button type="submit" id="login-btn">
-        Login
-      </button>
+        <Button
+          type="submit"
+          id="login-btn"
+          variant="outlined"
+        >
+          Login
+        </Button>
+      </Box>
     </form>
   );
 };
