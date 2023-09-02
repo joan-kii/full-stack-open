@@ -42,7 +42,6 @@ const App = () => {
         <Navigation />
         {actualUser && (
           <Container>
-            <Notification />
             <Routes>
               <Route path="/" element={<BlogsSection />} />
               <Route path="/users" element={<Users />} />
@@ -54,6 +53,7 @@ const App = () => {
         {!actualUser && (
           <LoginSection />
         )}
+        <Notification />
       </Router>
     </CssBaseline>
   );

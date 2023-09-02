@@ -2,6 +2,14 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import TextField from '@mui/material/TextField';
 
 import { showNotification } from '../reducers/notificationReducer';
 import { deleteBlog, likeBlog, newComment } from '../reducers/blogReducer';
@@ -59,40 +67,134 @@ const BlogDetails = () => {
 
   return (
     (blog && (
-    <div>
-      <h2>{blog.title} by {blog.author}</h2>
-      <a href="#">{blog.url}</a>
-      <div>
-        <p id="likes">
-          Likes: {blog.likes}{' '}
-          <button id="like-btn" type="button" onClick={() => handleLikes()}>
+    <>
+      <Box
+        sx={{
+          m: '2rem auto',
+          width: '50%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Typography
+          variant="h3"
+          color="primary.dark"
+          sx={{
+            mb: '1rem',
+            fontSize: '1.6rem',
+            fontWeight: 'bold'
+          }}
+        >
+          {blog.title} by {blog.author}
+        </Typography>
+        <Link href="#">{blog.url}</Link>
+        <Box>
+          <Typography
+            id="likes"
+            color="primary.dark"
+            mt={2}
+          >
+            Likes: {blog.likes}{' '}
+          </Typography>
+          <Button
+            id="like-btn"
+            variant="outlined"
+            color="success"
+            sx={{
+              mt: '1rem'
+            }}
+            onClick={() => handleLikes()}
+          >
             Like
-          </button>
-        </p>
-      </div>
-      <p>Added by {blog.user.name}</p>
-      {blog.user.id === actualUser.id && (
-        <button id="remove-btn" type="button" onClick={() => handleRemove()}>
-          Remove
-        </button>
-      )}
-      <h3>Comments</h3>
-      <form onSubmit={handleComment}>
-        <input
-          type="text"
-          value={comment}
-          name="comment"
-          onChange={({ target }) => setComment(target.value)}
-        />
-        <button type="submit">Add Comment</button>
-      </form>
-      <ul>
-        {blog.comments.map((comm) => {
-          const commentIndex = blog.comments.indexOf(comm);
-          return <li key={blog.id + commentIndex}>{comm}</li>;
-        })}
-      </ul>
-    </div>
+          </Button>
+        </Box>
+        <Typography
+          m={2}
+          color="primary.dark"
+        >
+          Added by {blog.user.name}
+        </Typography>
+        {blog.user.id === actualUser.id && (
+          <Button
+            id="remove-btn"
+            variant="outlined"
+            color="error"
+            onClick={() => handleRemove()}
+          >
+            Remove
+          </Button>
+        )}
+      </Box>
+      <Divider />
+      <Box
+        sx={{
+          m: '2rem auto',
+          width: '50%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Typography
+          variant="h3"
+          color="primary.dark"
+          sx={{
+            mb: '1rem',
+            fontSize: '1.6rem',
+            fontWeight: 'bold'
+          }}
+        >
+          Comments
+        </Typography>
+        <List>
+          {blog.comments.map((comm) => {
+            const commentIndex = blog.comments.indexOf(comm);
+            return <ListItem sx={{ color: 'primary.dark' }} key={blog.id + commentIndex}>{comm}</ListItem>;
+          })}
+        </List>
+        <form onSubmit={handleComment}>
+          <Box
+            sx={{
+              m: '2rem auto',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <Typography
+              variant="h5"
+              color="primary.dark"
+              sx={{
+                mb: '1rem',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              Add your comment
+            </Typography>
+            <TextField
+              value={comment}
+              name="comment"
+              label="Comment"
+              variant="outlined"
+              onChange={({ target }) => setComment(target.value)}
+            />
+            <Button
+              type="submit"
+              color="success"
+              variant="outlined"
+              sx={{
+                mt: '2rem'
+              }}
+            >
+              Add Comment
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </>
     ))
   );
 };

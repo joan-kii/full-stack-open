@@ -21,47 +21,52 @@ const Navigation = () => {
   return (
     <AppBar position="static" color="transparent">
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Box>
-          <Button
-            LinkComponent={Link}
-            to="/"
-            size="large"
-            variant="outlined"
-            sx={{ mr: '2rem' }}
-          >
-            Blogs
-          </Button>
-          <Button
-            LinkComponent={Link}
-            to="/users"
-            size="large"
-            variant="outlined"
-          >
-            Users
-          </Button>
-        </Box>
+        {actualUser && (
+          <Box>
+            <Button
+              LinkComponent={Link}
+              to="/"
+              size="large"
+              variant="outlined"
+              sx={{ mr: '2rem' }}
+            >
+              Blogs
+            </Button>
+            <Button
+              LinkComponent={Link}
+              to="/users"
+              size="large"
+              variant="outlined"
+            >
+              Users
+            </Button>
+          </Box>
+        )}
         <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-around' }}>
           {actualUser
             && (
-            <Typography
-              variant="overline"
-              sx={{
-                mt: '.5rem',
-                color: 'primary.dark',
-                fontSize: '.8rem'
-              }}
-            >
-              {actualUser.name} is logged in
-            </Typography>
+            <>
+              <Typography
+                variant="overline"
+                sx={{
+                  mt: '.5rem',
+                  color: 'primary.dark',
+                  fontSize: '.8rem'
+                }}
+              >
+                {actualUser.name} is logged in
+              </Typography>
+              <Button
+                id="logout-btn"
+                size="large"
+                variant="outlined"
+                color="error"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
             )}
-          <Button
-            id="logout-btn"
-            size="large"
-            variant="outlined"
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
         </Box>
       </Toolbar>
     </AppBar>

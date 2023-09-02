@@ -45,9 +45,11 @@ const Toggable = ({ showButtonLabel, hideButtonLabel, children }) => {
           <Button
             id="toggable-hide"
             variant="outlined"
+            color="error"
             onClick={toggleVisibility}
             sx={{
-              m: '0 auto'
+              m: '0 auto',
+              width: '25%'
             }}
           >
             {hideButtonLabel}

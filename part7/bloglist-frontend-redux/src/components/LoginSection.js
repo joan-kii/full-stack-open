@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -15,6 +16,7 @@ const LoginSection = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -30,6 +32,7 @@ const LoginSection = () => {
       localStorage.setItem('user', JSON.stringify(loggedUser));
       setUsername('');
       setPassword('');
+      navigate('/');
     } catch (error) {
       dispatch(showNotification({
         text: 'Wrong Username or Password',
