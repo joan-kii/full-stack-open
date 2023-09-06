@@ -109,7 +109,7 @@ const typeDefs = `
       author: String!
       published: Int!
       genres: [String!]!
-    ): Book!,
+    ): Book,
     editAuthor(
       name: String!
       setBornTo: Int!
@@ -136,6 +136,7 @@ const resolvers = {
   Mutation: {
     addBook: (_root, args) => {
       const newBook = { ...args, id: uuid() }
+      console.log(newBook);
       books = books.concat(newBook)
 
       if (!authors.find((author) => author.name === args.author)) {
