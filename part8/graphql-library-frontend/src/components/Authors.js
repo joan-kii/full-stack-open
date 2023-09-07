@@ -44,10 +44,18 @@ const Authors = ({ authors }) => {
         <h3>Set birthyear</h3>
         <div>
           Name
-          <input
-            value={name}
+          <select
+            value={authors.data.allAuthors[0]}
             onChange={({ target }) => setName(target.value)} 
-          />
+          >
+            {authors.data.allAuthors.map((a) => { //eslint-disable-line
+              return <option
+                key={a.name}
+                value={a.name}>
+                  {a.name}
+              </option>
+            })}
+          </select>
         </div>
         <div>
           Born
