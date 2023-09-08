@@ -6,7 +6,12 @@ const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 require('dotenv').config()
 
+const Book = require('./models/book')
+const Author = require('./models/author')
+
 const MONGODB_URI = process.env.MONGODB_URI
+
+console.log('connecting to MongoDB');
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
@@ -55,24 +60,28 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
-    allBooks: (_root, args) => {
-      if (Object.keys(args).length === 0) return books
-      if (args.author) return books.filter((book) => book.author === args.author)
-      if (args.genre) return books.filter((book) => book.genres.find((genre) => genre === args.genre))
+    bookCount: async () => Book.collection.countDocuments(),
+    authorCount: async () => Author.collection.countDocuments(),
+    allBooks: async (_root, args) => {
+      if (Object.keys(args).length === 0) return Book.find({})
+      if (args.author) return Book.findOne({ 'author.name': args.author })
+      if (args.genre) return Book.find({ genres: args.genre })
     },
-    allAuthors: () => {
+    allAuthors: async () => {
+      const authors = await Author.find({})
+      const books = await Book.find({}).populate('author')
       return authors.map((author) => {
-        const bookCount = books.filter((book) => book.author === author.name).length
-        return {...author, bookCount}
+        let bookCount = 0
+        for (const book of books) {
+          if (book.author.name === author.name) bookCount += 1
+        }
+        return { ...author._doc, bookCount }
       })
     }
   },
   Mutation: {
     addBook: (_root, args) => {
       const newBook = { ...args, id: uuid() }
-      console.log(newBook);
       books = books.concat(newBook)
 
       if (!authors.find((author) => author.name === args.author)) {

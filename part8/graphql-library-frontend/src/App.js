@@ -13,6 +13,7 @@ import { ALL_AUTHORS, ALL_BOOKS } from './queries'
 
 const App = () => {
   const authors = useQuery(ALL_AUTHORS)
+  console.log(authors);
   const books = useQuery(ALL_BOOKS)
 
   return (
