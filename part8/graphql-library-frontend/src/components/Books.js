@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 
 import { ALL_BOOKS, ALL_GENRES } from '../queries'
@@ -18,7 +18,7 @@ const Books = () => {
   return (
     <div>
       <h2>Books</h2>
-    <h3>{genre ? `In genre ${genre[0].toUpperCase() + genre.slice(1)}` : 'All Genres'}</h3>
+      <h3>{genre ? `In genre ${genre[0].toUpperCase() + genre.slice(1)}` : 'All Genres'}</h3>
       <table>
         <tbody>
           <tr>
