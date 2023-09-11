@@ -4,16 +4,34 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
+import { useQuery, useApolloClient } from '@apollo/client'
+import { useState } from 'react'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
-import { ALL_AUTHORS, ALL_BOOKS } from './queries'
+import LoginForm from './components/LoginForm'
+import Notify from './components/Notify'
+import { ALL_AUTHORS } from './queries'
 
 const App = () => {
   const authors = useQuery(ALL_AUTHORS)
-  const books = useQuery(ALL_BOOKS)
+  const [token, setToken] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('')
+  const client = useApolloClient()
+
+  const logout = () => {
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
+  }
+
+  const notify = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)
+  }
 
   return (
     <Router>
@@ -24,15 +42,27 @@ const App = () => {
         <Link to="/books">
           <button type="button">Books</button>
         </Link>
-        <Link to="/newbook">
-          <button type="button">New Book</button>
-        </Link>
+        {!token &&
+          <Link to="/login">
+            <button type="button">Login</button>
+          </Link>
+        }
+        {token &&
+          <>
+            <Link to="/newbook">
+              <button type="button">New Book</button>
+            </Link>
+            <button type="button" onClick={logout}>Logout</button>
+          </>
+        }
+        <Notify errorMessage={errorMessage} />
       </div>
 
       <Routes>
-        <Route path="/" element={<Authors authors={authors} />} />
-        <Route path="/books" element={<Books books={books} />} />
-        <Route path="/newbook" element={<NewBook />} />
+        <Route path="/" element={<Authors authors={authors} token={token} />} />
+        <Route path="/books" element={<Books />} />
+        <Route path="/newbook" element={token ? <NewBook /> : <Authors authors={authors} token={token} /> } />
+        <Route path="/login" element={<LoginForm setToken={setToken} setErrorMessage={notify} />} />
       </Routes>
     </Router>
   )

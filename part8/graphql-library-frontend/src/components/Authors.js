@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 
 import { ALL_AUTHORS, UPDATE_AUTHOR } from '../queries'
 
-const Authors = ({ authors }) => {
+const Authors = ({ authors, token }) => {
   const [name, setName] = useState('')
   const [birth, setBirth] = useState('')
   const [ updateAuthor ] = useMutation(UPDATE_AUTHOR, {
@@ -40,34 +40,36 @@ const Authors = ({ authors }) => {
           ))}
         </tbody>
       </table>
-      <form onSubmit={handleUpdateBirth}>
-        <h3>Set birthyear</h3>
-        <div>
-          Name
-          <select
-            value={authors.data.allAuthors[0]}
-            onChange={({ target }) => setName(target.value)} 
-          >
-            {authors.data.allAuthors.map((a) => { //eslint-disable-line
-              return <option
-                key={a.name}
-                value={a.name}>
-                  {a.name}
-              </option>
-            })}
-          </select>
-        </div>
-        <div>
-          Born
-          <input
-            value={birth}
-            onChange={({ target }) => setBirth(Number(target.value))} 
-          />
-        </div>
-        <div>
-          <button type="submit">update author</button>
-        </div>
-      </form>
+      { token &&
+        <form onSubmit={handleUpdateBirth}>
+          <h3>Set birthyear</h3>
+          <div>
+            Name
+            <select
+              value={authors.data.allAuthors[0]}
+              onChange={({ target }) => setName(target.value)} 
+            >
+              {authors.data.allAuthors.map((a) => { //eslint-disable-line
+                return <option
+                  key={a.name}
+                  value={a.name}>
+                    {a.name}
+                </option>
+              })}
+            </select>
+          </div>
+          <div>
+            Born
+            <input
+              value={birth}
+              onChange={({ target }) => setBirth(Number(target.value))} 
+            />
+          </div>
+          <div>
+            <button type="submit">update author</button>
+          </div>
+        </form>
+      }
     </div>
   )
 }
