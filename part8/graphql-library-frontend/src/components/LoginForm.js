@@ -9,14 +9,14 @@ const LoginForm = ({ setToken, setErrorMessage  }) => {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const [ login, result ] = useMutation(LOGIN, {
+  const [login, result] = useMutation(LOGIN, {
     onError: (error) => {
       setErrorMessage(error.graphQLErrors[0].message)
     }
   })
 
   useEffect(() => {
-    if ( result.data ) {
+    if (result.data) {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('user-token', token)
