@@ -13,14 +13,12 @@ import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Notify from './components/Notify'
 import Recommendation from './components/Recommendation'
-import { ALL_AUTHORS, ME, ALL_BOOKS } from './queries'
+import { ALL_AUTHORS, ME } from './queries'
 
 const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const user = useQuery(ME)
-  const books = useQuery(ALL_BOOKS, {
-    variables: { genre: user?.data?.me?.favouriteGenre }
-  })
+  
   const [token, setToken] = useState(localStorage.getItem('user-token'))
   const [errorMessage, setErrorMessage] = useState('')
   const client = useApolloClient()
@@ -69,7 +67,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Authors authors={authors} token={token} />} />
         <Route path="/books" element={<Books />} />
-        <Route path="/recommendation" element={<Recommendation user={user} books={books} />} />
+        <Route path="/recommendation" element={<Recommendation user={user} />} />
         <Route path="/newbook" element={token ? <NewBook /> : <Authors authors={authors} token={token} /> } />
         <Route path="/login" element={<LoginForm setToken={setToken} setErrorMessage={notify} />} />
       </Routes>

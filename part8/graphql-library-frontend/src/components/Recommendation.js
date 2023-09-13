@@ -1,6 +1,13 @@
-const Recommendation = ({ user, books }) => {
+import { useQuery } from '@apollo/client'
 
-  if (books.loading || user.loading) {
+import { ALL_BOOKS } from '../queries'
+
+const Recommendation = ({ user }) => {
+  const books = useQuery(ALL_BOOKS, {
+    variables: { genre: user.data?.me.favouriteGenre }
+  })
+
+  if (books.loading) {
     return <p>loading...</p>
   }
 
@@ -15,7 +22,7 @@ const Recommendation = ({ user, books }) => {
             <th>Author</th>
             <th>Published</th>
           </tr>
-          {books.data.allBooks.map((a) => (
+          { books.data.allBooks.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
