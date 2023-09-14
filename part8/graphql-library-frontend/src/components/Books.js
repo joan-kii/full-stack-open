@@ -4,14 +4,14 @@ import { useQuery } from '@apollo/client'
 import { ALL_BOOKS, ALL_GENRES } from '../queries'
 
 
-const Books = () => {
+const Books = ({ _books }) => {
   const [genre, setGenre] = useState('')
-  const books = useQuery(ALL_BOOKS, {
+  const booksGenre = useQuery(ALL_BOOKS, {
     variables: { genre }
   })
   const genres = useQuery(ALL_GENRES)
 
-  if (books.loading || genres.loading) {
+  if (genres.loading || booksGenre.loading) {
     return <p>loading...</p>
   }
 
@@ -26,7 +26,7 @@ const Books = () => {
             <th>Author</th>
             <th>Published</th>
           </tr>
-          {books.data.allBooks.map((a) => (
+          {booksGenre.data.allBooks.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
