@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import { ALL_BOOKS, ALL_GENRES } from '../queries'
 
 
-const Books = ({ _books }) => {
+const Books = () => {
   const [genre, setGenre] = useState('')
   const booksGenre = useQuery(ALL_BOOKS, {
     variables: { genre }

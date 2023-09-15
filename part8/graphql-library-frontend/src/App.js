@@ -13,11 +13,10 @@ import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Notify from './components/Notify'
 import Recommendation from './components/Recommendation'
-import { ALL_AUTHORS, ALL_BOOKS, ME } from './queries'
+import { ALL_AUTHORS, ME } from './queries'
 
 const App = () => {
   const authors = useQuery(ALL_AUTHORS)
-  const books = useQuery(ALL_BOOKS)
   const user = useQuery(ME)
   
   const [token, setToken] = useState(localStorage.getItem('user-token'))
@@ -67,7 +66,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Authors authors={authors} token={token} />} />
-        <Route path="/books" element={<Books books={books} />} />
+        <Route path="/books" element={<Books />} />
         <Route path="/recommendation" element={<Recommendation user={user} />} />
         <Route path="/newbook" element={token ? <NewBook /> : <Authors authors={authors} token={token} /> } />
         <Route path="/login" element={<LoginForm setToken={setToken} setErrorMessage={notify} />} />
