@@ -9,7 +9,7 @@ const Authors = ({ authors, token }) => {
   const [ updateAuthor ] = useMutation(UPDATE_AUTHOR, {
     refetchQueries: [{ query: ALL_AUTHORS }]
   })
-
+  
   if (authors.loading) {
     return <div>loading...</div>
   }

@@ -1,52 +1,31 @@
-import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 
+import BooksView from './BooksView'
+import BooksTable from './BooksTable'
 import { ALL_BOOKS, ALL_GENRES } from '../queries'
 
-
-const Books = () => {
-  const [genre, setGenre] = useState('')
+const Books = ({ books, genre, setGenre }) => {
   const booksGenre = useQuery(ALL_BOOKS, {
     variables: { genre }
   })
   const genres = useQuery(ALL_GENRES)
 
-  if (genres.loading || booksGenre.loading) {
+  if (genres.loading || booksGenre.loading || books.loading) {
     return <p>loading...</p>
   }
 
+  if (genre) {
+    return (
+      <BooksView genre={genre} setGenre={setGenre} genres={genres} >
+        <BooksTable booksList={booksGenre} />
+      </BooksView>
+    )
+  }
+  
   return (
-    <div>
-      <h2>Books</h2>
-      <h3>{genre ? `In genre ${genre[0].toUpperCase() + genre.slice(1)}` : 'All Genres'}</h3>
-      <table>
-        <tbody>
-          <tr>
-            <th></th>
-            <th>Author</th>
-            <th>Published</th>
-          </tr>
-          {booksGenre.data.allBooks.map((a) => (
-            <tr key={a.title}>
-              <td>{a.title}</td>
-              <td>{a.author.name}</td>
-              <td>{a.published}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {genres.data.allGenres.map((genre) => {
-        return (
-          <button 
-            type="button"
-            key={genre}
-            onClick={() => setGenre(genre)} >
-              {genre[0].toUpperCase() + genre.slice(1)}
-          </button>
-        )})
-      }
-      <button type="button" onClick={() => setGenre('')}>All Genres</button>
-    </div>
+    <BooksView genre={genre} setGenre={setGenre} genres={genres} >
+      <BooksTable booksList={books} />
+    </BooksView>
   )
 }
 

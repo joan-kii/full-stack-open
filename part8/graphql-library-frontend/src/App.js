@@ -4,8 +4,8 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import { useQuery, useApolloClient } from '@apollo/client'
-import { useState } from 'react'
+import { useQuery, useLazyQuery, useSubscription, useApolloClient } from '@apollo/client'
+import { useState, useEffect } from 'react'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -13,15 +13,50 @@ import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Notify from './components/Notify'
 import Recommendation from './components/Recommendation'
-import { ALL_AUTHORS, ME } from './queries'
+import { ALL_AUTHORS, ME, BOOK_ADDED, ALL_BOOKS } from './queries'
+
+export const updateCache = (cache, query, bookAdded) => {
+  const uniqByName = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.title
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allBooks: uniqByName(allBooks.concat(bookAdded)),
+    }
+  })
+}
 
 const App = () => {
-  const authors = useQuery(ALL_AUTHORS)
-  const user = useQuery(ME)
-  
   const [token, setToken] = useState(localStorage.getItem('user-token'))
   const [errorMessage, setErrorMessage] = useState('')
+  const [genre, setGenre] = useState('')
   const client = useApolloClient()
+
+  const authors = useQuery(ALL_AUTHORS)
+  const books = useQuery(ALL_BOOKS)
+  const user = useQuery(ME)
+  const [loadGenreBooks, favouriteGenreBooks] = useLazyQuery(ALL_BOOKS, {
+    variables: { genre: user.data?.me?.favouriteGenre }
+  })
+
+  useEffect(() => {
+    loadGenreBooks()
+  },[loadGenreBooks, user.loading])
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      const { title, author } = data.data.bookAdded 
+      alert(`${title} by ${author.name} added to library!`)
+      for (const bookGenre of data.data.bookAdded.genres){
+        updateCache(client.cache, { query: ALL_BOOKS, variables: { genre: bookGenre } }, data.data.bookAdded)
+      }
+    }
+  })
 
   const logout = () => {
     setToken(null)
@@ -66,8 +101,8 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Authors authors={authors} token={token} />} />
-        <Route path="/books" element={<Books />} />
-        <Route path="/recommendation" element={<Recommendation user={user} />} />
+        <Route path="/books" element={<Books books={books} genre={genre} setGenre={setGenre} />} />
+        <Route path="/recommendation" element={<Recommendation user={user} books={favouriteGenreBooks} />} />
         <Route path="/newbook" element={token ? <NewBook /> : <Authors authors={authors} token={token} /> } />
         <Route path="/login" element={<LoginForm setToken={setToken} setErrorMessage={notify} />} />
       </Routes>
