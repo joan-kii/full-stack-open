@@ -23,7 +23,7 @@ export const updateCache = (cache, query, bookAdded) => {
       return seen.has(k) ? false : seen.add(k)
     })
   }
-
+  
   cache.updateQuery(query, ({ allBooks }) => {
     return {
       allBooks: uniqByName(allBooks.concat(bookAdded)),
@@ -51,10 +51,11 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
       const { title, author } = data.data.bookAdded 
-      alert(`${title} by ${author.name} added to library!`)
-      for (const bookGenre of data.data.bookAdded.genres){
+      updateCache(client.cache, { query: ALL_BOOKS }, data.data.bookAdded)
+      for (const bookGenre of data.data.bookAdded.genres) {
         updateCache(client.cache, { query: ALL_BOOKS, variables: { genre: bookGenre } }, data.data.bookAdded)
       }
+      alert(`${title} by ${author.name} added to library!`)
     }
   })
 
@@ -70,7 +71,7 @@ const App = () => {
       setErrorMessage(null)
     }, 5000)
   }
-
+  
   return (
     <Router>
       <div>
@@ -103,7 +104,7 @@ const App = () => {
         <Route path="/" element={<Authors authors={authors} token={token} />} />
         <Route path="/books" element={<Books books={books} genre={genre} setGenre={setGenre} />} />
         <Route path="/recommendation" element={<Recommendation user={user} books={favouriteGenreBooks} />} />
-        <Route path="/newbook" element={token ? <NewBook /> : <Authors authors={authors} token={token} /> } />
+        <Route path="/newbook" element={token ? <NewBook user={user} /> : <Authors authors={authors} token={token} /> } />
         <Route path="/login" element={<LoginForm setToken={setToken} setErrorMessage={notify} />} />
       </Routes>
     </Router>

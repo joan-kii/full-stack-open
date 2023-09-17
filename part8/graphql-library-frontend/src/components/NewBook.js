@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client'
 import { ALL_AUTHORS, ALL_BOOKS, CREATE_BOOK } from '../queries'
 import { updateCache } from '../App'
 
-const NewBook = () => {
+const NewBook = ({ user }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState('')
@@ -14,7 +14,7 @@ const NewBook = () => {
     refetchQueries: [{ query: ALL_AUTHORS }],
     update: (cache, response) => {
       updateCache(cache, { query: ALL_BOOKS }, response.data.addBook)
-      updateCache(cache, { query: ALL_BOOKS, variables: { genre } }, response.data.addBook)
+      updateCache(cache, { query: ALL_BOOKS, variables: { genre: user.data.me.favouriteGenre } }, response.data.addBook)
     },
   })
 
