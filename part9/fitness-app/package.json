@@ -1,0 +1,12 @@
+{
+  "name": "fitness-app",
+  "version": "1.0.0",
+  "description": "full stack open TypeScript course exercise",
+  "main": "bmiCalculator.ts",
+  "scripts": {
+    "ts-node": "ts-node",
+    "calculateBmi": "ts-node bmiCalculator.ts"
+  },
+  "author": "joankii",
+  "license": "ISC"
+}
