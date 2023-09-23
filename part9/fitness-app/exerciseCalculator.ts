@@ -22,7 +22,7 @@ const parseExerciseArguments = (args: string[]): BodyExerciseValues => {
   };
   
   if (!isNaN(Number(args[2]))) {
-    validValues.targetAmount = Number(args[2])
+    validValues.targetAmount = Number(args[2]);
   } else {
     throw new Error('Provided target was not valid!');
   }
@@ -36,7 +36,7 @@ const parseExerciseArguments = (args: string[]): BodyExerciseValues => {
   return validValues;
 };
 
-const calculateExercises = (targetAmount: number, dailyExerciseHours: number[]) : Results => {  
+export const calculateExercises = (targetAmount: number, dailyExerciseHours: number[]) : Results => {  
   const periodLength = dailyExerciseHours.length;
   const trainingDays = dailyExerciseHours.filter((day) => day > 0).length;
   const average = dailyExerciseHours.reduce((acc, day) => acc += day) / periodLength;
@@ -68,14 +68,14 @@ const calculateExercises = (targetAmount: number, dailyExerciseHours: number[]) 
     ratingDescription,
     target: targetAmount,
     average
-  }
+  };
 };
 
 try {
   const { targetAmount, dailyExerciseHours } = parseExerciseArguments(process.argv);
   console.log(calculateExercises(targetAmount, dailyExerciseHours));
 } catch (error: unknown) {
-  let errorMessage = 'Something bad happened.'
+  let errorMessage = 'Something bad happened.';
   if (error instanceof Error) {
     errorMessage += ' Error: ' + error.message;
   }
