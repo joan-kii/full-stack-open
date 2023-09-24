@@ -36,7 +36,7 @@ const parseExerciseArguments = (args: string[]): BodyExerciseValues => {
   return validValues;
 };
 
-export const calculateExercises = (targetAmount: number, dailyExerciseHours: number[]) : Results => {  
+export const calculateExercises = (targetAmount: number, dailyExerciseHours: number[]) : Results => {
   const periodLength = dailyExerciseHours.length;
   const trainingDays = dailyExerciseHours.filter((day) => day > 0).length;
   const average = dailyExerciseHours.reduce((acc, day) => acc += day) / periodLength;
