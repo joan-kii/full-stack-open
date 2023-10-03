@@ -11,3 +11,9 @@ export const getAllDiaryEntries = () => {
       return res.data;
     });
 };
+
+export const createEntry = (entryToAdd: DiaryEntry) => {
+  return axios
+    .post<DiaryEntry>(baseUrl + '/diaries', entryToAdd)
+    .then((res) => res.data)
+}
