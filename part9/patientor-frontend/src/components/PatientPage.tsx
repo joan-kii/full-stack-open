@@ -4,10 +4,14 @@ import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 
-import { Patient } from '../types';
+import { Diagnosis, Entry, Patient } from '../types';
 import patientService from '../services/patients';
 
-const PatientPage = () => {
+interface Props {
+  diagnoses: Diagnosis[]
+}
+
+const PatientPage = ({ diagnoses }: Props) => {
   const { userId } = useParams<string>();
   const [patient, setPatient] = useState<Patient>();
 
@@ -21,7 +25,6 @@ const PatientPage = () => {
 
     fetchPatient();
   }, [userId])
-  console.log(patient);
   
   return (
     <div>
@@ -32,6 +35,26 @@ const PatientPage = () => {
       </h3>
       <p><b>S.S.N.:</b> {patient?.ssn}</p>
       <p><b>Occupation:</b> {patient?.occupation}</p>
+      {patient && patient.entries.length > 0 && <h3>Entries</h3>}
+      {patient?.entries.map((entry: Entry) => {
+        return (
+          <div key={entry.id}>
+            <p>{entry.date}</p>
+            <p>{entry.description}</p>
+            <ul>
+              {entry.diagnosisCodes?.map((code) => {
+                return diagnoses.map((diagnosis) => {
+                  if (diagnosis.code === code) {
+                    return <li key={diagnosis.code}>{code} {diagnosis.name}</li>;
+                  }
+
+                  return null;
+                })
+              })}
+            </ul>
+          </div>
+        )
+      })}
     </div>
   );
 };
