@@ -4,16 +4,15 @@ import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 
-import { Diagnosis, Entry, Patient } from '../types';
-import patientService from '../services/patients';
+import { Entry, Patient, Diagnosis } from '../../types';
+import patientService from '../../services/patients';
+import diagnosesService from '../../services/diagnoses';
+import PatientDetails from './PatientDetails';
 
-interface Props {
-  diagnoses: Diagnosis[]
-}
-
-const PatientPage = ({ diagnoses }: Props) => {
+const PatientPage = () => {
   const { userId } = useParams<string>();
   const [patient, setPatient] = useState<Patient>();
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -22,8 +21,13 @@ const PatientPage = ({ diagnoses }: Props) => {
         setPatient(patientData);
       }
     };
+    void fetchPatient();
 
-    fetchPatient();
+    const fetchDiagnosesList = async () => {
+      const diagnoses = await diagnosesService.getAll();
+      setDiagnoses(diagnoses);
+    };
+    void fetchDiagnosesList();
   }, [userId])
   
   return (
@@ -38,21 +42,7 @@ const PatientPage = ({ diagnoses }: Props) => {
       {patient && patient.entries.length > 0 && <h3>Entries</h3>}
       {patient?.entries.map((entry: Entry) => {
         return (
-          <div key={entry.id}>
-            <p>{entry.date}</p>
-            <p>{entry.description}</p>
-            <ul>
-              {entry.diagnosisCodes?.map((code) => {
-                return diagnoses.map((diagnosis) => {
-                  if (diagnosis.code === code) {
-                    return <li key={diagnosis.code}>{code} {diagnosis.name}</li>;
-                  }
-
-                  return null;
-                })
-              })}
-            </ul>
-          </div>
+          <PatientDetails key={entry.id} entry={entry} diagnoses={diagnoses} />
         )
       })}
     </div>
