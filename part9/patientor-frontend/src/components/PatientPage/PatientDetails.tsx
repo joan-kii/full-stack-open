@@ -10,8 +10,6 @@ interface Props {
 }
 
 const PatientDetails = ({ entry, diagnoses }: Props) => {
-  console.log(entry.type);
-  
   switch (entry.type) {
     case 'Hospital':
       return <HospitalEntry entry={entry} diagnoses={diagnoses} />;

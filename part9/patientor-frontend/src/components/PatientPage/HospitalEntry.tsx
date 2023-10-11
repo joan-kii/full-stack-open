@@ -5,11 +5,16 @@ interface Props {
   diagnoses: Diagnosis[];
 }
 
+const styles = {
+  border: 'solid black 1px',
+  borderRadius: '10px',
+  marginBottom: '1rem',
+  padding: '.5rem'
+};
+
 const HospitalEntry = ({ entry, diagnoses }: Props) => {
-  console.log(entry);
-  
   return (
-    <div style={{ border: 'solid black 1px', borderRadius: '10px' }}>
+    <div style={ styles }>
       <p>{entry.date}</p>
       <p>{entry.description}</p>
       <ul>

@@ -1,3 +1,5 @@
+import WorkIcon from '@mui/icons-material/Work';
+
 import { Entry, Diagnosis } from '../../types';
 
 interface Props {
@@ -5,9 +7,17 @@ interface Props {
   diagnoses: Diagnosis[];
 }
 
+const styles = {
+  border: 'solid black 1px',
+  borderRadius: '10px',
+  marginBottom: '1rem',
+  padding: '.5rem'
+};
+
 const OccupationalHealthcare = ({ entry, diagnoses }: Props) => {
   return (
-    <div>
+    <div style={ styles }>
+      <WorkIcon />
       <p>{entry.date}</p>
       <p>{entry.description}</p>
       <ul>
@@ -21,6 +31,7 @@ const OccupationalHealthcare = ({ entry, diagnoses }: Props) => {
           })
         })}
       </ul>
+      <p>Diagnosed by: {entry.specialist}</p>
     </div>
   );
 };
