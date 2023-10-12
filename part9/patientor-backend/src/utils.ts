@@ -1,7 +1,9 @@
 import {
   NewPatient,
   Gender,
-  Entry
+  Entry,
+  Diagnosis,
+  EntryWithoutId
 } from "./types";
 
 const isString = (text: unknown): text is string => {
@@ -57,6 +59,22 @@ const parseEntry = (object: unknown): Entry[] => {
   return object as Entry[];
 };
 
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
+  if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+    return [] as Array<Diagnosis['code']>;
+  }
+
+  return object.diagnosisCodes as Array<Diagnosis['code']>;
+};
+
+const parseHealthCheckRating = (rating: unknown): number => {
+  if (!rating || typeof Number(rating) !== 'number') {
+    throw new Error(`Value of healthCheckRating incorrect: ${rating}`);
+  }
+
+  return Number(rating);
+};
+
 const toNewPatient = (object: unknown): NewPatient => {
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data.');
@@ -78,4 +96,28 @@ const toNewPatient = (object: unknown): NewPatient => {
   throw new Error('Incorrect data: some fields are missing');
 };
 
-export default toNewPatient;
+const toNewEntry = (object: unknown): EntryWithoutId => {
+  if (!object || typeof object !== 'object') {
+    throw new Error('Incorrect or missing data.');
+  }
+
+  if ('date' in object && 'specialist' in object && 'description' in object && 'diagnosisCodes' in object && 'healthCheckRating' in object) { 
+    console.log(object);
+    const newEntry = {
+      date: parseDate(object.date),
+      specialist: parseField(object.specialist),
+      description: parseField(object.description),
+      diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
+      healthCheckRating: parseHealthCheckRating(object.healthCheckRating)
+    };
+
+    return newEntry as EntryWithoutId;
+  }
+
+  throw new Error('Incorrect data: some fields are missing');
+};
+
+export {
+  toNewPatient,
+  toNewEntry
+};

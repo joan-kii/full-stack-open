@@ -1,28 +1,14 @@
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { HealthCheckEntry, Diagnosis } from '../../types';
+import { HealthCheckEntry } from '../../types';
+import { styles, colours } from '../../styles';
 
 interface Props {
   entry: HealthCheckEntry;
-  diagnoses: Diagnosis[];
 }
 
-const styles = {
-  border: 'solid black 1px',
-  borderRadius: '10px',
-  marginBottom: '1rem',
-  padding: '.5rem'
-};
-
-const colours = {
-  good: 'green',
-  medium: 'yellow',
-  bad: 'orange',
-  alert: 'red'
-};
-
-const HealthCheck = ({ entry, diagnoses }: Props) => {
+const HealthCheck = ({ entry }: Props) => {
   let healthRating = colours.good;
   switch (entry.healthCheckRating) {
     case 1:
@@ -44,17 +30,6 @@ const HealthCheck = ({ entry, diagnoses }: Props) => {
       <p>{entry.date}</p>
       <p>{entry.description}</p>
       <FavoriteIcon sx={{ color: healthRating }} />
-      <ul>
-        {entry.diagnosisCodes?.map((code: Diagnosis['code']) => {
-          return diagnoses.map((diagnosis) => {
-            if (diagnosis.code === code) {
-              <p>{code}</p>
-            }
-
-            return null;
-          })
-        })}
-      </ul>
       <p>Diagnosed by: {entry.specialist}</p>
     </div>
   );

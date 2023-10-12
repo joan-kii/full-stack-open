@@ -1,39 +1,34 @@
-import WorkIcon from '@mui/icons-material/Work';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-import { Entry, Diagnosis } from '../../types';
+import { HospitalEntry, Diagnosis } from '../../types';
+import { styles } from '../../styles';
 
 interface Props {
-  entry: Entry;
+  entry: HospitalEntry;
   diagnoses: Diagnosis[];
 }
 
-const styles = {
-  border: 'solid black 1px',
-  borderRadius: '10px',
-  marginBottom: '1rem',
-  padding: '.5rem'
-};
-
-const OccupationalHealthcare = ({ entry, diagnoses }: Props) => {
+const Hospital = ({ entry, diagnoses }: Props) => {
   return (
     <div style={ styles }>
-      <WorkIcon />
+      <LocalHospitalIcon />
       <p>{entry.date}</p>
       <p>{entry.description}</p>
       <ul>
         {entry.diagnosisCodes?.map((code: Diagnosis['code']) => {
           return diagnoses.map((diagnosis) => {
             if (diagnosis.code === code) {
-              <p>{code}</p>
+              return <li key={code}>{code}: {diagnosis.name}</li>
             }
-
             return null;
           })
         })}
       </ul>
+      <h4>Discharge: </h4>
+      <p>{entry.discharge.date} - {entry.discharge.criteria}</p>
       <p>Diagnosed by: {entry.specialist}</p>
     </div>
   );
 };
 
-export default OccupationalHealthcare;
+export default Hospital;
