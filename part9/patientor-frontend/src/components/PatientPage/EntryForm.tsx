@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TextField, Button, Alert } from '@mui/material';
 
 import { Patient, Entry, HealthCheckEntry } from '../../types';
 import patientService from '../../services/patients';
@@ -11,29 +12,9 @@ const EntryForm = ({ patient }: Props) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
-  const [healthCheckRating, setHealthCheckRating] = useState(0);
-  /* const [diagnosisCodes, setDiagnosisCodes] = useState([]); */
+  const [healthCheckRating, setHealthCheckRating] = useState('');
+  const [diagnosisCodesList, setDiagnosisCodesList] = useState('');
   const [error, setError] = useState('');
-
-  const onDescriptionChange = (description: string) => {
-    setDescription(description);
-  };
-
-  const onDateChange = (date: string) => {
-    setDate(date);
-  };
-
-  const onSpecialistChange = (specialist: string) => {
-    setSpecialist(specialist);
-  };
-
-  const onHealthCheckRatingChange = (healthRating: string) => {
-    setHealthCheckRating(Number(healthRating));
-  };
-
-  /* const onDiagnosisCodeChange = (diagnosisCode: string) => {
-    setDiagnosisCodes(diagnosisCodes.push(diagnosisCode));
-  }; */
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -42,8 +23,8 @@ const EntryForm = ({ patient }: Props) => {
       description,
       date,
       specialist,
-      healthCheckRating,
-      /* diagnosisCodes */
+      healthCheckRating: Number(healthCheckRating),
+      diagnosisCodes: diagnosisCodesList.split(', ')
     };
 
     patientService.createEntry(newEntry, patient.id)
@@ -57,16 +38,59 @@ const EntryForm = ({ patient }: Props) => {
     setDescription('');
     setDate('');
     setSpecialist('');
-    setHealthCheckRating(0);
-    /* setDiagnosisCodes([]); */
+    setHealthCheckRating('');
+    setDiagnosisCodesList('');
   };
-
+  console.log(patient);
+  
   return (
     <>
-      <h3>New HealthCheck Entry</h3>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit} style={{ border: 'dot' }}>
-      </form>
+      {error && <Alert severity="error">{error}</Alert>}
+      <form onSubmit={handleSubmit} style={{ border: 'dotted', padding: '1rem' }}>
+        <h3>New HealthCheck Entry</h3>
+        <TextField
+            label="Description"
+            fullWidth
+            margin="normal"
+            value={description}
+            onChange={({ target }) => setDescription(target.value)}
+          />
+          <TextField
+            label="Date"
+            fullWidth 
+            margin="normal"
+            value={date}
+            onChange={({ target }) => setDate(target.value)}
+          />
+          <TextField
+            label="Specialist"
+            fullWidth
+            margin="normal"
+            value={specialist}
+            onChange={({ target }) => setSpecialist(target.value)}
+          />
+          <TextField
+            label="Health Check Rating"
+            fullWidth
+            margin="normal"
+            value={healthCheckRating}
+            defaultValue=""
+            onChange={({ target }) => setHealthCheckRating(target.value)}
+          />
+          <TextField
+            label="Diagnosis Codes"
+            fullWidth
+            margin="normal"
+            value={diagnosisCodesList}
+            onChange={({ target }) => setDiagnosisCodesList(target.value)}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+          >
+            Add
+          </Button>
+        </form>
     </>
   )
 };
