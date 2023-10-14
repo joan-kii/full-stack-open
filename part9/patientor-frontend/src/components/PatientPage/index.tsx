@@ -8,7 +8,7 @@ import { Entry, Patient, Diagnosis } from '../../types';
 import patientService from '../../services/patients';
 import diagnosesService from '../../services/diagnoses';
 import PatientDetails from './PatientDetails';
-import EntryForm from './EntryFormTypes/HealthCheckForm';
+import EntryForm from './EntryForm';
 
 const PatientPage = () => {
   const { userId } = useParams<string>();

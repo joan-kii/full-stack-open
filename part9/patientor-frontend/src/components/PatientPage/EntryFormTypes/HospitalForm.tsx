@@ -5,7 +5,7 @@ interface Props {
   setHealthCheckRating: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const HealthCheckForm = ({ healthCheckRating, setHealthCheckRating }: Props) => {
+const HopitalForm = ({ healthCheckRating, setHealthCheckRating }: Props) => {
   return (
     <>
       <TextField
@@ -19,4 +19,4 @@ const HealthCheckForm = ({ healthCheckRating, setHealthCheckRating }: Props) => 
   )
 };
 
-export default HealthCheckForm;
+export default HopitalForm;
