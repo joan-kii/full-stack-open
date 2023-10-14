@@ -8,7 +8,7 @@ import { Entry, Patient, Diagnosis } from '../../types';
 import patientService from '../../services/patients';
 import diagnosesService from '../../services/diagnoses';
 import PatientDetails from './PatientDetails';
-import EntryForm from './EntryForm';
+import EntryForm from './EntryFormTypes/HealthCheckForm';
 
 const PatientPage = () => {
   const { userId } = useParams<string>();
@@ -30,6 +30,13 @@ const PatientPage = () => {
     };
     void fetchDiagnosesList();
   }, [userId])
+
+  const updatePatient = (newEntry: Entry): void => {
+    const updatedEntries = patient?.entries.concat(newEntry);
+    if (patient?.entries !== undefined) {
+      setPatient({ ...patient, entries: updatedEntries as Entry[] });
+    }
+  };
   
   return (
     <div>
@@ -40,7 +47,7 @@ const PatientPage = () => {
       </h3>
       <p><b>S.S.N.:</b> {patient?.ssn}</p>
       <p><b>Occupation:</b> {patient?.occupation}</p>
-      {patient && <EntryForm patient={patient} />}
+      {patient && <EntryForm patient={patient} updatePatient={updatePatient} />}
       {patient && patient.entries.length > 0 && <h3>Entries</h3>}
       {patient?.entries.map((entry: Entry) => {
         return (

@@ -1,8 +1,8 @@
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { HealthCheckEntry } from '../../types';
-import { styles, colours } from '../../styles';
+import { HealthCheckEntry } from '../../../types';
+import { styles, colours } from '../../../styles';
 
 interface Props {
   entry: HealthCheckEntry;

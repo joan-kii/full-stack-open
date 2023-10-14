@@ -1,7 +1,7 @@
 import { Entry, Diagnosis } from '../../types';
-import Hospital from './Hospital';
-import OccupationalHealthcare from './OccupationalHealthcare';
-import HealthCheck from './HealthCheck';
+import Hospital from './EntryType/Hospital';
+import OccupationalHealthcare from './EntryType/OccupationalHealthcare';
+import HealthCheck from './EntryType/HealthCheck';
 import { assertNever } from '../../helpers';
 
 interface Props {

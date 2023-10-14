@@ -1,7 +1,7 @@
 import WorkIcon from '@mui/icons-material/Work';
 
-import { OccupationalHealthcareEntry, Diagnosis } from '../../types';
-import { styles } from '../../styles';
+import { OccupationalHealthcareEntry, Diagnosis } from '../../../types';
+import { styles } from '../../../styles';
 
 interface Props {
   entry: OccupationalHealthcareEntry;

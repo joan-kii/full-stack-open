@@ -2,6 +2,7 @@ import {
   NewPatient,
   Gender,
   Entry,
+  EntryType,
   Diagnosis,
   EntryWithoutId
 } from "./types";
@@ -68,11 +69,19 @@ const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
 };
 
 const parseHealthCheckRating = (rating: unknown): number => {
-  if (!rating || typeof Number(rating) !== 'number') {
+  if (!rating || typeof Number(rating) !== 'number' || Number(rating) < 0 || Number(rating) > 3) {
     throw new Error(`Value of healthCheckRating incorrect: ${rating}`);
   }
 
   return Number(rating);
+};
+
+const parseType = (type: unknown): EntryType => {
+  if (!type || typeof type !== 'string') {
+    throw new Error(`Value of Entry Type incorrect: ${type}`);
+  }
+
+  return type as EntryType;
 };
 
 const toNewPatient = (object: unknown): NewPatient => {
@@ -101,13 +110,13 @@ const toNewEntry = (object: unknown): EntryWithoutId => {
     throw new Error('Incorrect or missing data.');
   }
 
-  if ('date' in object && 'specialist' in object && 'description' in object && 'diagnosisCodes' in object && 'healthCheckRating' in object) { 
-    console.log(object);
+  if ('date' in object && 'specialist' in object && 'description' in object && 'diagnosisCodes' in object && 'healthCheckRating' in object && 'type' in object) {
     const newEntry = {
+      type: parseType(object.type),
       date: parseDate(object.date),
       specialist: parseField(object.specialist),
       description: parseField(object.description),
-      diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
+      diagnosisCodes: parseDiagnosisCodes(object),
       healthCheckRating: parseHealthCheckRating(object.healthCheckRating)
     };
 

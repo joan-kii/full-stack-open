@@ -1,7 +1,7 @@
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-import { HospitalEntry, Diagnosis } from '../../types';
-import { styles } from '../../styles';
+import { HospitalEntry, Diagnosis } from '../../../types';
+import { styles } from '../../../styles';
 
 interface Props {
   entry: HospitalEntry;
