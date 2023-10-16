@@ -7,7 +7,11 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
-  FormLabel
+  FormLabel,
+  Select,
+  MenuItem,
+  InputLabel,
+  SelectChangeEvent
 } from '@mui/material';
 
 import {
@@ -18,7 +22,8 @@ import {
   HospitalEntry,
   OccupationalHealthcareEntry,
   Discharge,
-  SickLeave
+  SickLeave,
+  Diagnosis
 } from '../../types';
 import HealthCheckForm from './EntryFormTypes/HealthCheckForm';
 import HospitalForm from './EntryFormTypes/HospitalForm';
@@ -26,15 +31,16 @@ import OccupationalHealthcareForm from './EntryFormTypes/OccupationalHealthcareF
 import patientService from '../../services/patients';
 
 interface Props {
+  diagnoses: Diagnosis[],
   patient: Patient;
   updatePatient: (newEntry: Entry) => void;
 }
 
-const EntryForm = ({ patient, updatePatient }: Props) => {
+const EntryForm = ({ diagnoses, patient, updatePatient }: Props) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
-  const [diagnosisCodesList, setDiagnosisCodesList] = useState('');
+  const [diagnosisCodesList, setDiagnosisCodesList] = useState<string[]>([]);
   const [entryType, setEntryType] = useState('HealthCheck');
   const [healthCheckRating, setHealthCheckRating] = useState('');
   const [discharge, setDischarge] = useState<Discharge>({ date: '', criteria: '' } as Discharge);
@@ -48,7 +54,7 @@ const EntryForm = ({ patient, updatePatient }: Props) => {
       description,
       date,
       specialist,
-      diagnosisCodes: diagnosisCodesList.split(', '),
+      diagnosisCodes: diagnosisCodesList
     } as EntryWithoutId;
     
     switch (entryType) {
@@ -98,7 +104,11 @@ const EntryForm = ({ patient, updatePatient }: Props) => {
     setDescription('');
     setDate('');
     setSpecialist('');
-    setDiagnosisCodesList('');
+    setDiagnosisCodesList([]);
+  };
+
+  const handleDiagnosisCodes = (event: SelectChangeEvent<typeof diagnosisCodesList>) => {
+    setDiagnosisCodesList(diagnosisCodesList.concat(event.target.value));
   };
 
   return (
@@ -124,9 +134,11 @@ const EntryForm = ({ patient, updatePatient }: Props) => {
             onChange={({ target }) => setDescription(target.value)}
           />
           <TextField
+            InputLabelProps={{ shrink: true }}
+            type="date"
             label="Date"
-            fullWidth 
-            margin="normal"
+            margin="dense"
+            fullWidth
             value={date}
             onChange={({ target }) => setDate(target.value)}
           />
@@ -137,13 +149,27 @@ const EntryForm = ({ patient, updatePatient }: Props) => {
             value={specialist}
             onChange={({ target }) => setSpecialist(target.value)}
           />
-          <TextField
-            label="Diagnosis Codes"
+          <InputLabel id="diagnosisCodes">Diagnosis Codes</InputLabel>
+          <Select
+            labelId="diagnosisCodes"
+            id="diagnosisCodes"
+            multiple
             fullWidth
-            margin="normal"
+            margin="dense"
             value={diagnosisCodesList}
-            onChange={({ target }) => setDiagnosisCodesList(target.value)}
-          />
+            onChange={handleDiagnosisCodes}
+          >
+            {diagnoses.map((diagnoses) => {
+              return (
+                <MenuItem
+                  key={diagnoses.code}
+                  value={diagnoses.code}
+                >
+                  {diagnoses.code}
+                </MenuItem>
+              )
+            })}
+          </Select>
           {entryType === 'HealthCheck' &&
             <HealthCheckForm healthCheckRating={healthCheckRating} setHealthCheckRating={setHealthCheckRating} />
           }
@@ -159,6 +185,7 @@ const EntryForm = ({ patient, updatePatient }: Props) => {
             />
           }
           <Button
+            sx={{ marginTop: '2rem' }}
             type="submit"
             variant="contained"
           >

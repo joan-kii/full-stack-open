@@ -11,9 +11,11 @@ const HopitalForm = ({ discharge, setDischarge }: Props) => {
   return (
     <>
       <TextField
+        InputLabelProps={{ shrink: true }}
+        type="date"
         label="Discharge Date"
         fullWidth
-        margin="normal"
+        margin="dense"
         value={discharge.date}
         onChange={({ target }) => setDischarge({ ...discharge, date: target.value })}
       />

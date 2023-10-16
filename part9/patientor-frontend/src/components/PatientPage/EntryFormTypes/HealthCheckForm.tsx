@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { Select, MenuItem, InputLabel } from '@mui/material';
 
 interface Props {
   healthCheckRating: string;
@@ -8,13 +8,20 @@ interface Props {
 const HealthCheckForm = ({ healthCheckRating, setHealthCheckRating }: Props) => {
   return (
     <>
-      <TextField
-        label="Health Check Rating"
+      <InputLabel id="healthCheckRating">Health Check Rating</InputLabel>
+      <Select
+        labelId="healthCheckRating"
+        id="healthCheckRating"
         fullWidth
-        margin="normal"
+        margin="dense"
         value={healthCheckRating}
         onChange={({ target }) => setHealthCheckRating(target.value)}
-      />
+      >
+        <MenuItem value={0}>0</MenuItem>
+        <MenuItem value={1}>1</MenuItem>
+        <MenuItem value={2}>2</MenuItem>
+        <MenuItem value={3}>3</MenuItem>
+      </Select>
     </>
   )
 };

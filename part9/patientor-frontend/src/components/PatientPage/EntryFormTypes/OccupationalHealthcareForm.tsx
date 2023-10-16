@@ -25,6 +25,8 @@ const OccupationalHealthcareForm = ({
         onChange={({ target }) => setEmployerName(target.value)}
       />
       <TextField
+        InputLabelProps={{ shrink: true }}
+        type="date"
         label="Start Date"
         fullWidth
         margin="normal"
@@ -32,6 +34,8 @@ const OccupationalHealthcareForm = ({
         onChange={({ target }) => setSickLeave({ ...sickLeave, startDate: target.value })}
       />
       <TextField
+        InputLabelProps={{ shrink: true }}
+        type="date"
         label="End Date"
         fullWidth
         margin="normal"

@@ -47,7 +47,7 @@ const PatientPage = () => {
       </h3>
       <p><b>S.S.N.:</b> {patient?.ssn}</p>
       <p><b>Occupation:</b> {patient?.occupation}</p>
-      {patient && <EntryForm patient={patient} updatePatient={updatePatient} />}
+      {patient && <EntryForm diagnoses={diagnoses} patient={patient} updatePatient={updatePatient} />}
       {patient && patient.entries.length > 0 && <h3>Entries</h3>}
       {patient?.entries.map((entry: Entry) => {
         return (
