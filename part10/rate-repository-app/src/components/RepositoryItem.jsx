@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import Text from './Text';
 import RepositoryItemHeader from './RepositoryItemHeader';
+import RepositoryItemStats from './RepositoryItemStats';
 
 const styles = StyleSheet.create({
   card: {
@@ -16,10 +16,7 @@ const RepositoryItem = ({ item }) => {
   return (
     <View style={styles.card}>
       <RepositoryItemHeader item={item} />
-      <Text>Stars: { item.stargazersCount }</Text>
-      <Text>Forks: { item.forksCount }</Text>
-      <Text>Reviews: { item.reviewCount }</Text>
-      <Text>Rating: { item.ratingAverage }</Text>
+      <RepositoryItemStats item={item} />
     </View>
   );
 };
