@@ -19,8 +19,8 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} horizontal>
-        <AppBarTab text="Sign In" path="/" />
         <AppBarTab text="Repositories" path="/repositoryList" />
+        <AppBarTab text="Sign In" path="/" />
       </ScrollView>
     </View>
   );

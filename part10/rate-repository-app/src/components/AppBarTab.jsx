@@ -5,15 +5,17 @@ import { Link } from 'react-router-native';
 import Text from './Text';
 
 const styles = StyleSheet.create({
+  tab: {
+    marginLeft: 20,
+  },
   text: {
-    paddingLeft: 20,
     color: '#fff'
   }
 });
 
 const AppBarTab = ({ text, path }) => {
   return (
-    <View>
+    <View style={styles.tab}>
       <Pressable>
         <Link to={path}>
           <Text
