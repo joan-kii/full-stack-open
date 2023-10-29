@@ -51,7 +51,7 @@ export const resolvers = {
       if (!match) {
         throw new UserInputError('Invalid username or password');
       }
-
+      
       return {
         user,
         ...authService.createAccessToken(user.id),

@@ -53,7 +53,6 @@ class AuthService {
 
   createAccessToken(userId) {
     const expiresAt = new Date(Date.now() + ACCESS_TOKEN_EXPIRATION_TIME);
-
     return {
       accessToken: signJwt(
         { userId },
