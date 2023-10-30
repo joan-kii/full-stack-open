@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 import FormikTextInput from './Form';
 import Text from './Text';
@@ -60,6 +61,7 @@ const initialValues = {
 };
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [signIn] = useSignIn();
 
   const onSubmit = async (values) => {
@@ -67,7 +69,7 @@ const SignIn = () => {
 
     try {
       const { data } = await signIn({ username, password });
-      console.log(data.authenticate.accessToken);
+      if (data) navigate('/repositoryList');
     } catch (e) {
       console.log(e);
     }
