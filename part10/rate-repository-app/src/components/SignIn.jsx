@@ -66,8 +66,7 @@ const SignIn = () => {
 
   const onSubmit = async (values) => {
     try {
-      const { data } = await signIn(values);
-      console.log(data);
+      const data = await signIn(values);
       if (data) navigate('/repositoryList');
     } catch (e) {
       console.log(e);

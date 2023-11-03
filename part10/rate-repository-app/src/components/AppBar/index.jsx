@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import { useQuery } from '@apollo/client';
 
 import AppBarTab from './AppBarTab';
+import SignOut from './SingOut';
 import { CURRENT_USER } from '../../graphql/queries';
 
 const styles = StyleSheet.create({
@@ -18,14 +19,15 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { user } = useQuery(CURRENT_USER, { fetchPolicy: 'cache-and-network' });
+  const { data } = useQuery(CURRENT_USER, { fetchPolicy: 'cache-and-network' });
+  console.log(data);
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} horizontal>
         <AppBarTab text="Repositories" path="/repositoryList" />
-        {!user && <AppBarTab text="Sign In" path="/" />}
-        {user && <AppBarTab text="Sign Out" path="/" />}
+        {!data && <AppBarTab text="Sign In" path="/" />}
+        {data && <SignOut text="Sign Out" />}
       </ScrollView>
     </View>
   );
