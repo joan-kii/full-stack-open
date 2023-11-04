@@ -14,20 +14,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const handlePress = async () => {
+const SignOut = ({ text }) => {
   const navigate = useNavigate();
   const [signOut] = useSignOut();
-  console.log('lol');
+  
+  const handlePress = async () => {
+    try {
+      await signOut();
+      navigate('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  try {
-    const data = await signOut();
-    if (data) navigate('/');
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const SignOut = ({ text }) => {
   return (
     <View style={styles.tab}>
       <Pressable onPress={handlePress}>

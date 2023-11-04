@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const { data } = useQuery(CURRENT_USER, { fetchPolicy: 'cache-and-network' });
-  console.log(data);
+  const user = data ? data.me : undefined;
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} horizontal>
         <AppBarTab text="Repositories" path="/repositoryList" />
-        {!data && <AppBarTab text="Sign In" path="/" />}
-        {data && <SignOut text="Sign Out" />}
+        {!user && <AppBarTab text="Sign In" path="/" />}
+        {user && <SignOut text="Sign Out" />}
       </ScrollView>
     </View>
   );
