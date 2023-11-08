@@ -2,7 +2,7 @@ import React  from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 
 import RepositoryItem from './RepositoryItem';
-import Text from '../Text';
+import Text from '../Elements/Text';
 import useRepositories from '../../hooks/useRepositories';
 
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ export const RepositoryListContainer = ({ repositories }) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={ item => item.id }
-      renderItem={ ({ item }) => <RepositoryItem item={item} /> }
+      renderItem={ ({ item }) => <RepositoryItem item={item} isSingleRepo={false} /> }
     />
   );
 };

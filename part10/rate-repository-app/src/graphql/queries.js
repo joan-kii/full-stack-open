@@ -28,3 +28,13 @@ export const CURRENT_USER = gql`
     }
   }
 `;
+
+export const GET_SINGLE_REPOSITORY = gql`
+  query ($repositoryId: ID!) {
+    repository(id: $repositoryId) {
+      fullName
+      id
+      url
+    }
+  }
+`;

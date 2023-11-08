@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { useNavigate } from 'react-router-dom';
 
-import Text from '../Text';
+import Text from '../Elements/Text';
 import useSignOut from '../../hooks/useSingOut';
 
 const styles = StyleSheet.create({
