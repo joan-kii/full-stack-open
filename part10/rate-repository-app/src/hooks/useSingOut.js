@@ -1,8 +1,6 @@
 import { useApolloClient } from '@apollo/client';
-/* import { useQuery } from '@apollo/client'; */
 
 import useAuthStorage from './useAuthStorage';
-/* import { CURRENT_USER } from '../graphql/queries'; */
 
 const useSignOut = () => {
   const apolloClient = useApolloClient();
@@ -10,10 +8,7 @@ const useSignOut = () => {
   
   const signOut = async () => {
     await authStorage.removeAccessToken();
-    apolloClient.resetStore();/* 
-    const { data } = useQuery(CURRENT_USER, { fetchPolicy: 'cache-and-network' });
-    
-    if (!data) return true; */
+    apolloClient.resetStore();
   };
 
   return [signOut];

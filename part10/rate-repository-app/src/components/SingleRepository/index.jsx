@@ -8,12 +8,12 @@ import useSingleRepository from '../../hooks/useSingleRepository';
 const SingleRepository = () => {
   const { id } = useParams();
   const { error, data } = useSingleRepository(id);
-
+  console.log(data);
   const onSubmit = async () => {
     if (!error) await Linking.openURL(data.url);
   };
 
-  return <RepositoryItem item={item} isSingleRepo={true} onSubmit={onSubmit} />;
+  return <RepositoryItem /* item={item} */ isSingleRepo={true} onSubmit={onSubmit} />;
 };
 
 export default SingleRepository;
