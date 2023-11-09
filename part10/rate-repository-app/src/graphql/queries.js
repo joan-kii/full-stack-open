@@ -32,9 +32,16 @@ export const CURRENT_USER = gql`
 export const GET_SINGLE_REPOSITORY = gql`
   query Repository($repositoryId: ID!) {
     repository(id: $repositoryId) {
-      fullName
       id
+      fullName
       url
+      description
+      forksCount
+      language
+      ownerAvatarUrl
+      stargazersCount
+      reviewCount
+      ratingAverage
     }
   }
 `;
