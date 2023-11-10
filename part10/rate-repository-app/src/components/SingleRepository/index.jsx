@@ -12,11 +12,10 @@ const SingleRepository = () => {
   const { error, data, loading } = useSingleRepository(id);
 
   const onSubmit = async () => {
-    console.log(data.repository.url);
     if (!error) await Linking.openURL(data.repository.url);
   };
 
-  if (loading) return <View><Text>Loading</Text></View>;
+  if (loading) return <View><Text>Loading...</Text></View>;
 
   return (
     <>
