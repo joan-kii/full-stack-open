@@ -28,6 +28,7 @@ const AppBar = () => {
         <AppBarTab text="Repositories" path="/repositoryList" />
         {user && <AppBarTab text="Create a Review" path="/reviewForm" />}
         {!user && <AppBarTab text="Sign In" path="/" />}
+        {!user && <AppBarTab text="Sign Up" path="/signUp" />}
         {user && <SignOut text="Sign Out" />}
       </ScrollView>
     </View>

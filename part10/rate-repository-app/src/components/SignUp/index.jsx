@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import FormikTextInput from '../Form';
 import Text from '../Elements/Text';
 import theme from '../../theme';
-import useSignIn from '../../hooks/useSignIn';
+import useSignUp from '../../hooks/useSignUp';
 
 
 const styles = StyleSheet.create({
@@ -27,25 +27,34 @@ const validationSchema = yup.object().shape({
     .min(6, 'Too short!')
     .max(50, 'Too long!')
     .matches(/^[a-z]+$/, 'Just lowercase letters!')
-    .required('Password is required!')
+    .required('Password is required!'),
+  confirmPassword: yup
+    .string()
+    .min(6, 'Too short!')
+    .max(50, 'Too long!')
+    .matches(/^[a-z]+$/, 'Just lowercase letters!')
+    .oneOf([yup.ref('password'), null], 'Passwords do not match!')
+    .required('Password confirm is required!')
 });
 
-const SignInForm = ({ onSubmit }) => {
+const SignUpForm = ({ onSubmit }) => {
   return (
     <View style={styles.form}>
       <FormikTextInput name="username" placeholder="Username" />
       <FormikTextInput name="password" placeholder="Password" secureTextEntry />
+      <FormikTextInput name="confirmPassword" placeholder="Confirm Password" secureTextEntry />
       <Pressable style={theme.button} onPress={onSubmit}>
-        <Text style={theme.text}>Sing In</Text>
+        <Text style={theme.text}>Sing Up</Text>
       </Pressable>
     </View>
   );
 };
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignUpContainer = ({ onSubmit }) => {
   const initialValues = {
     username: '',
-    password: ''
+    password: '',
+    confirmPassword: '',
   };
 
   return (
@@ -54,25 +63,25 @@ export const SignInContainer = ({ onSubmit }) => {
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
-      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+      {({ handleSubmit }) => <SignUpForm onSubmit={handleSubmit} />}
     </Formik>
   );
 };
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
-  const [signIn] = useSignIn();
+  const [signUp] = useSignUp();
   
   const onSubmit = async (values) => {
     try {
-      const data = await signIn(values);
+      const data = await signUp(values);
       if (data) navigate('/repositoryList');
     } catch (e) {
       console.log(e);
     }
   };
 
-  return <SignInContainer onSubmit={onSubmit} /> ;
+  return <SignUpContainer onSubmit={onSubmit} /> ;
 };
 
-export default SignIn;
+export default SignUp;
