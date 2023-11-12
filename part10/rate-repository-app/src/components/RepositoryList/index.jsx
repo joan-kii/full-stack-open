@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { Searchbar } from 'react-native-paper';
+import { useDebounce } from 'use-debounce';
 
 import RepositoryItem from './RepositoryItem';
 import ItemSeparator from '../ItemSeparator';
@@ -19,31 +21,57 @@ const optionsDescRating = {
   orderBy: 'RATING_AVERAGE',
   orderDirection: 'DESC'
 };
+const optionsKeyword = {
+  searchKeyword: ''
+};
 
-const OrderPicker = ({ selectedOrder, setSelectedOrder }) => {
+const searchStyle = {
+  backgroundColor: 'white',
+  width: '85%',
+  marginTop: 10,
+  marginLeft: 30,
+  alignItems: 'center'
+};
+
+const OrderPicker = ({
+  selectedOrder,
+  setSelectedOrder,
+  debouncedKeyword,
+  onChangeKeyword
+}) => {
   return (
-    <Picker 
-      selectedValue={selectedOrder}
-      onValueChange={(itemValue) =>
-        setSelectedOrder(itemValue)
-      }>
-      <Picker.Item
-        label="Latest repositories"
-        value={optionsDefault} />
-      <Picker.Item
-        label="Highest rated repositories"
-        value={optionsDescRating} />
-      <Picker.Item
-        label="Lowest rated repositories"
-        value={optionsAscRating} />
-    </Picker>
+    <>
+      <Searchbar
+        placeholder="Search"
+        onChangeText={onChangeKeyword}
+        value={debouncedKeyword}
+        style={searchStyle}
+      />
+      <Picker 
+        selectedValue={selectedOrder}
+        onValueChange={(itemValue) =>
+          setSelectedOrder(itemValue)
+        }>
+        <Picker.Item
+          label="Latest repositories"
+          value={optionsDefault} />
+        <Picker.Item
+          label="Highest rated repositories"
+          value={optionsDescRating} />
+        <Picker.Item
+          label="Lowest rated repositories"
+          value={optionsAscRating} />
+      </Picker>
+    </>
   );
 };
 
 export const RepositoryListContainer = ({
   repositories,
   selectedOrder,
-  setSelectedOrder
+  setSelectedOrder,
+  debouncedKeyword,
+  onChangeKeyword
 }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -55,6 +83,8 @@ export const RepositoryListContainer = ({
       ListHeaderComponent={<OrderPicker
         selectedOrder={selectedOrder}
         setSelectedOrder={setSelectedOrder}
+        debouncedKeyword={debouncedKeyword}
+        onChangeKeyword={onChangeKeyword}
         />}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={ item => item.id }
@@ -64,16 +94,25 @@ export const RepositoryListContainer = ({
 };
 
 const RepositoryList = () => {
-  const [selectedOrder, setSelectedOrder] = useState(optionsDefault)
-  const { loading, error, data } = useRepositories(selectedOrder);
+  const [options, setOptions] = useState(optionsDefault)
+  const [keyword, setKeyword] = useState('');
+  const [debouncedKeyword] = useDebounce(keyword, 500);
+  const onChangeKeyword = (query) => {
+    setKeyword(query);
+    optionsKeyword.searchKeyword = debouncedKeyword;
+    setOptions(optionsKeyword);
+  };
+  const { loading, error, data } = useRepositories(options);
 
   if (loading) return <View><Text>Loading</Text></View>;
   if (error) return <View><Text>{error.message}</Text></View>;
 
   return <RepositoryListContainer
     repositories={data.repositories}
-    selectedOrder={selectedOrder}
-    setSelectedOrder={setSelectedOrder}
+    selectedOrder={options}
+    setSelectedOrder={setOptions}
+    debouncedKeyword={debouncedKeyword}
+    onChangeKeyword={onChangeKeyword}
   />;
 };
 
