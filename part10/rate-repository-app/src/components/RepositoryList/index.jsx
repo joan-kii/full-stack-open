@@ -17,62 +17,60 @@ const optionsKeyword = {
   searchKeyword: ''
 };
 
-export class RepositoryListContainer extends React.Component {
-  renderHeader(props) {
-    return (
-      <>
-        <SearchBar
-          onChangeKeyword={props.onChangeKeyword}
-          debouncedKeyword={props.debouncedKeyword}
-        />
-        <OrderPicker
-          selectedOrder={props.selectedOrder}
-          setSelectedOrder={props.setSelectedOrder}
-          optionsDefault={optionsDefault}
-        />
-      </>
-    );
-  }
+export const RepositoryListContainer = ({ 
+  error,
+  loading,
+  data
+}) => {
+  if (error) return <View><Text>{error.message}</Text></View>;
+  if (loading) return <View><Text>Loading...</Text></View>;
 
-  render() {
-    const repositoryNodes = this.props.repositories
-    ? this.props.repositories.edges.map((edge) => edge.node)
-    : [];
+  const repositoryNodes = data.repositories
+  ? data.repositories.edges.map((edge) => edge.node)
+  : [];
 
-    return (
-      <FlatList
-        data={repositoryNodes}
-        ListHeaderComponent={this.renderHeader(this.props)}
-        ItemSeparatorComponent={ItemSeparator}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <RepositoryItem item={item} isSingleRepo={false} />}
-      />
-    );
-  }
-}
+  return (
+    <FlatList
+      data={repositoryNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <RepositoryItem item={item} isSingleRepo={false} />}
+    />
+  );
+};
 
 const RepositoryList = () => {
   const [options, setOptions] = useState(optionsDefault)
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword] = useDebounce(keyword, 500);
   const onChangeKeyword = (query) => {
-    setKeyword(query);
-    optionsKeyword.searchKeyword = debouncedKeyword;
-    setOptions(optionsKeyword);
+    if (query) {
+      optionsKeyword.searchKeyword = debouncedKeyword;
+      setKeyword(query);
+      setOptions(optionsKeyword);
+    } else {
+      setOptions(optionsDefault)
+    }
   };
   const { loading, error, data } = useRepositories(options);
 
-  if (error) return <View><Text>{error.message}</Text></View>;
-  if (loading) return <View><Text>Loading...</Text></View>;
-
   return (
-    <RepositoryListContainer
-      repositories={data.repositories}
-      selectedOrder={options}
-      setSelectedOrder={setOptions}
-      debouncedKeyword={debouncedKeyword}
-      onChangeKeyword={onChangeKeyword}
-    />
+    <>
+      <SearchBar
+        onChangeKeyword={onChangeKeyword}
+        keyword={keyword}
+      />
+      <OrderPicker
+        selectedOrder={options}
+        setSelectedOrder={setOptions}
+        optionsDefault={optionsDefault}
+      />
+      <RepositoryListContainer
+        loading={loading}
+        error={error}
+        data={data}
+      />
+    </>
   );
 };
 
