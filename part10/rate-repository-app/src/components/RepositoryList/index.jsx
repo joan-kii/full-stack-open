@@ -33,65 +33,51 @@ const searchStyle = {
   alignItems: 'center'
 };
 
-const OrderPicker = ({
-  selectedOrder,
-  setSelectedOrder,
-  debouncedKeyword,
-  onChangeKeyword
-}) => {
-  return (
-    <>
-      <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeKeyword}
-        value={debouncedKeyword}
-        style={searchStyle}
-      />
-      <Picker 
-        selectedValue={selectedOrder}
-        onValueChange={(itemValue) =>
-          setSelectedOrder(itemValue)
-        }>
-        <Picker.Item
-          label="Latest repositories"
-          value={optionsDefault} />
-        <Picker.Item
-          label="Highest rated repositories"
-          value={optionsDescRating} />
-        <Picker.Item
-          label="Lowest rated repositories"
-          value={optionsAscRating} />
-      </Picker>
-    </>
-  );
-};
-
-export const RepositoryListContainer = ({
-  repositories,
-  selectedOrder,
-  setSelectedOrder,
-  debouncedKeyword,
-  onChangeKeyword
-}) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
+export class RepositoryListContainer extends React.Component {
+  renderHeader(props) {
+    return (
+      <>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={props.onChangeKeyword}
+          value={props.debouncedKeyword}
+          style={searchStyle}
+        />
+        <Picker 
+          selectedValue={props.selectedOrder}
+          onValueChange={(itemValue) =>
+            props.setSelectedOrder(itemValue)
+          }>
+          <Picker.Item
+            label="Latest repositories"
+            value={optionsDefault} />
+          <Picker.Item
+            label="Highest rated repositories"
+            value={optionsDescRating} />
+          <Picker.Item
+            label="Lowest rated repositories"
+            value={optionsAscRating} />
+        </Picker>
+      </>
+    );
+  }
+  
+  render() {
+    const repositoryNodes = this.props.repositories
+    ? this.props.repositories.edges.map((edge) => edge.node)
     : [];
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ListHeaderComponent={<OrderPicker
-        selectedOrder={selectedOrder}
-        setSelectedOrder={setSelectedOrder}
-        debouncedKeyword={debouncedKeyword}
-        onChangeKeyword={onChangeKeyword}
-        />}
-      ItemSeparatorComponent={ItemSeparator}
-      keyExtractor={ item => item.id }
-      renderItem={ ({ item }) => <RepositoryItem item={item} isSingleRepo={false} /> }
-    />
-  );
-};
+    return (
+      <FlatList
+        data={repositoryNodes}
+        ListHeaderComponent={this.renderHeader(this.props)}
+        ItemSeparatorComponent={ItemSeparator}
+        keyExtractor={ item => item.id }
+        renderItem={ ({ item }) => <RepositoryItem item={item} isSingleRepo={false} /> }
+      />
+    );
+  }
+}
 
 const RepositoryList = () => {
   const [options, setOptions] = useState(optionsDefault)
