@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
-import { useQuery } from '@apollo/client';
 
 import AppBarTab from './AppBarTab';
 import SignOut from './SingOut';
-import { CURRENT_USER } from '../../graphql/queries';
+import useGetCurrentUser from '../../hooks/useGetCurrentUser';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useQuery(CURRENT_USER, { fetchPolicy: 'cache-and-network' });
+  const { data } = useGetCurrentUser(false);
   const user = data ? data.me : undefined;
 
   return (
@@ -29,6 +28,7 @@ const AppBar = () => {
         {user && <AppBarTab text="Create a Review" path="/reviewForm" />}
         {!user && <AppBarTab text="Sign In" path="/" />}
         {!user && <AppBarTab text="Sign Up" path="/signUp" />}
+        {user && <AppBarTab text="My Reviews" path="/myReviews" />}
         {user && <SignOut text="Sign Out" />}
       </ScrollView>
     </View>

@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryReview = ({ review }) => {
+  console.log(review);
   return (
     <View style={styles.reviewContainer}>
       <View style={styles.ratingContainer}>
