@@ -7,7 +7,7 @@ import RepositoryReview from '../SingleRepository/RepositoryReview';
 import useGetCurrentUser from '../../hooks/useGetCurrentUser';
 
 const MyReviews = () => {
-  const { error, data, loading } = useGetCurrentUser(true);
+  const { error, data, loading, refetch } = useGetCurrentUser(true);
 
   if (error) return <View><Text>{error.message}</Text></View>;
   if (loading) return <View><Text>Loading...</Text></View>;
@@ -17,12 +17,22 @@ const MyReviews = () => {
     return  review;
   })
   : [];
+
   return (
     <FlatList
       data={reviewNodes}
       ItemSeparatorComponent={ItemSeparator}
-      keyExtractor={(review) => review.id}
-      renderItem={({ item }) => <RepositoryReview review={item} isUserReview={true} />}
+      keyExtractor={(review) => review.node.id}
+      renderItem={({ item }) => {
+        return (
+          <RepositoryReview
+            review={item} 
+            isUserReview={true}
+            refetch={refetch}
+          />
+          )
+        }
+      }
     />
   );
 };

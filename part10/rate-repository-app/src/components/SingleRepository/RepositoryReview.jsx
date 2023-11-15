@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const RepositoryReview = ({ review, isUserReview }) => {
+const RepositoryReview = ({ review, isUserReview, refetch }) => {
   const navigate = useNavigate();
   const [deleteReview] = useDeleteReview();
 
@@ -66,7 +66,11 @@ const RepositoryReview = ({ review, isUserReview }) => {
       },
       {
         text: 'Delete',
-        onPress: () => console.log('delete pressed')
+        onPress: () => {
+          const isDeleted = deleteReview(review.node.id);
+
+          if (isDeleted) refetch({variable: { includeReviews: true }});
+        }
       }
     ])
   ;
