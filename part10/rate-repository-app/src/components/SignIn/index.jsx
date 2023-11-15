@@ -9,7 +9,6 @@ import Text from '../Elements/Text';
 import theme from '../../theme';
 import useSignIn from '../../hooks/useSignIn';
 
-
 const styles = StyleSheet.create({
   form: {
     backgroundColor: 'white'

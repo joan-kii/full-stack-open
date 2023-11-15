@@ -13,15 +13,16 @@ const MyReviews = () => {
   if (loading) return <View><Text>Loading...</Text></View>;
 
   const reviewNodes = data.me.reviews
-  ? data.me.reviews.edges.map((review) => review.node)
+  ? data.me.reviews.edges.map((review) => {
+    return  review;
+  })
   : [];
-  console.log(reviewNodes);
   return (
     <FlatList
       data={reviewNodes}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={(review) => review.id}
-      renderItem={({ node }) => <RepositoryReview review={node} />}
+      renderItem={({ item }) => <RepositoryReview review={item} isUserReview={true} />}
     />
   );
 };
