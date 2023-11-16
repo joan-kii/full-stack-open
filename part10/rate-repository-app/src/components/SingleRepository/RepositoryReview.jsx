@@ -69,7 +69,7 @@ const RepositoryReview = ({ review, isUserReview, refetch }) => {
         onPress: () => {
           const isDeleted = deleteReview(review.node.id);
 
-          if (isDeleted) refetch({variable: { includeReviews: true }});
+          if (isDeleted) refetch();
         }
       }
     ])

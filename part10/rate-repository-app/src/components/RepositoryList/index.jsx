@@ -20,7 +20,8 @@ const optionsKeyword = {
 export const RepositoryListContainer = ({ 
   error,
   loading,
-  data
+  data,
+  onEndReach
 }) => {
   if (error) return <View><Text>{error.message}</Text></View>;
   if (loading) return <View><Text>Loading...</Text></View>;
@@ -35,6 +36,8 @@ export const RepositoryListContainer = ({
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <RepositoryItem item={item} isSingleRepo={false} />}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
@@ -43,6 +46,7 @@ const RepositoryList = () => {
   const [options, setOptions] = useState(optionsDefault)
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword] = useDebounce(keyword, 500);
+
   const onChangeKeyword = (query) => {
     if (query) {
       optionsKeyword.searchKeyword = debouncedKeyword;
@@ -52,7 +56,15 @@ const RepositoryList = () => {
       setOptions(optionsDefault)
     }
   };
-  const { loading, error, data } = useRepositories(options);
+
+  const { loading, error, data, fetchMore } = useRepositories({
+    ...options,
+    first: 2
+  });
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <>
@@ -69,6 +81,7 @@ const RepositoryList = () => {
         loading={loading}
         error={error}
         data={data}
+        onEndReach={onEndReach}
       />
     </>
   );

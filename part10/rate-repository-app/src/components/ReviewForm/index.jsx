@@ -8,7 +8,7 @@ import FormikTextInput from '../Form';
 import Text from '../Elements/Text';
 import theme from '../../theme';
 import useCreateReview from '../../hooks/useCreateReview';
-
+import useGetCurrentUser from '../../hooks/useGetCurrentUser';
 
 const styles = StyleSheet.create({
   form: {
@@ -72,6 +72,7 @@ export const CreateReviewContainer = ({ onSubmit }) => {
 const ReviewForm = () => {
   const navigate = useNavigate();
   const [createReview] = useCreateReview();
+  const { refetch } = useGetCurrentUser(true);
   
   const onSubmit = async (values) => {
     const ratingAsNumber = values.rating;
@@ -80,6 +81,7 @@ const ReviewForm = () => {
     try {
       const data = await createReview(newValues);
       const id = data.createReview.repositoryId;
+      refetch();
       if (data) navigate(`/${id}`);
     } catch (e) {
       console.log(e);

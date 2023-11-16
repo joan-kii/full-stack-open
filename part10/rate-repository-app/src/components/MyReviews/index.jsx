@@ -21,6 +21,7 @@ const MyReviews = () => {
   return (
     <FlatList
       data={reviewNodes}
+      extraData={data}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={(review) => review.node.id}
       renderItem={({ item }) => {
