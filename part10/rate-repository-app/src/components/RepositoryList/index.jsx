@@ -20,14 +20,14 @@ const optionsKeyword = {
 export const RepositoryListContainer = ({ 
   error,
   loading,
-  data,
+  repositories,
   onEndReach
 }) => {
   if (error) return <View><Text>{error.message}</Text></View>;
   if (loading) return <View><Text>Loading...</Text></View>;
 
-  const repositoryNodes = data.repositories
-  ? data.repositories.edges.map((edge) => edge.node)
+  const repositoryNodes = repositories
+  ? repositories.edges.map((edge) => edge.node)
   : [];
 
   return (
@@ -46,10 +46,10 @@ const RepositoryList = () => {
   const [options, setOptions] = useState(optionsDefault)
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword] = useDebounce(keyword, 500);
+  optionsKeyword.searchKeyword = debouncedKeyword;
 
   const onChangeKeyword = (query) => {
     if (query) {
-      optionsKeyword.searchKeyword = debouncedKeyword;
       setKeyword(query);
       setOptions(optionsKeyword);
     } else {
@@ -57,7 +57,7 @@ const RepositoryList = () => {
     }
   };
 
-  const { loading, error, data, fetchMore } = useRepositories({
+  const { loading, error, repositories, fetchMore } = useRepositories({
     ...options,
     first: 2
   });
@@ -80,7 +80,7 @@ const RepositoryList = () => {
       <RepositoryListContainer
         loading={loading}
         error={error}
-        data={data}
+        repositories={repositories}
         onEndReach={onEndReach}
       />
     </>

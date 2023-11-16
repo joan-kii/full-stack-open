@@ -4,53 +4,29 @@ import { GET_REPOSITORIES } from '../graphql/queries';
 
 const useRepositories = (variables) => {
   console.log(variables);
-  if (variables.searchKeyword) {
-    const { data, error, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
+  const { data, error, loading, fetchMore } = useQuery(GET_REPOSITORIES, { variables: { ...variables } });
+
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
       variables: {
-        searchKeyword: variables.searchKeyword
-      }
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
     });
-    
-    const handleFetchMore = () => {
-      const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
-  
-      if (!canFetchMore) {
-        return;
-      }
-  
-      fetchMore({
-        variables: {
-          after: data.repositories.pageInfo.endCursor,
-          ...variables,
-        },
-      });
-    };
+  };
 
-    return { data, error, loading, fetchMore: handleFetchMore, ...result };
-  } else {
-    const { data, error, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
-      variables: {
-        ...variables
-      }
-    });
-
-    const handleFetchMore = () => {
-      const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
-  
-      if (!canFetchMore) {
-        return;
-      }
-  
-      fetchMore({
-        variables: {
-          after: data.repositories.pageInfo.endCursor,
-          ...variables,
-        },
-      });
-    };
-
-    return { data, error, loading, fetchMore: handleFetchMore, ...result };
-  }
+  return {
+    repositories: data?.repositories,
+    error,
+    loading,
+    fetchMore: handleFetchMore
+  };
 };
 
 export default useRepositories;

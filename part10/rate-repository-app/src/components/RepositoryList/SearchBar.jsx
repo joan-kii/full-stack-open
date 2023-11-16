@@ -12,13 +12,13 @@ const styles = {
   }
 };
 
-const SearchBar = ({ onChangeKeyword, debouncedKeyword }) => {
+const SearchBar = ({ onChangeKeyword, keyword }) => {
   return (
     <View style={styles.searchComponent}>
       <Searchbar
         placeholder="Search"
         onChangeText={onChangeKeyword}
-        value={debouncedKeyword}
+        value={keyword}
         style={styles.searchBar}
       />
     </View>

@@ -36,7 +36,7 @@ const createApolloClient = (authStorage) => {
   });
   return new ApolloClient({
     link: authLink.concat(httpLink),
-    cache,
+    cache/* : new InMemoryCache() SEGUIR AQUÍ */
   });
 };
 
