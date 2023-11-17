@@ -2,18 +2,12 @@ import { useQuery } from '@apollo/client';
 
 import { GET_CURRENT_USER } from '../graphql/queries';
 
-const useGetCurrentUser = (includeReviews) => {
-  if (includeReviews) {
+const useGetCurrentUser = (variables) => {
     const { data, error, loading, refetch } = useQuery(GET_CURRENT_USER, { 
-      variables: { includeReviews }
+      variables: { ...variables },
     });
     
-    return { data, error, loading, refetch };
-  } else {
-    const { data, error, loading } = useQuery(GET_CURRENT_USER);
-    
-    return { data, error, loading };
-  }
+    return { user: data?.me, error, loading, refetch };
 };
 
 export default useGetCurrentUser;

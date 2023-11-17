@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useGetCurrentUser(false);
-  const user = data ? data.me : undefined;
+  const { user } = useGetCurrentUser({ includeReviews: false });
 
   return (
     <View style={styles.container}>

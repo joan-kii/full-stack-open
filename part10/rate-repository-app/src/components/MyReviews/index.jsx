@@ -7,13 +7,18 @@ import RepositoryReview from '../SingleRepository/RepositoryReview';
 import useGetCurrentUser from '../../hooks/useGetCurrentUser';
 
 const MyReviews = () => {
-  const { error, data, loading, refetch } = useGetCurrentUser(true);
+  const {
+    error,
+    user,
+    loading,
+    refetch
+  } = useGetCurrentUser({ includeReviews: true });
 
   if (error) return <View><Text>{error.message}</Text></View>;
   if (loading) return <View><Text>Loading...</Text></View>;
-
-  const reviewNodes = data.me.reviews
-  ? data.me.reviews.edges.map((review) => {
+  
+  const reviewNodes = user.reviews
+  ? user.reviews.edges.map((review) => {
     return  review;
   })
   : [];
@@ -21,7 +26,7 @@ const MyReviews = () => {
   return (
     <FlatList
       data={reviewNodes}
-      extraData={data}
+      extraData={user.reviews}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={(review) => review.node.id}
       renderItem={({ item }) => {

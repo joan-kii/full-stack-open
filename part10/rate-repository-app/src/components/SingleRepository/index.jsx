@@ -10,12 +10,19 @@ import Text from '../Elements/Text';
 
 const SingleRepository = () => {
   const { id } = useParams();
-  const { error, data, loading } = useSingleRepository(id);
+  const { error, repository, loading, fetchMore } = useSingleRepository({
+    repositoryId: id,
+    first: 2
+  });
 
   if (loading) return <View><Text>Loading...</Text></View>;
   if (error) return <View><Text>Something went wrong...</Text></View>;
 
-  const { reviews, ...repo } = data.repository;
+  const { reviews, ...repo } = repository;
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <FlatList
@@ -24,6 +31,8 @@ const SingleRepository = () => {
       renderItem={({ item }) => <RepositoryReview review={item} isUserReview={false} />}
       keyExtractor={({ node }) => node.id}
       ListHeaderComponent={() => <RepositoryInfo repo={repo} />}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

@@ -51,7 +51,7 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const GET_SINGLE_REPOSITORY = gql`
-  query Repository($repositoryId: ID!) {
+  query Repository($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       id
       fullName
@@ -63,8 +63,9 @@ export const GET_SINGLE_REPOSITORY = gql`
       stargazersCount
       reviewCount
       ratingAverage
-      reviews {
+      reviews(first: $first, after: $after) {
         edges {
+          cursor
           node {
             id
             rating
@@ -75,6 +76,11 @@ export const GET_SINGLE_REPOSITORY = gql`
               username
             }
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+          startCursor
         }
       }
     }
