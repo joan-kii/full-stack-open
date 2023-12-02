@@ -4,9 +4,3 @@
 [submodule "part11/full-stack-open-pokedex"]
 	path = part11/full-stack-open-pokedex
 	url = https://github.com/joan-kii/full-stack-open-pokedex.git
-[submodule "part11/full-stack-open-wikiMemods"]
-	path = part11/full-stack-open-wikiMemods
-	url = https://github.com/joan-kii/full-stack-open-wikiMemods.git
-[submodule "part11/part/full-stack-open-wikiMemods"]
-	path = part11/full-stack-open-wikiMemods
-	url = https://github.com/joan-kii/full-stack-open-wikiMemods.git
