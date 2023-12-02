@@ -7,3 +7,6 @@
 [submodule "part11/full-stack-open-wikiMemods"]
 	path = part11/full-stack-open-wikiMemods
 	url = https://github.com/joan-kii/full-stack-open-wikiMemods.git
+[submodule "part11/part/full-stack-open-wikiMemods"]
+	path = part11/full-stack-open-wikiMemods
+	url = https://github.com/joan-kii/full-stack-open-wikiMemods.git
