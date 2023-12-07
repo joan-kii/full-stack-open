@@ -1385,4 +1385,56 @@ nothing to commit, working tree clean
 [?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12[00m$ cd part12-containers-applications/
 [?2004l[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git add .
 [?2004lfatal: in unpopulated submodule 'part12/part12-containers-applications'
-[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git puh[Ksh
+[?2004lEverything up-to-date
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git add .
+[?2004lfatal: in unpopulated submodule 'part12/part12-containers-applications'
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git rm --cached . -rf
+[?2004lrm 'part12/part12-containers-applications'
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git rm --cached . -rfadd .[K
+[?2004l[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git commit -m "add exercise  12.4"
+[?2004l[main 9a1f509] add exercise 12.4
+ 38 files changed, 35163 insertions(+), 1 deletion(-)
+ delete mode 160000 part12/part12-containers-applications
+ create mode 100644 part12/part12-containers-applications/script-answers/.gitkeep
+ create mode 100644 part12/part12-containers-applications/script-answers/exercise12_1.txt
+ create mode 100644 part12/part12-containers-applications/script-answers/exercise12_2.txt
+ create mode 100644 part12/part12-containers-applications/script-answers/exercise12_3.txt
+ create mode 100644 part12/part12-containers-applications/script-answers/exercise12_4.txt
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/.gitignore
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/README.md
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/app.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/bin/www
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/mongo/index.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/mongo/models/Todo.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/mongo/mongo-init.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/package-lock.json
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/package.json
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/redis/index.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/routes/index.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/routes/todos.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-backend/util/config.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/.gitignore
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/README.md
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/package-lock.json
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/package.json
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/public/favicon.ico
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/public/index.html
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/public/logo192.png
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/public/logo512.png
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/public/manifest.json
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/public/robots.txt
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/App.css
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/App.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/Todos/Form.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/Todos/List.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/Todos/TodoView.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/index.css
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/index.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/setupTests.js
+ create mode 100644 part12/part12-containers-applications/todo-app/todo-frontend/src/util/apiClient.js
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications[00m$ git push
+[?2004lEnumerating objects: 57, done.
+Counting objects:   1% (1/57)Counting objects:   3% (2/57)Counting objects:   5% (3/57)Counting objects:   7% (4/57)Counting objects:   8% (5/57)Counting objects:  10% (6/57)Counting objects:  12% (7/57)Counting objects:  14% (8/57)Counting objects:  15% (9/57)Counting objects:  17% (10/57)Counting objects:  19% (11/57)Counting objects:  21% (12/57)Counting objects:  22% (13/57)Counting objects:  24% (14/57)Counting objects:  26% (15/57)Counting objects:  28% (16/57)Counting objects:  29% (17/57)Counting objects:  31% (18/57)Counting objects:  33% (19/57)Counting objects:  35% (20/57)Counting objects:  36% (21/57)Counting objects:  38% (22/57)Counting objects:  40% (23/57)Counting objects:  42% (24/57)Counting objects:  43% (25/57)Counting objects:  45% (26/57)Counting objects:  47% (27/57)Counting objects:  49% (28/57)Counting objects:  50% (29/57)Counting objects:  52% (30/57)Counting objects:  54% (31/57)Counting objects:  56% (32/57)Counting objects:  57% (33/57)Counting objects:  59% (34/57)Counting objects:  61% (35/57)Counting objects:  63% (36/57)Counting objects:  64% (37/57)Counting objects:  66% (38/57)Counting objects:  68% (39/57)Counting objects:  70% (40/57)Counting objects:  71% (41/57)Counting objects:  73% (42/57)Counting objects:  75% (43/57)Counting objects:  77% (44/57)Counting objects:  78% (45/57)Counting objects:  80% (46/57)Counting objects:  82% (47/57)Counting objects:  84% (48/57)Counting objects:  85% (49/57)Counting objects:  87% (50/57)Counting objects:  89% (51/57)Counting objects:  91% (52/57)Counting objects:  92% (53/57)Counting objects:  94% (54/57)Counting objects:  96% (55/57)Counting objects:  98% (56/57)Counting objects: 100% (57/57)Counting objects: 100% (57/57), done.
+Delta compression using up to 6 threads
+Compressing objects:   2% (1/49)Compressing objects:   4% (2/49)Compressing objects:   6% (3/49)Compressing objects:   8% (4/49)Compressing objects:  10% (5/49)Compressing objects:  12% (6/49)Compressing objects:  14% (7/49)Compressing objects:  16% (8/49)Compressing objects:  18% (9/49)Compressing objects:  20% (10/49)Compressing objects:  22% (11/49)Compressing objects:  24% (12/49)Compressing objects:  26% (13/49)Compressing objects:  28% (14/49)Compressing objects:  30% (15/49)Compressing objects:  32% (16/49)Compressing objects:  34% (17/49)Compressing objects:  36% (18/49)Compressing objects:  38% (19/49)Compressing objects:  40% (20/49)Compr
