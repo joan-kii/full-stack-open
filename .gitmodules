@@ -4,6 +4,3 @@
 [submodule "part11/full-stack-open-pokedex"]
 	path = part11/full-stack-open-pokedex
 	url = https://github.com/joan-kii/full-stack-open-pokedex.git
-[submodule "part12/part12-containers-applications"]
-	path = part12-containers-applications
-	url = https://github.com/joan-kii/part12-containers-applications.git
