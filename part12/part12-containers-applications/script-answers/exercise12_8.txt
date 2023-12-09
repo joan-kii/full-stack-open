@@ -1,0 +1,86 @@
+Script started on 2023-12-09 07:44:36+01:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="169" LINES="22"]
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications/todo-app/todo-backend[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications/todo-app/todo-backend[00m$ docker  container ls
+[?2004lCONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+eb1acf0c7337   mongo     "docker-entrypoint.s…"   19 minutes ago   Up 19 minutes   0.0.0.0:3456->27017/tcp, :::3456->27017/tcp   todo-backend-mongo-1
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications/todo-app/todo-backend[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications/todo-app/todo-backend[00m$ docker  exec -it todo-backend-mongo-1 bahs[K[Ksh
+[?2004l[?2004hroot@eb1acf0c7337:/# n mpns   ongosh -u the_ue sername -p the  _password
+[?2004l]0;mongosh mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	65740d229ba4ab70de124f41
+Connecting to:		[1m[32mmongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.0[0m
+Using MongoDB:		7.0.4
+[1m[33mUsing Mongosh[0m:		2.1.0
+
+For mongosh info see: [1mhttps://docs.mongodb.com/mongodb-shell/[0m
+
+[1G[0J [1G[1m[33m------[0m
+   [1m[33mThe server generated these startup warnings when booting[0m
+   2023-12-09T06:25:45.434+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2023-12-09T06:25:46.052+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+   2023-12-09T06:25:46.052+00:00: Soft rlimits for open file descriptors too low
+[1m[33m------[0m
+
+[1G[0Jtest> [7Gshoe[1G[0Jtest> sho[10Gw dbs
+[1madmin[0m         100.00 KiB
+[1mconfig[0m         84.00 KiB
+[1mlocal[0m          72.00 KiB
+[1mthe_database[0m   72.00 KiB
+[1G[0Jtest> [7Guse the_database
+switched to db the_database
+[1G[0Jthe_database> [15Gdb.find({})[1D[1G[0Jthe_database> db.find[44m([49m{})[25G[1C[1G[0Jthe_database> db.find({})[26G[1G[0Jthe_database> db.find({}[25G[1G[0Jthe_database> db.find({[24G[1G[0Jthe_database> db.find([23G[1G[0Jthe_database> db.find[22G[1G[0Jthe_database> db.fin[21G[1G[0Jthe_database> db.fi[20G[1G[0Jthe_database> db.f[19G[1G[0Jthe_database> db.[18G
+[1G[0J... [5G
+[1G[0J... [5Gshow collections
+Uncaught:
+[1m[31mSyntaxError[0m: Missing semicolon. (3:4)
+
+[0m [90m 1 |[39m db[33m.[39m[0m
+[0m [90m 2 |[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 |[39m show collections[0m
+[0m [90m   |[39m     [31m[1m^[22m[39m[0m
+[0m [90m 4 |[39m[0m
+
+[1G[0Jthe_database> [15G[1G[0Jthe_database> db. show collections[35G[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1G[0Jthe_database> db.show collections[18G[1G[0Jthe_database> dbshow collections[17G[1G[0Jthe_database> dshow collections[16G[1G[0Jthe_database> show collections[15G[16C
+[1mtodos[0m
+[1G[0Jthe_database> [15Gdb.tso[1G[0Jthe_database> db.ts[20G[1G[0Jthe_database> db.t[19Gos[1G[0Jthe_database> db.to[20Godo[1G[0Jthe_database> db.tood[22G[1G[0Jthe_database> db.too[21G[1G[0Jthe_database> db.to[20Gdos.find({})
+[
+  {
+    _id: ObjectId([32m'65740868dec8b3e8a7ff7c7d'[39m),
+    text: [32m'Write code'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'65740868dec8b3e8a7ff7c7e'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gdb.todos.insertOne({[32m"[39m[32mt[39m[32me[39m[32mx[39m[32mt[39m[32mr[39m[1G[0Jthe_database> db.todos.insertOne({[32m"text[39m[40G[32m"[39m: [32m"[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32mb[39m[32me[39m[32ml[39m[32mt[39m[32m"[39m. [1G[0Jthe_database> db.todos.insertOne({[32m"text"[39m: [32m"Increase the number of tools in my toolbelt"[39m.[89G[1G[0Jthe_database> db.todos.insertOne({[32m"text"[39m: [32m"Increase the number of tools in my toolbelt"[39m[88G, [32m"[39m[32md[39m[32mo[39m[32mi[39m[1G[0Jthe_database> db.todos.insertOne({[32m"text"[39m: [32m"Increase the number of tools in my toolbelt"[39m, [32m"do[39m[93G[32me[39m[1G[0Jthe_database> db.todos.insertOne({[32m"text"[39m: [32m"Increase the number of tools in my toolbelt"[39m, [32m"do[39m[93G[32mn[39m[32me[39m[32m"[39m: fas[1G[0Jthe_database> db.todos.insertOne({[32m"text"[39m: [32m"Increase the number of tools in my toolbelt"[39m, [32m"done"[39m: fa[100Gls[33mfalse[39m})
+{
+  acknowledged: [33mtrue[39m,
+  insertedId: ObjectId([32m'65740da09ba4ab70de124f42'[39m)
+}
+[1G[0Jthe_database> [15Gdb.too[1G[0Jthe_database> db.to[20Gdos.dfind[1G[0Jthe_database> db.todos.dfin[28G[1G[0Jthe_database> db.todos.dfi[27G[1G[0Jthe_database> db.todos.df[26G[1G[0Jthe_database> db.todos.d[25G[1G[0Jthe_database> db.todos.[24Gfins[1G[0Jthe_database> db.todos.fin[27Gd({})
+[
+  {
+    _id: ObjectId([32m'65740868dec8b3e8a7ff7c7d'[39m),
+    text: [32m'Write code'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'65740868dec8b3e8a7ff7c7e'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'65740da09ba4ab70de124f42'[39m),
+    text: [32m'Increase the number of tools in my toolbelt'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15G
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+[1G[0Jthe_database> [15G
+[?2004hroot@eb1acf0c7337:/# exit
+[?2004lexit
+[?2004h]0;joankii@DESKTOP-RNI7MAE: /mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications/todo-app/todo-backend[01;32mjoankii@DESKTOP-RNI7MAE[00m:[01;34m/mnt/c/Users/Admin.DESKTOP-RNI7MAE/Desktop/Joan/FullStackOpen/full-stack-open/part12/part12-containers-applications/todo-app/todo-backend[00m$ exit
+[?2004lexit
+
+Script done on 2023-12-09 07:48:37+01:00 [COMMAND_EXIT_CODE="0"]
