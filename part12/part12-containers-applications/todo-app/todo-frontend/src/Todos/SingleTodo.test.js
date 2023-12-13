@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import SingleTodo from '../Todos/SingleTodo'
+import SingleTodo from './SingleTodo'
 
 test('loads and displays home page', () => {
   const todo = {
