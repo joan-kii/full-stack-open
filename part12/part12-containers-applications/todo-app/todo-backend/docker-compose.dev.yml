@@ -12,15 +12,30 @@ services:
     volumes: 
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - mongo_data:/data/db
+    container_name: mongo
 
   redis:
-    image: redis:7.2-alpine
+    image: redis
     command: ['redis-server', '--appendonly', 'yes']
     ports:
       - '6379:6379' 
     volumes:
       - ./redis_data:/data
+    container_name: redis
+
+  server:
+      image: todo-backend-dev
+      build:
+        context: .
+        dockerfile: dev.Dockerfile
+      volumes:
+        - ./:/usr/src/app
+      ports:
+        - 3000:3000
+      environment: 
+        - REDIS_URL=redis://redis:6379
+        - MONGO_URL=mongodb://the_username:the_password@mongo:3456/the_database
+      container_name: todo-backend-dev
 
 volumes:
   mongo_data:
-  redis:
